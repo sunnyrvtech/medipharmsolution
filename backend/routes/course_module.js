@@ -13,7 +13,8 @@ router.get('/module', passport.authenticate('jwt', { session: false }), (req, re
   CourseModule.find().populate('course_id','name').exec(function(err, course_modules) {
     var result =[];
       course_modules.forEach(function(element,i) {
-        result.push({ _id: element._id,id: i+1,name: element.name,course_name: element.course_id.name,content: element.content });
+        var course_name = element.course_id != null?element.course_id.name:null;
+        result.push({ _id: element._id,id: i+1,name: element.name,course_name: course_name,content: element.content });
       });
      res.json(result)
 });

@@ -11,8 +11,7 @@ const CourseModuleSchema = new Schema({
     },
     course_id: {
         type: Schema.Types.ObjectId,
-        ref: 'courses',
-        required: true
+        ref: 'courses'
     },
     content: {
         type: String,

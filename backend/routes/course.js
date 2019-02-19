@@ -12,10 +12,11 @@ router.get(
   "/course",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    Course.find({}).then(course => {
+      Course.find().populate('category_id','name').exec(function(err, course) {
       var result = [];
       course.forEach(function(element, i) {
-        result.push({ _id: element._id, id: i + 1, name: element.name });
+        var category_name = element.category_id != null?element.category_id.name:null;
+        result.push({ _id: element._id, id: i + 1, name: element.name,category_name: category_name });
       });
       res.json(result);
     });
@@ -40,6 +41,7 @@ router.post(
       } else {
         const newCourse = new Course({
           name: req.body.name,
+          category_id: req.body.category,
           description: req.body.description
         });
         newCourse.save().then(course => {
@@ -64,7 +66,7 @@ router.put(
       if (course) {
         Course.updateOne(
           { _id: req.body.courseId },
-          { $set: { name: req.body.name, description: req.body.description } }
+          { $set: { name: req.body.name,category_id: req.body.category,description: req.body.description } }
         )
           .then(result => {
             res.json(result);

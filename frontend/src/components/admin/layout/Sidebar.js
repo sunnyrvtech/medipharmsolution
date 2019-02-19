@@ -33,6 +33,12 @@ class Sidebar extends Component {
       </li>
       <hr className="sidebar-divider" />
       <li className="nav-item">
+        <Link className="nav-link" to="/admin/categories">
+          <i className="fa fa-align-left"></i>
+          <span>Categories</span></Link>
+      </li>
+      <hr className="sidebar-divider" />
+      <li className="nav-item">
         <Link className="nav-link" to="/admin/courses">
           <i className="fa fa-list"></i>
           <span>Courses</span></Link>

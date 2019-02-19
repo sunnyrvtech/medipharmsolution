@@ -11,6 +11,10 @@ const CourseSchema = new Schema({
         unique: true,
         required: true
     },
+    category_id: {
+        type: Schema.Types.ObjectId,
+        ref: 'categories'
+    },
     description: {
         type: String,
         required: true
@@ -26,7 +30,8 @@ const CourseSchema = new Schema({
 });
 
 CourseSchema.pre('remove', function(next){
-    CourseModule.deleteMany({course_id: this._id}).exec();
+     CourseModule.update({ course_id: this._id },{ $set: { course_id: null }},{multi:true}).exec();
+    // CourseModule.deleteMany({course_id: this._id}).exec();
     next();
 });
 

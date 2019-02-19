@@ -1,40 +1,45 @@
-// Course.js
+// Category.js
 
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withRouter, Link } from "react-router-dom";
-import { getCourses,courseDelete } from "../../../actions/admin/course";
+import { getCategories,deleteCategory } from "../../../actions/admin/category";
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 
 let route_name;
 
-class Course extends Component {
+class Category extends Component {
 
   constructor(props) {
     super();
     this.state = {
       alert_message: null
     };
-   route_name= props.match.path
+  route_name= props.match.url
   }
 
   onDelete(cell) {
-    this.props.courseDelete(cell, this.props.history)
+    this.props.deleteCategory(cell, this.props.history)
     .then(response => {
       if (response) {
         this.setState({ alert_message: {class:'success',message: 'Deleted successfully!'}});
         setTimeout(function(){
             this.setState({alert_message:false});
         }.bind(this),5000);
-        this.props.getCourses();
+        this.props.getCategories()
+        .then(response => {
+          this.setState({ categories: response});
+        });
       }
     });
 }
   componentWillMount() {
       window.scrollTo(0, 0);
-    //if(this.props.courses.length == undefined)
-      this.props.getCourses();
+      this.props.getCategories()
+      .then(response => {
+        this.setState({ categories: response});
+      });
       if(this.props.location.state){
         if(this.props.location.state.alert_message){
             this.setState({
@@ -62,10 +67,8 @@ ActionButton(cell, row) {
       </div>
     );
   }
-  rendertable(courses)
+  rendertable(categories)
   {
-
-
     const options = {
       clearSearch: true,
       defaultSortName: 'id',
@@ -76,9 +79,8 @@ ActionButton(cell, row) {
     };
     return (
       <div>
-        <BootstrapTable data={courses} version='4' search={ true } options={ options } insertRow pagination>
+        <BootstrapTable data={categories} version='4' search={ true } options={ options } insertRow pagination>
         <TableHeaderColumn isKey dataSort dataField='id'>ID</TableHeaderColumn>
-        <TableHeaderColumn dataSort dataField='category_name'>Category</TableHeaderColumn>
         <TableHeaderColumn dataSort dataField='name'>Name</TableHeaderColumn>
         <TableHeaderColumn dataField='_id' dataFormat={ this.ActionButton.bind(this) }>Action</TableHeaderColumn>
         </BootstrapTable>
@@ -88,7 +90,7 @@ ActionButton(cell, row) {
 
 
   render() {
-    const { courses }= this.props;
+    const { categories }= this.state;
     return (
       <div className="container datatable">
       {this.state.alert_message  && (
@@ -96,22 +98,16 @@ ActionButton(cell, row) {
            {this.state.alert_message.message}
         </div>
       )}
-        {courses.length!=undefined  &&
-         this.rendertable(courses)
+        {categories !=undefined  &&
+         this.rendertable(categories)
         }
       </div>
     );
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    courses: state.courses.courses
-  };
-}
-
 
 export default connect(
-  mapStateToProps,
-  { getCourses,courseDelete }
-)(withRouter(Course));
+  null,
+  { getCategories,deleteCategory }
+)(withRouter(Category));
