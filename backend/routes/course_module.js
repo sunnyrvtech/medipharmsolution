@@ -54,9 +54,11 @@ router.put('/module', passport.authenticate('jwt', { session: false }), (req, re
 });
 
 router.delete('/module/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
-CourseModule.deleteOne({_id:mongoose.Types.ObjectId(req.params.id)})
- .then(result => {
-        res.json(result);
+ CourseModule.findOne({ _id: req.params.id }).then(module => {
+   if (module) {
+     module.remove();
+     res.json({ success: true });
+   }
  });
 });
 router.get('/module/:id', passport.authenticate('jwt', { session: false }), (req, res) => {

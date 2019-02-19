@@ -89,11 +89,11 @@ ActionButton(cell, row) {
     return (
       <div>
         <BootstrapTable data={courses_modules} version='4' search={ true } options={ options } insertRow pagination>
-        <TableHeaderColumn isKey dataSort dataField='id'>ID</TableHeaderColumn>
+        <TableHeaderColumn width='60' isKey dataSort dataField='id'>ID</TableHeaderColumn>
         <TableHeaderColumn dataSort dataField='course_name'>Course</TableHeaderColumn>
         <TableHeaderColumn dataSort dataField='name'>Module</TableHeaderColumn>
         <TableHeaderColumn dataField='_id' dataFormat={ this.QuizeButton.bind(this) }>View Quiz</TableHeaderColumn>
-        <TableHeaderColumn dataField='_id' dataFormat={ this.ActionButton.bind(this) }>Action</TableHeaderColumn>
+        <TableHeaderColumn width='100' dataField='_id' dataFormat={ this.ActionButton.bind(this) }>Action</TableHeaderColumn>
         </BootstrapTable>
     </div>
     );

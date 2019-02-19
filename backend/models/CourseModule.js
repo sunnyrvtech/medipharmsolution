@@ -3,6 +3,7 @@
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
+const Quiz = require('./Quiz');
 
 const CourseModuleSchema = new Schema({
     name: {
@@ -25,6 +26,11 @@ const CourseModuleSchema = new Schema({
         type: Date,
         default: Date.now
     }
+});
+
+CourseModuleSchema.pre('remove', function(next){
+    Quiz.deleteMany({module_id: this._id}).exec();
+    next();
 });
 
 const CourseModule = mongoose.model('course_modules', CourseModuleSchema);

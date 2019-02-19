@@ -83,12 +83,12 @@ ActionButton(cell, row) {
     return (
       <div>
         <BootstrapTable data={users} version='4' search={ true } options={ options } insertRow pagination>
-        <TableHeaderColumn isKey dataSort dataField='id'>ID</TableHeaderColumn>
+        <TableHeaderColumn width='60' isKey dataSort dataField='id'>ID</TableHeaderColumn>
         <TableHeaderColumn dataSort dataField='email'>Email</TableHeaderColumn>
         <TableHeaderColumn dataSort dataField='first_name'>First Name</TableHeaderColumn>
         <TableHeaderColumn dataSort dataField='last_name'>Last Name</TableHeaderColumn>
         <TableHeaderColumn dataSort dataField='account_status'>Status</TableHeaderColumn>
-        <TableHeaderColumn dataField='_id' dataFormat={ this.ActionButton.bind(this) }>Action</TableHeaderColumn>
+        <TableHeaderColumn width='100' dataField='_id' dataFormat={ this.ActionButton.bind(this) }>Action</TableHeaderColumn>
         </BootstrapTable>
     </div>
     );
