@@ -31,7 +31,7 @@ class Header extends Component {
                 <div className="header-wrap">
                     <div className="container">
                         <div className="row">
-                            <div className="col-sm-6">
+                            <div className="col-sm-3">
                                 <div className="social_icon">
                                     <ul>
                                         <li><a href="#"><i className="fa fa-facebook" aria-hidden="true"></i></a></li>
@@ -41,7 +41,20 @@ class Header extends Component {
                                     </ul>
                                 </div>
                             </div>
-                            <div className="col-sm-6 text-right">
+                            <div className="col-sm-6 text-center">
+                                <ul id="course-menu" class="course-menu">
+                                    <li>
+                                    <h3><a title="Clinical Research" href="#">Clinical Research</a></h3>
+                                    </li>
+                                    <li>
+                                    <h3><a title="Drug Safety" href="#">Drug Safety</a></h3>
+                                    </li>
+                                    <li>
+                                    <h3><a title="Data Science" href="#">Data Science</a></h3>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div className="col-sm-3 text-right">
                                 <div className="login_icon">
                                     {isAuthenticated ? authLinks : guestLinks}
                                 </div>
@@ -51,7 +64,7 @@ class Header extends Component {
                 </div>
                 <nav className="navbar navbar-expand-lg navbar-light bg-light">
                     <div className="container">
-                      <Link className="navbar-brand" to="/"><img src="images/sollers-college-logo.png" /></Link>
+                      <Link className="navbar-brand" to="/"><img src="images/logo.png" /></Link>
                       <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                       </button>
@@ -61,13 +74,28 @@ class Header extends Component {
                             <a className="nav-link" href="#">Home <span className="sr-only">(current)</span></a>
                           </li>
                           <li className="nav-item">
-                            <a className="nav-link" href="#">Courses</a>
-                          </li>
-                          <li className="nav-item">
                             <a className="nav-link" href="#">About Us</a>
                           </li>
                           <li className="nav-item">
-                            <a className="nav-link" href="#">Contact Us</a>
+                            <a className="nav-link" href="#">Explore programs</a>
+                          </li>
+                          {/*<li className="nav-item">
+                            <a className="nav-link" href="#">Testimonials </a>
+                          </li>*/}
+                          <li className="nav-item">
+                            <a className="nav-link" href="#">E-learning</a>
+                          </li>
+                          <li className="nav-item">
+                            <a className="nav-link" href="#">Careers</a>
+                          </li>
+                          <li className="nav-item">
+                            <a className="nav-link" href="#">Collaborations </a>
+                          </li>
+                          {/*<li className="nav-item">
+                            <a className="nav-link" href="#">Student log in </a>
+                          </li>*/}
+                          <li className="nav-item">
+                            <a className="nav-link" href="#">Contact us </a>
                           </li>
                         </ul>
                         <span className="desktop-cta"><a href="#" className="btn btn-header">Apply Now</a></span>

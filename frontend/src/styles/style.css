@@ -43,7 +43,7 @@ ul li {
 a:hover,
 a:focus {
     text-decoration: none;
-    color: #ed2d35;
+    color: #004dda;
 }
 
 input,
@@ -72,7 +72,7 @@ section.learn-interest-wpr,section.future-wpr{
 }
 }
 .header-wrap {
-    background: #ed2d35;
+    background: #004dda;
 }
 .social_icon ul li {
     display: inline-block;
@@ -97,10 +97,10 @@ section.learn-interest-wpr,section.future-wpr{
     justify-content: flex-start;
 }
 a.navbar-brand img {
-    max-width: 200px;
+    max-width: 150px;
 }
 span.desktop-cta a{
-    background-color: #ed2d35;
+    background-color: #004dda;
     border: 0;
     color: #fff;
     cursor: pointer;
@@ -150,7 +150,7 @@ section.hero-banner {
         text-transform: uppercase;
 }
  .frontApp .btn {
-    background-color: #ed2d35;
+    background-color: #004dda;
     border: 0;
     color: #fff;
     cursor: pointer;
@@ -175,7 +175,7 @@ section.hero-banner {
     padding-top: 70px;
 }
 .title h2 {
-    color: #ed2d35;
+    color: #004dda;
     font-weight: 600;
     font-size: 48px;
 }
@@ -228,7 +228,7 @@ section.learn-interest-wpr {
 .learn-interest-wpr .learn-interest-inner-wpr .learn-interest-inner-box .learn-interest-info {
     background-color: #fff;
     width: 450px;
-    outline: 2px solid #ed2d35;
+    outline: 2px solid #004dda;
     text-align: center;
     box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
     outline-offset: -20px;
@@ -264,7 +264,7 @@ max-width: 800px;
 }
 
 .carousel-indicators li {
-    background-color: #ed2d35;
+    background-color: #004dda;
 }
 .table {
     display: table;
@@ -350,7 +350,7 @@ max-width: 800px;
     margin-bottom: 30px;
 }
 .carousel-control-prev i,.carousel-control-next i{
-font-size: 30px;color: #ed2d35;
+font-size: 30px;color: #004dda;
 opacity: 1;
 }
 footer {
@@ -434,7 +434,9 @@ span.desktop-cta {
     text-transform: uppercase;
 }
 .navbar-expand-lg .navbar-nav .nav-link{
-    padding: 10px 20px;
+    padding: 10px 8px;
+    font-size: 13px;
+    font-weight: 500;
 }
 section.start-explore-wpr{
     padding-bottom: 50px;
@@ -478,7 +480,7 @@ footer h5::before {
     position: absolute;
     height: 2px;
     width: 50px;
-    background: #ed2d35;
+    background: #004dda;
     bottom: -10px;
 }
 .carousel-indicators li {
@@ -502,6 +504,32 @@ footer h5::before {
 .container.auth { max-width: 1140px;}
 .container.auth .auth-a { background: #f9f9f9; }
 .not-found { padding: 80px; }
+ .course-menu li {
+    display: inline-block;
+    padding: 0 19px;
+    text-transform: uppercase;
+}
+.course-menu li h3 {
+    margin: 0;
+    font-size: 14px;
+}
+ul#course-menu {
+    margin: 5px 0px;
+}
+.course-menu li a {
+    color: #fff;
+}
+span.desktop-cta a.btn.btn-header{
+    font-size: 13px;
+    padding: 10px;
+    min-width: inherit;
+}
+
+@media(max-width: 1366px){
+	.navbar-expand-lg .navbar-nav .nav-link{
+		font-size: 12px;
+	}
+}
 @media (min-width: 992px) and  (max-width: 1199px){
 .container {
     max-width: 100%;
@@ -518,8 +546,33 @@ footer h5::before {
     font-size: 14px;
     line-height: normal;
 }
+   a.navbar-brand img {
+    max-width: 100px;
 }
+.navbar-expand-lg .navbar-nav .nav-link {
+        text-transform: capitalize;
+    }
+}
+
+@media(min-width: 991px) and (max-width: 1270px){
+   .navbar-expand-lg .navbar-nav .nav-link {
+    padding: 10px 5px;
+    }
+    span.desktop-cta a.btn.btn-header{
+        padding: 5px 10px;
+    } 
+    nav.navbar .container {
+    padding: 0;
+}
+}
+
 @media(max-width: 991px){
+ .course-menu li h3 {
+    font-size: 12px;
+}
+.course-menu li{
+        padding: 0 5px;
+}
     section.start-explore-wpr{
         text-align: center;
     }
@@ -561,6 +614,9 @@ ul.navbar-nav li {
 }
 
 @media(max-width: 767px){
+    .header-wrap {
+    display: none;
+}
     .home-explore-box {
     width: 100%;
 }

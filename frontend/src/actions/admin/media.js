@@ -3,41 +3,16 @@
 import { GET_ERRORS } from "../types";
 import client from "../../client";
 
-export const emptyReducer =() => dispatch => {
+export const emptyReducer = () => dispatch => {
   dispatch({
     type: GET_ERRORS,
-    payload: ''
+    payload: ""
   });
 };
 
 export const getGalleries = () => async dispatch =>
   client()
-    .get("/quiz")
-    .then(res => {return res.data;})
-    .catch(err => {
-      console.log(err);
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      });
-    });
-
-export const uploadImage = (quiz,route_name, history) => dispatch => {
-  client()
-    .post("/quiz/create", quiz)
-    .then(res => history.push({ pathname: route_name.split('/add')[0],state: { alert_message:{class:'success',message: 'Quiz added successfully!'}}}))
-    .catch(err => {
-      console.log(err);
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      });
-    });
-};
-
-export const deleteImage = (quizId, history) => dispatch =>
-  client()
-    .delete("/quiz/delete/" + quizId)
+    .get("/media")
     .then(res => {
       return res.data;
     })
@@ -49,3 +24,38 @@ export const deleteImage = (quizId, history) => dispatch =>
       });
     });
 
+export const uploadImage = (file, route_name, history) => dispatch => {
+  const formData = new FormData();
+        formData.append('myImage',file);
+
+  client()
+    .post("/media/upload", formData)
+    .then(res =>
+      history.push({
+        pathname: route_name.split("/upload")[0],
+        state: {
+          alert_message: {
+            class: "success",
+            message: "Image uploaded successfully!"
+          }
+        }
+      })
+    )
+    .catch(err => {
+      console.log(err);
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
+};
+
+export const deleteImage = (images, history) => dispatch =>
+  client()
+    .post("/media/delete" , images)
+    .then(res => {
+      return res.data;
+    })
+    .catch(err => {
+      throw err.response.data;
+    });
