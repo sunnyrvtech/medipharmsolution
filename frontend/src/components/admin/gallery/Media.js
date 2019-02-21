@@ -37,6 +37,27 @@ class Media extends Component {
       }
     }
   }
+  CopyImageUrl(imageUrl) {
+    window.scrollTo(0, 0);
+    var inp = document.createElement("input");
+    document.body.appendChild(inp);
+    inp.value = imageUrl;
+    inp.select();
+    document.execCommand("copy");
+    inp.remove();
+    this.setState({
+      alert_message: {
+        class: "success",
+        message: "Copied! "+imageUrl
+      }
+    });
+    setTimeout(
+      function() {
+        this.setState({ alert_message: false });
+      }.bind(this),
+      3000
+    );
+  }
   onDelete(imageName, index) {
     window.scrollTo(0, 0);
     const images = {
@@ -47,7 +68,7 @@ class Media extends Component {
       .then(response => {
         if (response) {
           var images = this.state.images;
-          delete images[index];     //////    this is used to remove image from the list
+          delete images[index]; //////    this is used to remove image from the list
           this.setState({
             images: images,
             alert_message: {
@@ -86,7 +107,9 @@ class Media extends Component {
           </div>
         )}
         <div className="row mb-5">
-          <Link className="btn btn-info" to={`${route_name + "/upload"}`}>Upload Image</Link>
+          <Link className="btn btn-info" to={`${route_name + "/upload"}`}>
+            Upload Image
+          </Link>
         </div>
         <div className="row">
           {images.length != undefined &&
@@ -96,13 +119,17 @@ class Media extends Component {
                   <div className="img-thumbnail">
                     <img className="rounded" src={image.imageUrl} />
                     <div className="caption text-center mt-2 mb-2">
-                      <a className="btn btn-info btn-circle" title="copy">
+                      <a
+                        onClick={() => this.CopyImageUrl(image.imageUrl)}
+                        className="btn btn-info btn-circle"
+                        tooltip="Copy image url"
+                      >
                         <i className="fa fa-copy" />
                       </a>
                       <a
                         onClick={() => this.onDelete(image.imageName, i)}
                         className="btn btn-danger btn-circle ml-2"
-                        title="delete"
+                        tooltip="delete"
                       >
                         <i className="fa fa-trash" />
                       </a>
