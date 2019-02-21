@@ -27,6 +27,12 @@ class Sidebar extends Component {
       </li>
       <hr className="sidebar-divider" />
       <li className="nav-item">
+        <Link className="nav-link" to="/admin/media/gallery">
+          <i className="fa fa-picture-o"></i>
+          <span>Media Gallery</span></Link>
+      </li>
+      <hr className="sidebar-divider" />
+      <li className="nav-item">
         <Link className="nav-link" to="/admin/users">
           <i className="fa fa-user"></i>
           <span>Users</span></Link>
