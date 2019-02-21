@@ -42,7 +42,7 @@ class Header extends Component {
                                 </div>
                             </div>
                             <div className="col-sm-6 text-center">
-                                <ul id="course-menu" class="course-menu">
+                                <ul id="course-menu" className="course-menu">
                                     <li>
                                     <h3><a title="Clinical Research" href="#">Clinical Research</a></h3>
                                     </li>

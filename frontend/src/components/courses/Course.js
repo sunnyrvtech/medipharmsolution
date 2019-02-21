@@ -5,6 +5,8 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withRouter, Link } from "react-router-dom";
 import { getCourseByCategory } from "../../actions/course";
+import PageNotFound from "../PageNotFound";
+
 
 let route_name;
 

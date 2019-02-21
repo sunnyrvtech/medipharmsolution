@@ -8,17 +8,18 @@ const passport = require("passport");
 const Course = require("../models/Course");
 const Category = require("../models/Category");
 
-router.get("/:slug", (req, res) => {
+router.get("/:slug", function(req, res) {
   Category.findOne({
-    name: req.body.slug
+    slug: req.params.slug
   }).then(category => {
     if (category) {
       Course.find({ category_id: category.id })
-        .populate("source_id", "name")
+        .populate("category_id", "name")
         .exec(function(err, course) {
-          console.log(course);
           res.json(course);
         });
+    }else{
+      res.json([]);
     }
   });
 });
