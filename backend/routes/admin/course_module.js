@@ -6,9 +6,9 @@ const router = express.Router();
 
 const mongoose = require('mongoose');
 const passport = require('passport');
-const validateCourseModuleInput = require('../validation/course_module');
+const validateCourseModuleInput = require('../../validation/course_module');
 
-const CourseModule = require('../models/CourseModule');
+const CourseModule = require('../../models/CourseModule');
 router.get('/module', passport.authenticate('jwt', { session: false }), (req, res) => {
   CourseModule.find().populate('course_id','name').exec(function(err, course_modules) {
     var result =[];
@@ -41,10 +41,12 @@ router.put('/module', passport.authenticate('jwt', { session: false }), (req, re
         return res.status(400).json(errors);
     }
     if(module){
-      CourseModule.updateOne({_id: req.body.moduleId }, {$set: {name:req.body.name,course_id:req.body.course_id,content:req.body.content}})
-      .then(module => {
-             res.json(module);
-           });
+      module.name = req.body.name;
+      module.course_id = req.body.course_id;
+      module.content = req.body.content;
+      module.save().then(module => {
+        res.json(module);
+      });
     }else{
       return res.status(400).json({
         name: 'Course not found!'

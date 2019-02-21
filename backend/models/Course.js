@@ -3,6 +3,7 @@
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
+const URLSlugs = require('mongoose-url-slugs');
 const CourseModule = require('./CourseModule');
 
 const CourseSchema = new Schema({
@@ -34,7 +35,7 @@ CourseSchema.pre('remove', function(next){
     // CourseModule.deleteMany({course_id: this._id}).exec();
     next();
 });
-
+CourseSchema.plugin(URLSlugs('name', {update: 'slug'}));
 const Course = mongoose.model('courses', CourseSchema);
 
 module.exports = Course;

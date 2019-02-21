@@ -5,9 +5,9 @@ const router = express.Router();
 
 const mongoose = require("mongoose");
 const passport = require("passport");
-const validateCategoryInput = require("../validation/category");
+const validateCategoryInput = require("../../validation/category");
 
-const Category = require("../models/Category");
+const Category = require("../../models/Category");
 
 router.get(
   "/",
@@ -16,7 +16,7 @@ router.get(
     Category.find({}).then(category => {
       var result = [];
       category.forEach(function(element, i) {
-        result.push({ _id: element._id, id: i + 1, name: element.name });
+        result.push({ _id: element._id, id: i + 1, name: element.name,slug: element.slug });
       });
       res.json(result);
     });
@@ -60,21 +60,9 @@ router.put(
         return res.status(400).json(errors);
       }
       if (category) {
-        Category.updateOne(
-          { _id: req.body.categoryId },
-          {
-            $set: {
-              name: req.body.name
-            }
-          }
-        ).then(result => {
-          res.json(result);
-        }).catch(err => {
-          if (err && err.code == 11000) {
-            return res.status(400).json({
-              name: "This category already exists"
-            });
-          }
+        category.name = req.body.name;
+        category.save().then(category => {
+          res.json(category);
         });
       } else {
         return res.status(400).json({

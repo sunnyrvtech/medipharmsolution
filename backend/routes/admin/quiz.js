@@ -5,9 +5,9 @@ const router = express.Router();
 
 const mongoose = require("mongoose");
 const passport = require("passport");
-const validateQuizInput = require("../validation/quiz");
+const validateQuizInput = require("../../validation/quiz");
 
-const Quiz = require("../models/Quiz");
+const Quiz = require("../../models/Quiz");
 
 router.get(
   "/",

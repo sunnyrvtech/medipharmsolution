@@ -1,3 +1,0 @@
-{"_id":{"$oid":"5c6bd4f6acafad5e5f856df9"},"name":"Clinical research","created_at":{"$date":"2019-02-19T10:05:42.994Z"},"updated_at":{"$date":"2019-02-19T10:05:42.994Z"},"__v":0}
-{"_id":{"$oid":"5c6bd50dacafad5e5f856dfa"},"name":"Drug safety","created_at":{"$date":"2019-02-19T10:06:05.039Z"},"updated_at":{"$date":"2019-02-19T10:06:05.039Z"},"__v":0}
-{"_id":{"$oid":"5c6bd51dacafad5e5f856dfb"},"name":"Data management","created_at":{"$date":"2019-02-19T10:06:21.635Z"},"updated_at":{"$date":"2019-02-19T10:06:21.635Z"},"__v":0}

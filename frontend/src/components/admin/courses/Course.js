@@ -50,8 +50,8 @@ class Course extends Component {
 ActionButton(cell, row) {
     return (
       <div>
-      <Link to={`${route_name+'/'+cell}`} className="btn btn-info btn-circle" title="update"><i className="fa fa-pencil-square-o"></i></Link>{' '}
-      <a onClick={() => this.onDelete(cell)} className="btn btn-danger btn-circle" title="delete"><i className="fa fa-trash"></i></a>
+      <Link to={`${route_name+'/'+cell}`} className="btn btn-info btn-circle" tooltip="update"><i className="fa fa-pencil-square-o"></i></Link>{' '}
+      <a onClick={() => this.onDelete(cell)} className="btn btn-danger btn-circle" tooltip="delete"><i className="fa fa-trash"></i></a>
       </div>
     );
   }

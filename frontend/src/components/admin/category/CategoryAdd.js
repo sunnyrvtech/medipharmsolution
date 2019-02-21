@@ -63,9 +63,10 @@ class CategoryAdd extends Component {
                   <div className="invalid-feedback">{errors.name}</div>
                 )}
               </div>
-              <button type="submit" className="btn btn-info">
+              <button type="submit" className="btn btn-info mr-2">
                 Add
               </button>
+              <a className="btn btn-info" onClick={this.props.history.goBack}>Back</a>
             </form>
           </div>
         </div>

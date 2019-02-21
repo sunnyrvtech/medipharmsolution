@@ -62,6 +62,31 @@ h6 {
   font-family: 'Poppins', sans-serif;
     color: #000;
 }
+/*****inner css*****/
+.content-gray-wpr,section.list_sec {
+    text-align: center;
+}
+.syllabus-heading {
+    font-size: 24px;
+    padding: 25px 0 10px 0;
+    font-weight: 700;
+}
+section.list_sec {
+    background: #f9f9f9;
+}
+.list_inner{
+    text-align: left;
+}
+.list_cols {
+    max-width: 1000px;
+    margin: 0 auto 40px;
+}
+
+.list_inner ul li {
+    list-style: disc;
+    margin-left: 18px;
+}
+/*****end inner css******/
 [tooltip]{ position:relative;display:inline-block; }
 [tooltip]::before { content: "";position: absolute;top:-6px;left:50%;transform: translateX(-50%);border-width: 4px 6px 0 6px;border-style: solid;border-color: rgba(0,0,0,0.7) transparent;z-index: 99;opacity:0; }
 [tooltip]::after { content: attr(tooltip);position: absolute;left:50%;top:-6px;transform: translateX(-50%) translateY(-100%);background: rgba(0,0,0,0.7);text-align: center;color: #fff;padding:4px 2px;font-size: 12px;min-width: 80px;border-radius: 5px;pointer-events: none;padding: 4px 4px;z-index:99;opacity:0; }

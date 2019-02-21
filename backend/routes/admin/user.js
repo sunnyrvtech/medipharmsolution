@@ -5,8 +5,8 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 const passport = require('passport');
-const validateUserInput = require('../validation/user');
-const User = require('../models/User');
+const validateUserInput = require('../../validation/user');
+const User = require('../../models/User');
 
 router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => {
   User.find({role: { $ne: 1 }}).then(user => {

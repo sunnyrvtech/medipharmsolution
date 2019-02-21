@@ -135,9 +135,10 @@ class CourseUpdate extends Component {
                   <div className="invalid-feedback">{errors.description}</div>
                 )}
               </div>
-              <button type="submit" className="btn btn-info">
+              <button type="submit" className="btn btn-info mr-2">
                 Update
               </button>
+              <a className="btn btn-info" onClick={this.props.history.goBack}>Back</a>
             </form>
           </div>
         </div>

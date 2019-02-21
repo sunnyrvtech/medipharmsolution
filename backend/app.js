@@ -5,12 +5,13 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const config = require('./config');
 const auth = require('./routes/auth');
-const users = require('./routes/user');
-const courses = require('./routes/course');
-const quizes = require('./routes/quiz');
-const course_modules = require('./routes/course_module');
-const categories = require('./routes/category');
-const media = require('./routes/media');
+const users = require('./routes/admin/user');
+const courses = require('./routes/admin/course');
+const quizes = require('./routes/admin/quiz');
+const course_modules = require('./routes/admin/course_module');
+const categories = require('./routes/admin/category');
+const media = require('./routes/admin/media');
+const front_courses = require('./routes/course');
 
 mongoose.connect(config.DB, { useNewUrlParser: true }).then(
     () => {console.log('Database is connected') },
@@ -37,6 +38,7 @@ app.use('/api/courses', course_modules);
 app.use('/api/categories', categories);
 app.use('/api/quiz', quizes);
 app.use('/api/media', media);
+app.use('/api/course', front_courses);
 app.get('/', function(req, res) {
     res.send('hello');
 });

@@ -142,9 +142,10 @@ class UserUpdate extends Component {
                 <option value={false}>Not Active</option>
               </select>
             </div>
-              <button type="submit" className="btn btn-info">
+              <button type="submit" className="btn btn-info mr-2">
                 Update
               </button>
+                <a className="btn btn-info" onClick={this.props.history.goBack}>Back</a>
             </form>
           </div>
         </div>

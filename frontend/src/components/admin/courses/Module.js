@@ -19,18 +19,22 @@ class Module extends Component {
    route_name= props.match.path
   }
 
-  onDelete(cell) {
+  onDelete(cell,index) {
     this.props.deleteModule(cell, this.props.history)
     .then(response => {
       if (response) {
-        this.setState({ alert_message: {class:'success',message: 'Deleted successfully!'}});
+        var courses_modules = this.state.courses_modules;
+        delete courses_modules[index]; // this is used to remove item from the list after delete
+        courses_modules = courses_modules.filter(function(obj) {
+          if (obj.id > index) {
+            return (obj.id = obj.id - 1);
+          }
+          return true;
+        });
+        this.setState({ courses_modules: courses_modules,alert_message: {class:'success',message: 'Deleted successfully!'}});
         setTimeout(function(){
             this.setState({alert_message:false});
         }.bind(this),5000);
-        this.props.getModules()
-        .then(response => {
-          this.setState({ courses_modules: response});
-        });
       }
     });
 }
@@ -56,14 +60,14 @@ class Module extends Component {
 ActionButton(cell, row) {
     return (
       <div>
-      <Link to={`${route_name+'/'+cell}`} className="btn btn-info btn-circle" title="update"><i className="fa fa-pencil-square-o"></i></Link>{' '}
-      <a onClick={() => this.onDelete(cell)} className="btn btn-danger btn-circle" title="delete"><i className="fa fa-trash"></i></a>
+      <Link to={`${route_name+'/'+cell}`} className="btn btn-info btn-circle" tooltip="update"><i className="fa fa-pencil-square-o"></i></Link>{' '}
+      <a onClick={() => this.onDelete(cell,row.id-1)} className="btn btn-danger btn-circle" tooltip="delete"><i className="fa fa-trash"></i></a>
       </div>
     );
   }
   QuizeButton(cell, row) {
       return (
-        <Link to={`${route_name+'/'+cell+'/'+'quiz'}`} className="btn btn-info btn-circle" title="view quiz"><i className="fa fa fa-low-vision"></i></Link>
+        <Link to={`${route_name+'/'+cell+'/'+'quiz'}`} className="btn btn-info btn-circle" tooltip="view quiz"><i className="fa fa fa-low-vision"></i></Link>
 
       );
     }

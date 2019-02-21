@@ -3,6 +3,7 @@
 const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
+const URLSlugs = require('mongoose-url-slugs');
 const Course = require('./Course');
 
 const CategorySchema = new Schema({
@@ -29,7 +30,7 @@ CategorySchema.pre('remove', function(next){
   Course.update({ category_id: this._id },{ $set: { category_id: null }},{multi:true}).exec();
     next();
 });
-
+CategorySchema.plugin(URLSlugs('name', {update: 'slug'}));
 const Category = mongoose.model("categories", CategorySchema);
 
 module.exports = Category;

@@ -19,18 +19,22 @@ class Category extends Component {
   route_name= props.match.url
   }
 
-  onDelete(cell) {
+  onDelete(cell,index) {
     this.props.deleteCategory(cell, this.props.history)
     .then(response => {
       if (response) {
-        this.setState({ alert_message: {class:'success',message: 'Deleted successfully!'}});
+        var categories = this.state.categories;
+        delete categories[index]; // this is used to remove item from the list after delete
+        categories = categories.filter(function(obj) {
+          if (obj.id > index) {
+            return (obj.id = obj.id - 1);
+          }
+          return true;
+        });
+        this.setState({ categories: categories,alert_message: {class:'success',message: 'Deleted successfully!'}});
         setTimeout(function(){
             this.setState({alert_message:false});
         }.bind(this),5000);
-        this.props.getCategories()
-        .then(response => {
-          this.setState({ categories: response});
-        });
       }
     });
 }
@@ -55,8 +59,8 @@ class Category extends Component {
 ActionButton(cell, row) {
     return (
       <div>
-      <Link to={`${route_name+'/'+cell}`} className="btn btn-info btn-circle" title="update"><i className="fa fa-pencil-square-o"></i></Link>{' '}
-      <a onClick={() => this.onDelete(cell)} className="btn btn-danger btn-circle" title="delete"><i className="fa fa-trash"></i></a>
+      <Link to={`${route_name+'/'+cell}`} className="btn btn-info btn-circle" tooltip="update"><i className="fa fa-pencil-square-o"></i></Link>{' '}
+      <a onClick={() => this.onDelete(cell,row.id-1)} className="btn btn-danger btn-circle" tooltip="delete"><i className="fa fa-trash"></i></a>
       </div>
     );
   }

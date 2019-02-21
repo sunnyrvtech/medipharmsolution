@@ -16,6 +16,7 @@ import Verification from "./components/account/Verification";
 import ResetPassword from "./components/ResetPassword";
 import RouteLayout from "./components/layout/RouteLayout";
 import AdminRoute from "./components/admin/AdminRoute";
+import Course from "./components/courses/Course";
 import PageNotFound from "./components/PageNotFound";
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -51,6 +52,7 @@ class App extends Component {
             <RouteLayout exact path="/password/reset/:code" component={ResetPassword} />
             <RouteLayout exact path="/account/activate/:code" component={Verification} />
             <Route path="/admin" component={AdminRoute} />
+            <RouteLayout path="/:slug" component={Course} />
             <RouteLayout component={PageNotFound} />
             </Switch>
         </Router>
