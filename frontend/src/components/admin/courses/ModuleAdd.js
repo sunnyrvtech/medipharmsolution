@@ -131,8 +131,7 @@ class ModuleAdd extends Component {
   }
 }
 ModuleAdd.propTypes = {
-  createModule: PropTypes.func.isRequired,
-  errors: PropTypes.object.isRequired
+  createModule: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({

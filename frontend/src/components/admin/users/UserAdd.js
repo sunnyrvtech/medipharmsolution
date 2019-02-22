@@ -163,8 +163,7 @@ class UserAdd extends Component {
   }
 }
 UserAdd.propTypes = {
-  createUser: PropTypes.func.isRequired,
-  errors: PropTypes.object.isRequired
+  createUser: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({

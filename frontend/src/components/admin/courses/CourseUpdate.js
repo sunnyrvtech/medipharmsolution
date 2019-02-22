@@ -82,6 +82,21 @@ class CourseUpdate extends Component {
           <div className="col-md-12">
             <form onSubmit={this.handleSubmit}>
             <div className="form-group">
+              <label htmlFor="name">Name:</label>
+              <input
+                type="text"
+                className={classnames("form-control", {
+                  "is-invalid": errors.name
+                })}
+                name="name"
+                onChange={this.handleInputChange}
+                value={this.state.name}
+              />
+              {errors.name  && (
+                <div className="invalid-feedback">{errors.name}</div>
+              )}
+            </div>
+            <div className="form-group">
               <label htmlFor="course">Category:</label>
               <select
                 className={classnames("form-control", {
@@ -105,21 +120,6 @@ class CourseUpdate extends Component {
                 <div className="invalid-feedback">{errors.category}</div>
               )}
             </div>
-              <div className="form-group">
-                <label htmlFor="name">Name:</label>
-                <input
-                  type="text"
-                  className={classnames("form-control", {
-                    "is-invalid": errors.name
-                  })}
-                  name="name"
-                  onChange={this.handleInputChange}
-                  value={this.state.name}
-                />
-                {errors.name  && (
-                  <div className="invalid-feedback">{errors.name}</div>
-                )}
-              </div>
               <div className={classnames("form-group", {
                 "ck_text": errors.description
               })}>

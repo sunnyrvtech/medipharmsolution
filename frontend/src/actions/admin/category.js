@@ -12,7 +12,7 @@ export const emptyReducer =() => dispatch => {
 export const createCategory = (category,route_name, history) => dispatch => {
   client()
     .post("/categories/create", category)
-    .then(res => history.push({ pathname: route_name.split('/add')[0],state: { alert_message:{class:'success',message: 'Category added successfully!'}}}))
+    .then(res => history.push({ pathname: route_name,state: { alert_message:{class:'success',message: 'Category added successfully!'}}}))
     .catch(err => {
       console.log(err);
       dispatch({
@@ -24,7 +24,7 @@ export const createCategory = (category,route_name, history) => dispatch => {
 export const updateCategory = (category,route_name, history) => dispatch => {
   client()
     .put("/categories/update", category)
-    .then(res => history.push({ pathname: route_name.split('/'+category.categoryId)[0],state: { alert_message:{class:'success',message: 'Updated successfully!'}}}))
+    .then(res => history.push({ pathname: route_name,state: { alert_message:{class:'success',message: 'Updated successfully!'}}}))
     .catch(err => {
       console.log(err);
       dispatch({

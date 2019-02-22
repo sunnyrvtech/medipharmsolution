@@ -4,7 +4,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withRouter, Link } from "react-router-dom";
-import { createCategory,emptyReducer } from "../../../actions/admin/category";
+import { createCategory, emptyReducer } from "../../../actions/admin/category";
 import classnames from "classnames";
 let route_name;
 class CategoryAdd extends Component {
@@ -12,6 +12,7 @@ class CategoryAdd extends Component {
     super();
     this.state = {
       name: "",
+      banner: "",
       errors: {}
     };
     route_name = props.match.url;
@@ -27,12 +28,27 @@ class CategoryAdd extends Component {
   componentDidMount() {
     this.props.emptyReducer();
   }
+  onChange(e) {
+    e.preventDefault();
+    var file = e.target.files[0];
+    var reader = new FileReader();
+    reader.onload = function() {
+      var output = document.getElementById("output");
+      output.src = reader.result;
+    };
+    reader.readAsDataURL(e.target.files[0]);
+    this.setState({
+      banner: file
+    });
+    //  this.props.uploadImage(file, route_name, this.props.history);
+  }
   handleSubmit(e) {
     e.preventDefault();
-    const category = {
-      name: this.state.name
-    };
-    this.props.createCategory(category, route_name, this.props.history);
+    const category = new FormData();
+    category.append("name", this.state.name);
+    category.append("banner", this.state.banner);
+    var routeName = route_name.split('/add')[0];
+    this.props.createCategory(category, routeName, this.props.history);
   }
 
   render() {
@@ -63,10 +79,29 @@ class CategoryAdd extends Component {
                   <div className="invalid-feedback">{errors.name}</div>
                 )}
               </div>
+              <div className="form-group">
+                <label htmlFor="banner">Banner:</label>
+                <input
+                  type="file"
+                  className={classnames("form-control", {
+                    "is-invalid": errors.banner
+                  })}
+                  name="banner"
+                  onChange={this.onChange.bind(this)}
+                />
+                {errors.banner && (
+                  <div className="invalid-feedback">{errors.banner}</div>
+                )}
+              </div>
+              <div className="form-group">
+                <img id="output" />
+              </div>
               <button type="submit" className="btn btn-info mr-2">
                 Add
               </button>
-              <a className="btn btn-info" onClick={this.props.history.goBack}>Back</a>
+              <a className="btn btn-info" onClick={this.props.history.goBack}>
+                Back
+              </a>
             </form>
           </div>
         </div>
@@ -75,8 +110,7 @@ class CategoryAdd extends Component {
   }
 }
 CategoryAdd.propTypes = {
-  createCategory: PropTypes.func.isRequired,
-  errors: PropTypes.object.isRequired
+  createCategory: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -85,5 +119,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { createCategory,emptyReducer }
+  { createCategory, emptyReducer }
 )(withRouter(CategoryAdd));

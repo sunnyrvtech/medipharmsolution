@@ -12,6 +12,7 @@ class CategoryUpdate extends Component {
     super();
     this.state = {
       name: "",
+      banner: "",
       errors: { }
     };
     route_name = props.match.url;
@@ -25,13 +26,29 @@ class CategoryUpdate extends Component {
     });
   }
 
+  onChange(e) {
+    e.preventDefault();
+    var file = e.target.files[0];
+    var reader = new FileReader();
+    reader.onload = function() {
+      var output = document.getElementById("output");
+      output.src = reader.result;
+    };
+    reader.readAsDataURL(e.target.files[0]);
+    this.setState({
+      banner: file
+    });
+    //  this.props.uploadImage(file, route_name, this.props.history);
+  }
+
   handleSubmit(e) {
     e.preventDefault();
-    const category = {
-      name: this.state.name,
-      categoryId: this.props.match.params.categoryId,
-    };
-    this.props.updateCategory(category,route_name, this.props.history);
+    const category = new FormData();
+    category.append("name", this.state.name);
+    category.append("banner", this.state.banner);
+    category.append("categoryId", this.props.match.params.categoryId);
+    var routeName = route_name.split('/'+this.props.match.params.categoryId)[0];
+    this.props.updateCategory(category,routeName, this.props.history);
   }
 
   componentDidMount() {
@@ -41,7 +58,7 @@ class CategoryUpdate extends Component {
       .getCategoryById(categoryId, this.props.history)
       .then(response => {
         if (response) {
-          this.setState({ name: response.name });
+          this.setState({ name: response.name,banner: response.banner});
         }
       });
   }
@@ -75,6 +92,23 @@ class CategoryUpdate extends Component {
                 {errors.name && (
                   <div className="invalid-feedback">{errors.name}</div>
                 )}
+              </div>
+              <div className="form-group">
+                <label htmlFor="banner">Banner:</label>
+                <input
+                  type="file"
+                  className={classnames("form-control", {
+                    "is-invalid": errors.banner
+                  })}
+                  name="banner"
+                  onChange={this.onChange.bind(this)}
+                />
+                {errors.banner && (
+                  <div className="invalid-feedback">{errors.banner}</div>
+                )}
+              </div>
+              <div className="form-group">
+                <img src={this.state.banner} id="output" />
               </div>
               <button type="submit" className="btn btn-info mr-2">
                 Update

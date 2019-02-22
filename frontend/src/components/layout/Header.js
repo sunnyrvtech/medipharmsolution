@@ -76,8 +76,13 @@ class Header extends Component {
                           <li className="nav-item">
                             <a className="nav-link" href="#">About Us</a>
                           </li>
-                          <li className="nav-item">
-                            <a className="nav-link" href="#">Explore programs</a>
+                          <li className="nav-item parent">
+                            <a className="nav-link" href="#">Explore programs <i className="fa fa-chevron-down" aria-hidden="true"></i></a>
+                              <ul className="submenu">
+                                  <li><a className="nav-link" href="#">Clinical Research</a></li>
+                                  <li><a className="nav-link" href="#">Drug Safety</a></li>
+                                  <li><a className="nav-link" href="#">Data Science</a></li>
+                              </ul>
                           </li>
                           {/*<li className="nav-item">
                             <a className="nav-link" href="#">Testimonials </a>

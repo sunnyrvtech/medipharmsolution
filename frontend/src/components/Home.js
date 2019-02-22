@@ -44,7 +44,7 @@ export default class Home extends Component {
       dotsClass: "carousel-indicators"
     };
     return (
-      <div>
+      <main>
         <section className="hero-banner">
           <div className="container">
             <div className="modal-wrap">
@@ -587,7 +587,7 @@ export default class Home extends Component {
             </div>
           </div>
         </section>
-      </div>
+      </main>
     );
   }
 }

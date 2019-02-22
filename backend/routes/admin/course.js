@@ -12,14 +12,22 @@ router.get(
   "/course",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-      Course.find().populate('category_id','name').exec(function(err, course) {
-      var result = [];
-      course.forEach(function(element, i) {
-        var category_name = element.category_id != null?element.category_id.name:null;
-        result.push({ _id: element._id, id: i + 1, name: element.name,category_name: category_name });
+    Course.find()
+      .populate("category_id", "name")
+      .exec(function(err, course) {
+        var result = [];
+        course.forEach(function(element, i) {
+          var category_name =
+            element.category_id != null ? element.category_id.name : null;
+          result.push({
+            _id: element._id,
+            id: i + 1,
+            name: element.name,
+            category_name: category_name
+          });
+        });
+        res.json(result);
       });
-      res.json(result);
-    });
   }
 );
 router.post(
@@ -64,12 +72,20 @@ router.put(
       }
 
       if (course) {
-        course.name=req.body.name;
-        course.category_id=req.body.category;
-        course.description=req.body.description;
-        course.save().then(course => {
-          res.json(course);
-        });
+        course.name = req.body.name;
+        course.category_id = req.body.category;
+        course.description = req.body.description;
+        course
+          .save()
+          .then(course => {
+            res.json(course);
+          })
+          .catch(error => {
+            if ((error.code = 11000))
+              return res.status(400).json({
+                name: "This Course already exists"
+              });
+          });
       } else {
         return res.status(400).json({
           name: "Course not found!"

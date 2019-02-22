@@ -13,6 +13,9 @@ const CategorySchema = new Schema({
     unique: true,
     required: true
   },
+  banner: {
+    type: String
+  },
   created_at: {
     type: Date,
     default: Date.now

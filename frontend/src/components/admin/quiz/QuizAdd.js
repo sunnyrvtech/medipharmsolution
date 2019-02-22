@@ -194,8 +194,7 @@ class QuizAdd extends Component {
   }
 }
 QuizAdd.propTypes = {
-  createQuiz: PropTypes.func.isRequired,
-  errors: PropTypes.object.isRequired
+  createQuiz: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
