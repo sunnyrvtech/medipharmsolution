@@ -16,6 +16,7 @@ class CourseAdd extends Component {
       name: "",
       category: "",
       description: "",
+      banner: "",
       errors: {}
     };
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -39,6 +40,19 @@ class CourseAdd extends Component {
       this.setState({ categories: response});
     });
   }
+  onChange(e) {
+    e.preventDefault();
+    var file = e.target.files[0];
+    var reader = new FileReader();
+    reader.onload = function() {
+      var output = document.getElementById("output");
+      output.src = reader.result;
+    };
+    reader.readAsDataURL(e.target.files[0]);
+    this.setState({
+      banner: file
+    });
+  }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
@@ -50,11 +64,11 @@ class CourseAdd extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    const course = {
-      name: this.state.name,
-      category: this.state.category,
-      description: this.state.description
-    };
+    const course = new FormData();
+    course.append("name", this.state.name);
+    course.append("category", this.state.category);
+    course.append("description", this.state.description);
+    course.append("banner", this.state.banner);
     this.props.courseAdd(course,this.props.history);
   }
   render() {
@@ -128,6 +142,23 @@ class CourseAdd extends Component {
                 {errors.description && (
                   <div className="invalid-feedback">{errors.description}</div>
                 )}
+              </div>
+              <div className="form-group">
+                <label htmlFor="banner">Banner:</label>
+                <input
+                  type="file"
+                  className={classnames("form-control", {
+                    "is-invalid": errors.banner
+                  })}
+                  name="banner"
+                  onChange={this.onChange.bind(this)}
+                />
+                {errors.banner && (
+                  <div className="invalid-feedback">{errors.banner}</div>
+                )}
+              </div>
+              <div className="form-group">
+                <img id="output" />
               </div>
               <button type="submit" className="btn btn-info mr-2">
                 Add

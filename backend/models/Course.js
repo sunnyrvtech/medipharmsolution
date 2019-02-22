@@ -20,6 +20,9 @@ const CourseSchema = new Schema({
         type: String,
         required: true
     },
+    banner: {
+      type: String
+    },
     created_at: {
         type: Date,
         default: Date.now

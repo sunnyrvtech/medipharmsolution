@@ -16,6 +16,7 @@ class CourseUpdate extends Component {
       name: "",
       category: "",
       description: "",
+      banner: "",
       errors: { }
     };
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -32,6 +33,19 @@ class CourseUpdate extends Component {
       [e.target.name]: e.target.value
     });
   }
+  onChange(e) {
+    e.preventDefault();
+    var file = e.target.files[0];
+    var reader = new FileReader();
+    reader.onload = function() {
+      var output = document.getElementById("output");
+      output.src = reader.result;
+    };
+    reader.readAsDataURL(e.target.files[0]);
+    this.setState({
+      banner: file
+    });
+  }
   componentDidMount() {
     this.props.emptyReducer();
     const courseId = this.props.match.params.courseId;
@@ -39,7 +53,7 @@ class CourseUpdate extends Component {
       .getCourseById(courseId, this.props.history)
       .then(response => {
         if (response) {
-          this.setState({ name: response.name,category: response.category_id,description: response.description });
+          this.setState({ name: response.name,category: response.category_id,description: response.description,banner: response.banner });
         }
       });
       this.props.getCategories()
@@ -50,13 +64,13 @@ class CourseUpdate extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    const course = {
-      name: this.state.name,
-      courseId: this.props.match.params.courseId,
-      category: this.state.category,
-      description: this.state.description
-    };
-     this.props.courseUpdate(course,this.props.history);
+    const course = new FormData();
+    course.append("name", this.state.name);
+    course.append("courseId", this.props.match.params.courseId);
+    course.append("category", this.state.category);
+    course.append("description", this.state.description);
+    course.append("banner", this.state.banner);
+    this.props.courseUpdate(course,this.props.history);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -134,6 +148,23 @@ class CourseUpdate extends Component {
                 {errors.description && (
                   <div className="invalid-feedback">{errors.description}</div>
                 )}
+              </div>
+              <div className="form-group">
+                <label htmlFor="banner">Banner:</label>
+                <input
+                  type="file"
+                  className={classnames("form-control", {
+                    "is-invalid": errors.banner
+                  })}
+                  name="banner"
+                  onChange={this.onChange.bind(this)}
+                />
+                {errors.banner && (
+                  <div className="invalid-feedback">{errors.banner}</div>
+                )}
+              </div>
+              <div className="form-group">
+                <img src={this.state.banner} id="output" />
               </div>
               <button type="submit" className="btn btn-info mr-2">
                 Update

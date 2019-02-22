@@ -40,7 +40,6 @@ class CategoryAdd extends Component {
     this.setState({
       banner: file
     });
-    //  this.props.uploadImage(file, route_name, this.props.history);
   }
   handleSubmit(e) {
     e.preventDefault();
