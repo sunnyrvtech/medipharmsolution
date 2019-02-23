@@ -4,13 +4,10 @@ const express = require("express");
 const router = express.Router();
 const multer = require("multer");
 const fs = require("fs");
+const config = require('../../config');
 
 const passport = require("passport");
 
-var IMAGE_GALLERY_URL =
-  process.env.APP_ENV == "developement"
-    ? "http://localhost:5000/gallery/"
-    : "http://157.230.186.77:5000/gallery/";
 var storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "public/gallery");
@@ -42,7 +39,7 @@ router.get(
       var result = [];
       filenames.forEach(function(element, i) {
         result.unshift({
-          imageUrl: `${IMAGE_GALLERY_URL + element}`,
+          imageUrl: `${config.APP_BACK_URL +'/gallery/'+ element}`,
           imageName: element
         });
       });
@@ -61,7 +58,7 @@ router.post(
         });
       else
         res.json({
-          imageUrl: `${IMAGE_GALLERY_URL + req.file.filename}`
+          imageUrl: `${config.APP_BACK_URL +'/gallery/'+ req.file.filename}`
         });
     });
   }

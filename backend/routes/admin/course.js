@@ -5,15 +5,12 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const passport = require("passport");
 const multer = require("multer");
+const config = require('../../config');
 const fs = require("fs");
 const validateCourseInput = require("../../validation/course");
 
 const Course = require("../../models/Course");
 
-var IMAGE_COURSE_URL =
-  process.env.APP_ENV == "developement"
-    ? "http://localhost:5000/course/"
-    : "http://157.230.186.77:5000/course/";
 var storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "public/course");
@@ -176,7 +173,7 @@ router.get(
   (req, res) => {
     Course.findOne({ _id: req.params.id }).then(course => {
       if (course.banner)
-        course.banner = IMAGE_COURSE_URL + course.banner;
+        course.banner = config.IMAGE_COURSE_URL+ course.banner;
       res.json(course);
     });
   }

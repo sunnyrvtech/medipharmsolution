@@ -9,9 +9,22 @@ export const emptyReducer =() => dispatch => {
     payload: ''
   });
 };
-export const getCourseByCategory = (slug, history) => dispatch =>
+export const getCourseByCategorySlug = (categorySlug, history) => dispatch =>
   client()
-    .get("/course/" + slug)
+    .get("/course/category/" + categorySlug)
+    .then(res => {
+      return res.data;
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
+export const getCourseByCourseSlug = (courseSlug, history) => dispatch =>
+  client()
+    .get("/course/" + courseSlug)
     .then(res => {
       return res.data;
     })

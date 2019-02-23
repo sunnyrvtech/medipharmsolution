@@ -44,13 +44,13 @@ class Header extends Component {
                             <div className="col-sm-6 text-center">
                                 <ul id="course-menu" className="course-menu">
                                     <li>
-                                    <h3><a title="Clinical Research" href="#">Clinical Research</a></h3>
+                                    <h3><a href="/clinical-research">Clinical Research</a></h3>
                                     </li>
                                     <li>
-                                    <h3><a title="Drug Safety" href="#">Drug Safety</a></h3>
+                                    <h3><a href="/drug-safety">Drug Safety</a></h3>
                                     </li>
                                     <li>
-                                    <h3><a title="Data Science" href="#">Data Science</a></h3>
+                                    <h3><a href="/data-management">Data Management</a></h3>
                                     </li>
                                 </ul>
                             </div>

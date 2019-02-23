@@ -6,15 +6,13 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const passport = require("passport");
 const multer = require("multer");
+const config = require('../../config');
 const fs = require("fs");
 const validateCategoryInput = require("../../validation/category");
 
 const Category = require("../../models/Category");
 
-var IMAGE_CATEGORY_URL =
-  process.env.APP_ENV == "developement"
-    ? "http://localhost:5000/category/"
-    : "http://157.230.186.77:5000/category/";
+
 var storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "public/category");
@@ -166,7 +164,7 @@ router.get(
   (req, res) => {
     Category.findOne({ _id: req.params.id }).then(category => {
       if (category.banner)
-        category.banner = IMAGE_CATEGORY_URL + category.banner;
+        category.banner = config.IMAGE_CATEGORY_URL+ category.banner;
       res.json(category);
     });
   }
