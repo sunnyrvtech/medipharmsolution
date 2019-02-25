@@ -14,7 +14,7 @@ class Course extends Component {
     super();
     route_name = props.match.url;
     this.state = {
-      courses: null
+      courses: {}
     };
   }
 
@@ -84,11 +84,12 @@ class Course extends Component {
     const { courses } = this.state;
     return (
       <div>
-        {courses && courses.length != 0 ? (
+        {courses && courses.length != undefined &&
           this.renderHomeContent(courses)
-        ) : (
-          <PageNotFound />
-        )}
+        }
+        {courses == undefined &&
+                <PageNotFound />
+        }
       </div>
     );
   }
