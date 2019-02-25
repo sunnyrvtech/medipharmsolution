@@ -9,6 +9,9 @@ import PageNotFound from "../PageNotFound";
 
 let route_name;
 
+var static_page_slugs = ["home","about-us", "blog", "free-website-resources-to-be-added", "resume-writing","job-search","interview-preparation","phone-interview-preparation","in-person-interview-preparation","after-interview","collaborations"];
+
+
 class Course extends Component {
   constructor(props) {
     super();

@@ -3,13 +3,9 @@
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
-
+const URLSlugs = require('mongoose-url-slugs');
 const StaticPageSchema = new Schema({
     name: {
-        type: String,
-        required: true
-    },
-    slug: {
         type: String,
         required: true
     },
@@ -26,7 +22,7 @@ const StaticPageSchema = new Schema({
         default: Date.now
     }
 });
+StaticPageSchema.plugin(URLSlugs('name', {addField: 'slug'}));
+const StaticPage = mongoose.model('static_pages', StaticPageSchema);
 
-const CourseModule = mongoose.model('course_modules', CourseModuleSchema);
-
-module.exports = CourseModule;
+module.exports = StaticPage;

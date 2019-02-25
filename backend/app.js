@@ -10,6 +10,7 @@ const courses = require('./routes/admin/course');
 const quizes = require('./routes/admin/quiz');
 const course_modules = require('./routes/admin/course_module');
 const categories = require('./routes/admin/category');
+const static_pages = require('./routes/admin/static_page');
 const media = require('./routes/admin/media');
 const front_courses = require('./routes/course');
 
@@ -37,6 +38,7 @@ app.use('/api/courses', courses);
 app.use('/api/courses', course_modules);
 app.use('/api/categories', categories);
 app.use('/api/quiz', quizes);
+app.use('/api/pages', static_pages);
 app.use('/api/media', media);
 app.use('/api/course', front_courses);
 app.get('/', function(req, res) {
