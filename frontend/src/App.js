@@ -18,6 +18,7 @@ import RouteLayout from "./components/layout/RouteLayout";
 import AdminRoute from "./components/admin/AdminRoute";
 import Course from "./components/courses/Course";
 import CourseView from "./components/courses/CourseView";
+import StaticPage from "./components/StaticPage";
 import PageNotFound from "./components/PageNotFound";
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -53,8 +54,18 @@ class App extends Component {
             <RouteLayout exact path="/password/reset/:code" component={ResetPassword} />
             <RouteLayout exact path="/account/activate/:code" component={Verification} />
             <Route path="/admin" component={AdminRoute} />
-            <RouteLayout exact path="/:categorySlug" component={Course} />
-            <RouteLayout exact path="/:categorySlug/:courseSlug" component={CourseView} />
+            <RouteLayout exact path="/about-us" component={StaticPage} />
+            <RouteLayout exact path="/blog" component={StaticPage} />
+            <RouteLayout exact path="/free-website-resources-to-be-added" component={StaticPage} />
+            <RouteLayout exact path="/resume-writing" component={StaticPage} />
+            <RouteLayout exact path="/job-search" component={StaticPage} />
+            <RouteLayout exact path="/interview-preparation" component={StaticPage} />
+            <RouteLayout exact path="/phone-interview-preparation" component={StaticPage} />
+            <RouteLayout exact path="/in-person-interview-preparation" component={StaticPage} />
+            <RouteLayout exact path="/after-interview" component={StaticPage} />
+            <RouteLayout exact path="/collaborations" component={StaticPage} />
+            <RouteLayout path="/:categorySlug" component={Course} />
+            <RouteLayout path="/:categorySlug/:courseSlug" component={CourseView} />
             <RouteLayout component={PageNotFound} />
             </Switch>
         </Router>

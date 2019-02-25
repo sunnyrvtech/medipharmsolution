@@ -77,5 +77,13 @@ router.get(
     });
   }
 );
+router.get(
+  "/content/:slug",
+  function(req, res) {
+    StaticPage.findOne({ slug: req.params.slug }).then(page => {
+      res.json(page);
+    });
+  }
+);
 
 module.exports = router;

@@ -79,9 +79,9 @@ class Header extends Component {
                           <li className="nav-item parent">
                             <a className="nav-link" href="#">Explore programs <i className="fa fa-chevron-down" aria-hidden="true"></i></a>
                               <ul className="submenu">
-                                  <li><a className="nav-link" href="#">Clinical Research</a></li>
-                                  <li><a className="nav-link" href="#">Drug Safety</a></li>
-                                  <li><a className="nav-link" href="#">Data Science</a></li>
+                                  <li><a className="nav-link" href="/clinical-research">Clinical Research</a></li>
+                                  <li><a className="nav-link" href="/drug-safety">Drug Safety</a></li>
+                                  <li><a className="nav-link" href="/data-management">Data Science</a></li>
                               </ul>
                           </li>
                           {/*<li className="nav-item">
