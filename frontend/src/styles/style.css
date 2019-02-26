@@ -651,11 +651,13 @@ li.nav-item.parent {
     position: relative;
 }
 ul.submenu {
-    top: 100%;
+  top: 100%;
     position: absolute;
     background: #fff;
     box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
     display: none;
+    z-index: 9;
+    min-width: 200px;
 }
 ul.submenu li:hover{
       background: #004dda;
@@ -666,7 +668,9 @@ nav.navbar-light ul.submenu li a:hover{
 .testimonial_outer button.slick-arrow {
     display: none !important;
 }
-
+ul.submenu a.nav-link {
+    text-transform: capitalize;
+}
 
 @media(max-width: 1366px){
 	.navbar-expand-lg .navbar-nav .nav-link{

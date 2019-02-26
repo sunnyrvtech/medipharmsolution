@@ -71,10 +71,10 @@ class Header extends Component {
                       <div className="collapse navbar-collapse" id="navbarText">
                         <ul className="navbar-nav ml-auto">
                           <li className="nav-item active">
-                            <a className="nav-link" href="#">Home <span className="sr-only">(current)</span></a>
+                            <a className="nav-link" href="/">Home <span className="sr-only">(current)</span></a>
                           </li>
                           <li className="nav-item">
-                            <a className="nav-link" href="#">About Us</a>
+                            <a className="nav-link" href="/about-us">About Us</a>
                           </li>
                           <li className="nav-item parent">
                             <a className="nav-link" href="#">Explore programs <i className="fa fa-chevron-down" aria-hidden="true"></i></a>
@@ -87,14 +87,26 @@ class Header extends Component {
                           {/*<li className="nav-item">
                             <a className="nav-link" href="#">Testimonials </a>
                           </li>*/}
-                          <li className="nav-item">
-                            <a className="nav-link" href="#">E-learning</a>
+                          <li className="nav-item parent">
+                            <a className="nav-link" href="#">E-learning <i className="fa fa-chevron-down" aria-hidden="true"></i></a>
+                            <ul className="submenu">
+                                <li><a className="nav-link" href="/blog">Blog</a></li>
+                                <li><a className="nav-link" href="/free-website-resources-to-be-added">Free website resources to be added </a></li>
+                            </ul>
+                          </li>
+                          <li className="nav-item parent">
+                            <a className="nav-link" href="#">Careers <i className="fa fa-chevron-down" aria-hidden="true"></i></a>
+                            <ul className="submenu">
+                                <li><a className="nav-link" href="/resume-writing">Resume writing</a></li>
+                                <li><a className="nav-link" href="/job-search">Job search </a></li>
+                                <li><a className="nav-link" href="/interview-preparation">Interview preparation </a></li>
+                                <li><a className="nav-link" href="/phone-interview-preparation">Phone interview preparation </a></li>
+                                <li><a className="nav-link" href="/in-person-interview-preparation">In-person interview preparation </a></li>
+                                <li><a className="nav-link" href="/after-interview">After interview </a></li>
+                            </ul>
                           </li>
                           <li className="nav-item">
-                            <a className="nav-link" href="#">Careers</a>
-                          </li>
-                          <li className="nav-item">
-                            <a className="nav-link" href="#">Collaborations </a>
+                            <a className="nav-link" href="/collaborations">Collaborations </a>
                           </li>
                           {/*<li className="nav-item">
                             <a className="nav-link" href="#">Student log in </a>

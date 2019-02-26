@@ -127,7 +127,7 @@ export default class Home extends Component {
                           "The Sollers 7" is a blueprint for what we do and who
                           we are.
                         </p>
-                        <a href="#">About Us</a>
+                        <a href="/about-us">About Us</a>
                       </div>
                     </div>
                   </div>
