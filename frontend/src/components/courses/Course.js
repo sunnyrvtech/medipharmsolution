@@ -25,7 +25,7 @@ class Course extends Component {
     });
   }
 
-  renderHomeContent(courses) {
+  renderContent(courses) {
     var category_banner = this.state.IMAGE_CATEGORY_URL+this.state.category.banner;
     return (
       <main>
@@ -85,7 +85,7 @@ class Course extends Component {
     return (
       <div>
         {courses && courses.length != undefined &&
-          this.renderHomeContent(courses)
+          this.renderContent(courses)
         }
         {courses == undefined &&
                 <PageNotFound />

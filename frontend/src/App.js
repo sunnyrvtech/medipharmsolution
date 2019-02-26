@@ -16,6 +16,12 @@ import Verification from "./components/account/Verification";
 import ResetPassword from "./components/ResetPassword";
 import RouteLayout from "./components/layout/RouteLayout";
 import AdminRoute from "./components/admin/AdminRoute";
+import Profile from "./components/account/Profile";
+import PasswordChange from "./components/account/Password";
+import CourseList from "./components/account/CourseList";
+import Module from "./components/account/Module";
+import Quiz from "./components/account/Quiz";
+import QuizDetail from "./components/account/QuizDetail";
 import Course from "./components/courses/Course";
 import CourseView from "./components/courses/CourseView";
 import StaticPage from "./components/StaticPage";
@@ -53,6 +59,12 @@ class App extends Component {
             <RouteLayout exact path="/password/forgot" component={ForgotPassword} />
             <RouteLayout exact path="/password/reset/:code" component={ResetPassword} />
             <RouteLayout exact path="/account/activate/:code" component={Verification} />
+            <RouteLayout exact path="/account/profile" component={Profile} />
+            <RouteLayout exact path="/account/password/change" component={PasswordChange} />
+            <RouteLayout exact path="/account/courses" component={CourseList} />
+            <RouteLayout exact path="/account/module" component={Module} />
+            <RouteLayout exact path="/account/quiz" component={Quiz} />
+            <RouteLayout exact path="/account/quiz/summary" component={QuizDetail} />
             <Route path="/admin" component={AdminRoute} />
             <RouteLayout exact path="/about-us" component={StaticPage} />
             <RouteLayout exact path="/blog" component={StaticPage} />

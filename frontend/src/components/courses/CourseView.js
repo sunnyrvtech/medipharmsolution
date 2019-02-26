@@ -45,7 +45,7 @@ class CourseView extends Component {
         });
       });
   }
-  renderHomeContent(course) {
+  renderContent(course) {
     var course_modules = chunk(course[0].course_modules, 3);
     var course_banner = this.state.IMAGE_COURSE_URL + course[0].banner;
     return (
@@ -137,7 +137,7 @@ class CourseView extends Component {
         {course &&
           course.length != 0 &&
           course.length != undefined &&
-          this.renderHomeContent(course)}
+          this.renderContent(course)}
         {course.length == 0 && <PageNotFound />}
       </div>
     );

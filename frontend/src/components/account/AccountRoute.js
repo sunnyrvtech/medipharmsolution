@@ -1,20 +1,20 @@
-// AdminRouteLayout.js
+// AccountRoute.js
 
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
-import Layout from "./Layout";
+import Sidebar from "./Sidebar";
 
-const AdminRouteLayout = ({ component: Component, ...rest }) => {
+const AccountRoute = ({ component: Component, ...rest }) => {
   return (
     <Route
       {...rest}
       render={matchProps => (
-        <Layout>
+          <Sidebar>
           <Component {...matchProps} />
-        </Layout>
+          </Sidebar>
       )}
     />
   );
 };
 
-export default AdminRouteLayout;
+export default AccountRoute;
