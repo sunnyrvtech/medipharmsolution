@@ -97,7 +97,7 @@ class Header extends Component {
                           <li className="nav-item parent">
                             <a className="nav-link" href="#">Careers <i className="fa fa-chevron-down" aria-hidden="true"></i></a>
                             <ul className="submenu">
-                                <li><a className="nav-link " href="/resume-writing">Resume writing</a></li>
+                                <li><a className="nav-link" href="/resume-writing">Resume writing</a></li>
                                 <li><a className="nav-link" href="/job-search">Job search </a></li>
                                 <li><a className="nav-link" href="/interview-preparation">Interview preparation </a></li>
                                 <li><a className="nav-link" href="/phone-interview-preparation">Phone interview preparation </a></li>
