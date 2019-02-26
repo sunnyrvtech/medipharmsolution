@@ -64,8 +64,8 @@ class App extends Component {
             <RouteLayout exact path="/in-person-interview-preparation" component={StaticPage} />
             <RouteLayout exact path="/after-interview" component={StaticPage} />
             <RouteLayout exact path="/collaborations" component={StaticPage} />
-            <RouteLayout path="/:categorySlug" component={Course} />
-            <RouteLayout path="/:categorySlug/:courseSlug" component={CourseView} />
+            <RouteLayout exact path="/:categorySlug" component={Course} />
+            <RouteLayout exact path="/:categorySlug/:courseSlug" component={CourseView} />
             <RouteLayout component={PageNotFound} />
             </Switch>
         </Router>
