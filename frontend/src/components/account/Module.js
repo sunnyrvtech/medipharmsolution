@@ -33,7 +33,14 @@ class Module extends Component {
           <div className="row">
             <Sidebar route_name={route_name} />
             <div className="col-sm-8">
-                Module View
+              <div className="p-5">
+                <div className="text-center">
+                  <h1 className="h4 text-gray-900 mb-4">
+                    Module Deatils
+                  </h1>
+                </div>
+
+              </div>
             </div>
           </div>
         </div>

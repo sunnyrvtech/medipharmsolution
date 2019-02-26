@@ -21,6 +21,7 @@ class Sidebar extends Component {
             <Link to="/account/password/change" class="list-group-item list-group-item-action">Password Change</Link>
             <Link to="/account/courses" class="list-group-item list-group-item-action">Courses</Link>
             <Link to="/account/quiz/summary" class="list-group-item list-group-item-action">Quiz Summary</Link>
+            <Link to="/account/payment/history" class="list-group-item list-group-item-action">Payment History</Link>
           </div>
         </div>
       </div>

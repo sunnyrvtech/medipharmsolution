@@ -19,6 +19,7 @@ import AdminRoute from "./components/admin/AdminRoute";
 import Profile from "./components/account/Profile";
 import PasswordChange from "./components/account/Password";
 import CourseList from "./components/account/CourseList";
+import PaymentHistory from "./components/account/PaymentHistory";
 import Module from "./components/account/Module";
 import Quiz from "./components/account/Quiz";
 import QuizDetail from "./components/account/QuizDetail";
@@ -65,6 +66,7 @@ class App extends Component {
             <RouteLayout exact path="/account/module" component={Module} />
             <RouteLayout exact path="/account/quiz" component={Quiz} />
             <RouteLayout exact path="/account/quiz/summary" component={QuizDetail} />
+            <RouteLayout exact path="/account/payment/history" component={PaymentHistory} />
             <Route path="/admin" component={AdminRoute} />
             <RouteLayout exact path="/about-us" component={StaticPage} />
             <RouteLayout exact path="/blog" component={StaticPage} />

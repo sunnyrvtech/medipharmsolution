@@ -1,4 +1,4 @@
-// CourseList.js
+// PaymentHistory.js
 
 import React, { Component } from "react";
 import { connect } from "react-redux";
@@ -10,7 +10,7 @@ import classnames from "classnames";
 
 let route_name;
 
-class CourseList extends Component {
+class PaymentHistory extends Component {
   constructor(props) {
     super();
     route_name = props.match.url;
@@ -36,7 +36,7 @@ class CourseList extends Component {
               <div className="p-5">
                 <div className="text-center">
                   <h1 className="h4 text-gray-900 mb-4">
-                    Course Details
+                    Payment History
                   </h1>
                 </div>
                 <table class="table table-hover table-fixed">
@@ -46,7 +46,6 @@ class CourseList extends Component {
                       <th>Name</th>
                       <th>Surname</th>
                       <th>Position</th>
-                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -55,42 +54,36 @@ class CourseList extends Component {
                       <td>Jerry</td>
                       <td>Horwitz</td>
                       <td>Editor-in-chief</td>
-                      <td><Link to="/account/module">View Course</Link></td>
                     </tr>
                     <tr>
                       <th scope="row">4</th>
                       <td>Jerry</td>
                       <td>Horwitz</td>
                       <td>Editor-in-chief</td>
-                      <td><Link to="/account/module">View Course</Link></td>
                     </tr>
                     <tr>
                       <th scope="row">4</th>
                       <td>Jerry</td>
                       <td>Horwitz</td>
                       <td>Editor-in-chief</td>
-                      <td><Link to="/account/module">View Course</Link></td>
                     </tr>
                     <tr>
                       <th scope="row">4</th>
                       <td>Jerry</td>
                       <td>Horwitz</td>
                       <td>Editor-in-chief</td>
-                      <td><Link to="/account/module">View Course</Link></td>
                     </tr>
                     <tr>
                       <th scope="row">4</th>
                       <td>Jerry</td>
                       <td>Horwitz</td>
                       <td>Editor-in-chief</td>
-                      <td><Link to="/account/module">View Course</Link></td>
                     </tr>
                     <tr>
                       <th scope="row">4</th>
                       <td>Jerry</td>
                       <td>Horwitz</td>
                       <td>Editor-in-chief</td>
-                      <td><Link to="/account/module">View Course</Link></td>
                     </tr>
                   </tbody>
                 </table>
@@ -108,4 +101,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   {  }
-)(withRouter(CourseList));
+)(withRouter(PaymentHistory));
