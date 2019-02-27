@@ -14,14 +14,14 @@ class Sidebar extends Component {
 
   render() {
     return (
-      <div class="col-sm-2">
+      <div class="col-md-4 col-lg-3">
         <div class="bg-light border-right" id="sidebar-wrapper">
           <div class="list-group list-group-flush">
-            <Link to="/account/profile" class="list-group-item list-group-item-action">Profile</Link>
-            <Link to="/account/password/change" class="list-group-item list-group-item-action">Password Change</Link>
-            <Link to="/account/courses" class="list-group-item list-group-item-action">Courses</Link>
-            <Link to="/account/quiz/summary" class="list-group-item list-group-item-action">Quiz Summary</Link>
-            <Link to="/account/payment/history" class="list-group-item list-group-item-action">Payment History</Link>
+            <Link to="/account/profile" class="list-group-item list-group-item-action active"><i class="fa fa-user-o" aria-hidden="true"></i>Profile</Link>
+            <Link to="/account/password/change" class="list-group-item list-group-item-action"><i class="fa fa-key" aria-hidden="true"></i>Password Change</Link>
+            <Link to="/account/courses" class="list-group-item list-group-item-action"><i class="fa fa-book" aria-hidden="true"></i>Courses</Link>
+            <Link to="/account/quiz/summary" class="list-group-item list-group-item-action"><i class="fa fa-question-circle-o" aria-hidden="true"></i>Quiz Summary</Link>
+            <Link to="/account/payment/history" class="list-group-item list-group-item-action"><i class="fa fa-money" aria-hidden="true"></i>Payment History</Link>
           </div>
         </div>
       </div>

@@ -17,6 +17,19 @@ class Header extends Component {
       const {isAuthenticated, user} = this.props.auth;
       const authLinks = (
           <ul>
+       
+            <li>
+                <div className="dropdown">
+                  <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img src="/images/12.png" />
+                  </button>
+                  <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a className="dropdown-item" href="#"><i className="fa fa-user" aria-hidden="true"></i><span>About Me</span></a>
+                    <a className="dropdown-item" href="#"><i className="fa fa-cog" aria-hidden="true"></i><span>Account Setting</span></a>
+                    <a className="dropdown-item" href="#"><i className="fa fa-sign-out" aria-hidden="true"></i><span>Logout</span></a>
+                  </div>
+                </div>
+            </li>
             <li><a href="#" onClick={this.onLogout.bind(this)}><i className="fa fa-sign-in" aria-hidden="true"></i> Logout</a></li>
           </ul>
       )
@@ -71,7 +84,7 @@ class Header extends Component {
                       <div className="collapse navbar-collapse" id="navbarText">
                         <ul className="navbar-nav ml-auto">
                           <li className="nav-item active">
-                            <a className="nav-link" href="/">Home <span className="sr-only">(current)</span></a>
+                            <Link className="nav-link" to="/">Home <span className="sr-only">(current)</span></Link>
                           </li>
                           <li className="nav-item">
                             <a className="nav-link" href="/about-us">About Us</a>

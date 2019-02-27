@@ -28,11 +28,11 @@ class Profile extends Component {
   render() {
     const { errors } = this.state;
     return (
-      <main>
+      <main className="profile_main">
         <div className="container">
           <div className="row">
             <Sidebar route_name={route_name} />
-            <div className="col-sm-8">
+            <div className="col-md-8 col-lg-9">
               <div className="p-5">
                 <div className="text-center">
                   <h1 className="h4 text-gray-900 mb-4">
@@ -89,7 +89,6 @@ class Profile extends Component {
                     value="Profile update"
                   />
                 </form>
-                <hr />
               </div>
             </div>
           </div>

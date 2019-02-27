@@ -671,7 +671,71 @@ nav.navbar-light ul.submenu li a:hover{
 ul.submenu a.nav-link {
     text-transform: capitalize;
 }
-
+main.profile_main {
+    padding: 60px 0px 100px;
+}
+.list-group-flush .list-group-item i {
+    margin-right: 10px;
+}
+#sidebar-wrapper .list-group-item {
+    background-color: #f8f9fa;
+    transition: 0.5s;
+}
+#sidebar-wrapper {
+    border: none !important;
+}
+main.profile_main form.user .btn-user{
+    width: auto;
+}
+.profile_main .p-5 .text-center {
+    text-align: left !important;
+}
+.profile_main .p-5 {
+    background: #f8f9fa;
+}
+.profile_main table.table {
+    background: #fff;
+}
+#sidebar-wrapper .list-group-item:hover {
+    background-color: #004dda;
+    color: #fff;
+}
+#sidebar-wrapper a.list-group-item.list-group-item-action.active {
+    background-color: #004dda;
+}
+.module_content {
+    position: relative;
+}
+.nxt_btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.dropdown img {
+    height: 26px;
+    line-height: 0;
+    max-width: 36px;
+}
+button#dropdownMenuButton {
+    min-width: auto;
+    padding: 0;
+    background-color: #eee;
+    border-radius: 0;
+}
+.dropdown .dropdown-toggle::after {
+    border-top: .3em solid #004dda;
+    margin: 0px 5px;
+}
+.dropdown .dropdown-menu a.dropdown-item {
+    color: #333;padding: 5px 10px;
+}
+.dropdown .dropdown-menu a.dropdown-item i{
+    margin-right: 5px;
+}
+.dropdown .dropdown-menu {
+    right: 0;
+    left: auto;
+}
 @media(max-width: 1366px){
 	.navbar-expand-lg .navbar-nav .nav-link{
 		font-size: 12px;
@@ -714,63 +778,70 @@ ul.submenu a.nav-link {
 }
 
 @media(max-width: 991px){
-  ul.navbar-nav li ul.submenu {
-    box-shadow: none;
-    position: static;
+    .profile_main .p-5 {
+    padding: 20px !important;
 }
-ul.navbar-nav li ul.submenu li {
-    margin: 0;
-}
-li.nav-item.parent i.fa {
-    float: right;
-}
- .course-menu li h3 {
-    font-size: 12px;
-}
-.course-menu li{
-        padding: 0 5px;
-}
-    section.start-explore-wpr{
-        text-align: center;
+    ul.navbar-nav li ul.submenu {
+        box-shadow: none;
+        position: static;
     }
-    .exp-left img {
-    margin: 0 auto;
-}
-.home-explore-box .icon-box{
-    float: none;
-}
-.home-explore-info .home-explore-box .info-box{
-    width: 100%;padding: 0;
-}
-.exp-right,.graduate-wpr-rt{
-    margin-top: 40px;
-}
-.learn-interest-wpr .learn-interest-inner-wpr .learn-interest-inner-box .learn-interest-info{
-    width: 100%;
-}
-.ch-part .carousel-item {
-    height: auto;
-}
-#part .slide-content{
-    max-width: 90%;
-}
-.home-explore-info .home-explore-box .info-box p {
-     min-height: 50px;
-    margin-bottom: 20px;
-}
-span.desktop-cta{
-    display: none;
-}
-nav.navbar .container,.header-wrap .container {
-    max-width: 100%;
-}
-ul.navbar-nav li {
-    border-top: 1px solid #eee;
-    margin: 0px -15px;
-}
+    ul.navbar-nav li ul.submenu li {
+        margin: 0;
+    }
+    li.nav-item.parent i.fa {
+        float: right;
+    }
+     .course-menu li h3 {
+        font-size: 12px;
+    }
+    .course-menu li{
+            padding: 0 5px;
+    }
+        section.start-explore-wpr{
+            text-align: center;
+        }
+        .exp-left img {
+        margin: 0 auto;
+    }
+    .home-explore-box .icon-box{
+        float: none;
+    }
+    .home-explore-info .home-explore-box .info-box{
+        width: 100%;padding: 0;
+    }
+    .exp-right,.graduate-wpr-rt{
+        margin-top: 40px;
+    }
+    .learn-interest-wpr .learn-interest-inner-wpr .learn-interest-inner-box .learn-interest-info{
+        width: 100%;
+    }
+    .ch-part .carousel-item {
+        height: auto;
+    }
+    #part .slide-content{
+        max-width: 90%;
+    }
+    .home-explore-info .home-explore-box .info-box p {
+         min-height: 50px;
+        margin-bottom: 20px;
+    }
+    span.desktop-cta{
+        display: none;
+    }
+    nav.navbar .container,.header-wrap .container {
+        max-width: 100%;
+    }
+    ul.navbar-nav li {
+        border-top: 1px solid #eee;
+        margin: 0px -15px;
+    }
 }
 
 @media(max-width: 767px){
+    #sidebar-wrapper {
+    margin-bottom: 20px;
+}
+
     .header-wrap {
     display: none;
 }

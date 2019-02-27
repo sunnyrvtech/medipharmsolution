@@ -28,18 +28,18 @@ class CourseList extends Component {
   render() {
     const { errors } = this.state;
     return (
-      <main>
+      <main className="profile_main">
         <div className="container">
           <div className="row">
             <Sidebar route_name={route_name} />
-            <div className="col-sm-8">
+            <div className="col-md-8 col-lg-9">
               <div className="p-5">
                 <div className="text-center">
                   <h1 className="h4 text-gray-900 mb-4">
                     Course Details
                   </h1>
                 </div>
-                <table class="table table-hover table-fixed">
+                <table class="table table-bordered">
                   <thead>
                     <tr>
                       <th>#</th>
