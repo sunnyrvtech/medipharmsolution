@@ -41,5 +41,10 @@ router.get("/:courseSlug", function(req, res) {
     res.json({IMAGE_COURSE_URL:config.IMAGE_COURSE_URL,course:course});
   });
 });
+router.get('/user/:userId', passport.authenticate('jwt', { session: false }), (req, res) => {
+        Course.find({ _id: '5c70e72a093dbd32c6155519' }).then(courses => {
+          res.json(courses);
+        });
+});
 
 module.exports = router;

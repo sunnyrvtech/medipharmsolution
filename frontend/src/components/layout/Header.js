@@ -8,7 +8,9 @@ import { logoutUser } from '../../actions/authentication';
 import { withRouter } from 'react-router-dom';
 
 class Header extends Component {
-
+  toggleAccountDropDown = () => {
+    document.getElementById("account_drop_down").classList.toggle('show');
+  }
   onLogout(e) {
         e.preventDefault();
         this.props.logoutUser(this.props.history);
@@ -17,20 +19,17 @@ class Header extends Component {
       const {isAuthenticated, user} = this.props.auth;
       const authLinks = (
           <ul>
-       
             <li>
                 <div className="dropdown">
-                  <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <button className="btn btn-secondary dropdown-toggle" type="button" onClick={this.toggleAccountDropDown} id="dropdownMenuButton">
                     <img src="/images/12.png" />
                   </button>
-                  <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a className="dropdown-item" href="#"><i className="fa fa-user" aria-hidden="true"></i><span>About Me</span></a>
-                    <a className="dropdown-item" href="#"><i className="fa fa-cog" aria-hidden="true"></i><span>Account Setting</span></a>
-                    <a className="dropdown-item" href="#"><i className="fa fa-sign-out" aria-hidden="true"></i><span>Logout</span></a>
+                  <div className="dropdown-menu" id="account_drop_down" aria-labelledby="dropdownMenuButton">
+                    <Link className="dropdown-item" to="/account/profile" onClick={this.toggleAccountDropDown}><i className="fa fa-cog" aria-hidden="true"></i><span>My Account</span></Link>
+                    <a className="dropdown-item" href="#" onClick={this.onLogout.bind(this)}><i className="fa fa-sign-out" aria-hidden="true"></i><span>Logout</span></a>
                   </div>
                 </div>
             </li>
-            <li><a href="#" onClick={this.onLogout.bind(this)}><i className="fa fa-sign-in" aria-hidden="true"></i> Logout</a></li>
           </ul>
       )
     const guestLinks = (

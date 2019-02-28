@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import { withRouter, Link } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import PageNotFound from "../PageNotFound";
+import { getModuleByCourseId } from "../../actions/course";
 import classnames from "classnames";
 
 let route_name;
@@ -15,18 +16,54 @@ class Module extends Component {
     super();
     route_name = props.match.url;
     this.state = {
-      courses: {},
-      errors: {}
+      module: null
     };
   }
 
-  componentWillMount() {
-
+  nextModule(){
+    var index = this.state.current_count;
+    var modules = this.state.modules;
+    this.setState({ current_count: index+1,module: modules[index+1] });
+  }
+  backModule(){
+    var index = this.state.current_count;
+    var modules = this.state.modules;
+    this.setState({ current_count: index-1,module: modules[index-1] });
   }
 
+  componentWillMount() {
+    const courseId = this.props.match.params.courseId;
+    this.props
+      .getModuleByCourseId(courseId, this.props.history)
+      .then(response => {
+        this.setState({ current_count: 0,module_count: response.length,modules: response,module: response[0] });
+      });
+  }
+
+  renderContent(courses) {
+    const { module,module_count,current_count } = this.state;
+    console.log(module_count,+   +current_count);
+    return (
+      <div className="text-center module_content">
+        <h2 className="h4 text-gray-900 mb-4">
+          {module.name}
+        </h2>
+        <div className="content_des" dangerouslySetInnerHTML={{ __html: module.content }} />
+        <div className="nxt_btn"><a href="#" className="btn btn-primary">Play Quiz</a></div>
+        <div className="btn_profile">
+            {current_count != 0 && current_count < module_count &&
+              <a onClick={() => this.backModule()} href="#" className="btn btn-primary">Back</a>
+            }
+            {current_count+1 < module_count &&
+            <a href="#" className="btn btn-primary pull-right" onClick={() => this.nextModule()}>Next</a>
+            }
+        </div>
+      </div>
+    );
+  }
 
   render() {
-    const { errors } = this.state;
+    const { module } = this.state;
     return (
       <main className="profile_main">
         <div className="container">
@@ -34,24 +71,11 @@ class Module extends Component {
             <Sidebar route_name={route_name} />
             <div className="col-md-8 col-lg-9">
               <div className="p-5">
-                <div className="text-center module_content">
-                  <h2 className="h4 text-gray-900 mb-4">
-                    Module Deatils
-                  </h2>
-                  <div className="content_des">
-                      <p>The Graduate Certificate in Clinical Trial Management is a unique, hybrid program that provides and prepares students for the entire spectrum of the clinical trials management processes as applicable to the pharmaceutical and biotech industries.</p>
-                      <p>You will learn about  the specialty areas of GCP and ICH regulations of human research protection, and development of complete regulatory activities involved in planning, organising, monitoring, recording, analysis and reporting of clinical trials in humans. The program provides additional opportunities to learn about recent advancements as well as specialisations in e-Clinical Technology.</p>
-                      <p>With many clinical research training options available in the market today, what distinguishes this program is the unique, 20-week internship module, that will allow you to gain experience through hands-on tools used by the industry today, such as Clinical Trial Management System (CTMS), Electronic Data Capture Management (EDC) System, and Electronic Trial Master File Management  (eTMF) System. In real world, you will require to be proficient in using these systems to successfully manage the myriad of functions in clinical trial management.</p>
-                      <p>You will use the CTM system to prioritise site management activities, update site staff information, document site visits, generate visit tasks/reports, regulatory approval and investigation payment. The EDC systems are used to enter and verify the Case Report Forms (CRF), raise/answer queries and generate EDC reports. You will learn to use Trial Master File (TMF) to upload/index documents, use naming conventions and electronically sign the documents before submitting. You will work with document place holders, signature work flows, TMF metrics to successfully perform Site Master File/Trial Master File reconciliation.</p>
-                      <p>You will work on real time case scenarios, clinical tasks and other site management activities under the guidance industry experts to fully equip you with the hard skills required for a career in clinical research. No other training program prepares you in such a comprehensive way.</p>
-                  </div>
-                  <div className="nxt_btn"><a href="#" class="btn btn-primary">Next</a></div>
-                  <div className="btn_profile">
-                      <a href="#" className="btn btn-primary">Quiz</a>
-                      <a href="#" className="btn btn-primary pull-right">Next</a>
-                  </div>
-                </div>
-
+              {module ?
+                this.renderContent(module)
+                :
+                <span>No module found!</span>
+              }
               </div>
             </div>
           </div>
@@ -65,5 +89,5 @@ const mapStateToProps = state => ({
 });
 export default connect(
   mapStateToProps,
-  {  }
+  { getModuleByCourseId }
 )(withRouter(Module));

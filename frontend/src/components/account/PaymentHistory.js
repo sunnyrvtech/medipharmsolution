@@ -44,44 +44,16 @@ class PaymentHistory extends Component {
                     <tr>
                       <th>#</th>
                       <th>Name</th>
-                      <th>Surname</th>
-                      <th>Position</th>
+                      <th>Price</th>
+                      <th>Start At</th>
+                      <th>Expired At</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <th scope="row">4</th>
+                      <th scope="row">1</th>
                       <td>Jerry</td>
                       <td>Horwitz</td>
-                      <td>Editor-in-chief</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">4</th>
-                      <td>Jerry</td>
-                      <td>Horwitz</td>
-                      <td>Editor-in-chief</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">4</th>
-                      <td>Jerry</td>
-                      <td>Horwitz</td>
-                      <td>Editor-in-chief</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">4</th>
-                      <td>Jerry</td>
-                      <td>Horwitz</td>
-                      <td>Editor-in-chief</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">4</th>
-                      <td>Jerry</td>
-                      <td>Horwitz</td>
-                      <td>Editor-in-chief</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">4</th>
-                      <td>Jerry</td>
                       <td>Horwitz</td>
                       <td>Editor-in-chief</td>
                     </tr>

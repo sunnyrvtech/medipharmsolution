@@ -9,7 +9,7 @@ const passport = require('passport');
 const validateCourseModuleInput = require('../../validation/course_module');
 
 const CourseModule = require('../../models/CourseModule');
-router.get('/module', passport.authenticate('jwt', { session: false }), (req, res) => {
+router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => {
   CourseModule.find().populate('course_id','name').exec(function(err, course_modules) {
     var result =[];
       course_modules.forEach(function(element,i) {
@@ -19,7 +19,7 @@ router.get('/module', passport.authenticate('jwt', { session: false }), (req, re
      res.json(result)
 });
 });
-router.post('/module', passport.authenticate('jwt', { session: false }), (req, res) => {
+router.post('/', passport.authenticate('jwt', { session: false }), (req, res) => {
   const { errors, isValid } = validateCourseModuleInput(req.body);
   if(!isValid) {
       return res.status(400).json(errors);
@@ -33,7 +33,7 @@ router.post('/module', passport.authenticate('jwt', { session: false }), (req, r
   });
 });
 
-router.put('/module', passport.authenticate('jwt', { session: false }), (req, res) => {
+router.put('/', passport.authenticate('jwt', { session: false }), (req, res) => {
   CourseModule.findOne({_id: req.body.moduleId}).then(module => {
     const { errors, isValid } = validateCourseModuleInput(req.body);
 
@@ -55,7 +55,7 @@ router.put('/module', passport.authenticate('jwt', { session: false }), (req, re
   });
 });
 
-router.delete('/module/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
+router.delete('/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
  CourseModule.findOne({ _id: req.params.id }).then(module => {
    if (module) {
      module.remove();
@@ -63,7 +63,7 @@ router.delete('/module/:id', passport.authenticate('jwt', { session: false }), (
    }
  });
 });
-router.get('/module/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
+router.get('/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
   CourseModule.findOne({_id: req.params.id}).then(module => {
      res.json(module)
   });

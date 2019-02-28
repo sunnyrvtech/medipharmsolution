@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withRouter, Link } from "react-router-dom";
 import Sidebar from "./Sidebar";
-import PageNotFound from "../PageNotFound";
+import { getCourseByUserId } from "../../actions/course";
 import classnames from "classnames";
 
 let route_name;
@@ -15,18 +15,40 @@ class CourseList extends Component {
     super();
     route_name = props.match.url;
     this.state = {
-      courses: {},
-      errors: {}
+      courses: {}
     };
   }
 
   componentWillMount() {
-
+    this.props
+      .getCourseByUserId(this.props.auth.user.id, this.props.history)
+      .then(response => {
+        this.setState({ courses: response });
+      });
   }
 
+  renderContent(courses) {
+    return (
+      <tbody>
+        {courses.map((course, i) => {
+          return (
+            <tr key={i}>
+              <th scope="row">{i + 1}</th>
+              <td>{course.name}</td>
+              <td>{course.created_at}</td>
+              <td>{course.created_at}</td>
+              <td>
+                <Link to={"/account/modules/"+course._id} tooltip="View Module"><i className="fa fa-low-vision"></i></Link>
+              </td>
+            </tr>
+          );
+        })}
+      </tbody>
+    );
+  }
 
   render() {
-    const { errors } = this.state;
+    const { courses } = this.state;
     return (
       <main className="profile_main">
         <div className="container">
@@ -35,64 +57,25 @@ class CourseList extends Component {
             <div className="col-md-8 col-lg-9">
               <div className="p-5">
                 <div className="text-center">
-                  <h1 className="h4 text-gray-900 mb-4">
-                    Course Details
-                  </h1>
+                  <h1 className="h4 text-gray-900 mb-4">Course Details</h1>
                 </div>
-                <table class="table table-bordered">
+                <table className="table table-bordered">
                   <thead>
                     <tr>
                       <th>#</th>
                       <th>Name</th>
-                      <th>Surname</th>
-                      <th>Position</th>
+                      <th>Start At</th>
+                      <th>Expired At</th>
                       <th>Action</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr>
-                      <th scope="row">4</th>
-                      <td>Jerry</td>
-                      <td>Horwitz</td>
-                      <td>Editor-in-chief</td>
-                      <td><Link to="/account/module">View Course</Link></td>
-                    </tr>
-                    <tr>
-                      <th scope="row">4</th>
-                      <td>Jerry</td>
-                      <td>Horwitz</td>
-                      <td>Editor-in-chief</td>
-                      <td><Link to="/account/module">View Course</Link></td>
-                    </tr>
-                    <tr>
-                      <th scope="row">4</th>
-                      <td>Jerry</td>
-                      <td>Horwitz</td>
-                      <td>Editor-in-chief</td>
-                      <td><Link to="/account/module">View Course</Link></td>
-                    </tr>
-                    <tr>
-                      <th scope="row">4</th>
-                      <td>Jerry</td>
-                      <td>Horwitz</td>
-                      <td>Editor-in-chief</td>
-                      <td><Link to="/account/module">View Course</Link></td>
-                    </tr>
-                    <tr>
-                      <th scope="row">4</th>
-                      <td>Jerry</td>
-                      <td>Horwitz</td>
-                      <td>Editor-in-chief</td>
-                      <td><Link to="/account/module">View Course</Link></td>
-                    </tr>
-                    <tr>
-                      <th scope="row">4</th>
-                      <td>Jerry</td>
-                      <td>Horwitz</td>
-                      <td>Editor-in-chief</td>
-                      <td><Link to="/account/module">View Course</Link></td>
-                    </tr>
-                  </tbody>
+                  {courses && courses.length != undefined ?
+                    this.renderContent(courses)
+                    :
+                          <tbody>
+                          <tr><td colSpan={5}>No course found!</td></tr>
+                          </tbody>
+                  }
                 </table>
               </div>
             </div>
@@ -103,9 +86,9 @@ class CourseList extends Component {
   }
 }
 const mapStateToProps = state => ({
-  errors: state.errors
+  auth: state.auth
 });
 export default connect(
   mapStateToProps,
-  {  }
+  { getCourseByUserId }
 )(withRouter(CourseList));

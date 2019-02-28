@@ -13,6 +13,7 @@ const categories = require('./routes/admin/category');
 const static_pages = require('./routes/admin/static_page');
 const media = require('./routes/admin/media');
 const front_courses = require('./routes/course');
+const front_modules = require('./routes/course_module');
 
 mongoose.connect(config.DB, { useNewUrlParser: true }).then(
     () => {console.log('Database is connected') },
@@ -35,12 +36,13 @@ app.use(express.static('public'));
 app.use('/api/users', auth);
 app.use('/api/users', users);
 app.use('/api/courses', courses);
-app.use('/api/courses', course_modules);
+app.use('/api/courses/module', course_modules);
 app.use('/api/categories', categories);
 app.use('/api/quiz', quizes);
 app.use('/api/pages', static_pages);
 app.use('/api/media', media);
 app.use('/api/course', front_courses);
+app.use('/api/course/module', front_modules);
 app.get('/', function(req, res) {
     res.send('hello');
 });

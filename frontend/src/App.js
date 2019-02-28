@@ -33,14 +33,16 @@ import "./styles/style.css";
 import "./styles/sb-admin.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
+let isAuthenticated = false;
 if (localStorage.jwtToken) {
+  isAuthenticated = true;
   setAuthToken(localStorage.jwtToken);
   const decoded = jwt_decode(localStorage.jwtToken);
   store.dispatch(setCurrentUser(decoded));
 
   const currentTime = Date.now() / 1000;
   if (decoded.exp < currentTime) {
+    isAuthenticated = false;
     store.dispatch(logoutUser());
     window.location.href = "/login";
   }
@@ -60,13 +62,6 @@ class App extends Component {
             <RouteLayout exact path="/password/forgot" component={ForgotPassword} />
             <RouteLayout exact path="/password/reset/:code" component={ResetPassword} />
             <RouteLayout exact path="/account/activate/:code" component={Verification} />
-            <RouteLayout exact path="/account/profile" component={Profile} />
-            <RouteLayout exact path="/account/password/change" component={PasswordChange} />
-            <RouteLayout exact path="/account/courses" component={CourseList} />
-            <RouteLayout exact path="/account/module" component={Module} />
-            <RouteLayout exact path="/account/quiz" component={Quiz} />
-            <RouteLayout exact path="/account/quiz/summary" component={QuizDetail} />
-            <RouteLayout exact path="/account/payment/history" component={PaymentHistory} />
             <Route path="/admin" component={AdminRoute} />
             <RouteLayout exact path="/about-us" component={StaticPage} />
             <RouteLayout exact path="/blog" component={StaticPage} />
@@ -78,6 +73,20 @@ class App extends Component {
             <RouteLayout exact path="/in-person-interview-preparation" component={StaticPage} />
             <RouteLayout exact path="/after-interview" component={StaticPage} />
             <RouteLayout exact path="/collaborations" component={StaticPage} />
+            { isAuthenticated == true &&
+            <Switch>
+            <RouteLayout exact path="/account/profile" component={Profile} />
+            <RouteLayout exact path="/account/password/change" component={PasswordChange} />
+            <RouteLayout exact path="/account/courses" component={CourseList} />
+            <RouteLayout exact path="/account/modules/:courseId" component={Module} />
+            <RouteLayout exact path="/account/quiz" component={Quiz} />
+            <RouteLayout exact path="/account/quiz/summary" component={QuizDetail} />
+            <RouteLayout exact path="/account/payment/history" component={PaymentHistory} />
+            <RouteLayout exact path="/:categorySlug" component={Course} />
+            <RouteLayout exact path="/:categorySlug/:courseSlug" component={CourseView} />
+            <RouteLayout component={PageNotFound} />
+            </Switch>
+            }
             <RouteLayout exact path="/:categorySlug" component={Course} />
             <RouteLayout exact path="/:categorySlug/:courseSlug" component={CourseView} />
             <RouteLayout component={PageNotFound} />
