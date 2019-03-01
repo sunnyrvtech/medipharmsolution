@@ -79,7 +79,7 @@ class App extends Component {
             <RouteLayout exact path="/account/password/change" component={PasswordChange} />
             <RouteLayout exact path="/account/courses" component={CourseList} />
             <RouteLayout exact path="/account/modules/:courseId" component={Module} />
-            <RouteLayout exact path="/account/quiz" component={Quiz} />
+            <RouteLayout exact path="/account/quiz/:moduleId" component={Quiz} />
             <RouteLayout exact path="/account/quiz/summary" component={QuizDetail} />
             <RouteLayout exact path="/account/payment/history" component={PaymentHistory} />
             <RouteLayout exact path="/:categorySlug" component={Course} />

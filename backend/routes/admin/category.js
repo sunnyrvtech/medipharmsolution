@@ -8,7 +8,7 @@ const passport = require("passport");
 const multer = require("multer");
 const config = require('../../config');
 const fs = require("fs");
-const validateCategoryInput = require("../../validation/category");
+const validateCategoryInput = require("../../validation/admin/category");
 
 const Category = require("../../models/Category");
 
@@ -134,6 +134,8 @@ router.put(
               }
             });
         } else {
+          if (req.file != undefined)
+            fs.unlinkSync("public/category/" + req.file.filename);
           return res.status(400).json({
             name: "Category not found!"
           });

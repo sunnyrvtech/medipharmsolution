@@ -5,8 +5,6 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withRouter, Link } from "react-router-dom";
 import Sidebar from "./Sidebar";
-import PageNotFound from "../PageNotFound";
-import classnames from "classnames";
 
 let route_name;
 

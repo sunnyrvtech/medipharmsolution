@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withRouter, Link } from "react-router-dom";
 import Sidebar from "./Sidebar";
-import PageNotFound from "../PageNotFound";
+import { passwordChange,emptyReducer } from "../../actions/user";
 import classnames from "classnames";
 
 let route_name;
@@ -15,24 +15,53 @@ class Password extends Component {
     super();
     route_name = props.match.url;
     this.state = {
-      courses: {},
+      current_password: "",
+      passport: "",
+      password_confirm: "",
       errors: {}
     };
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentWillMount() {
-
+  handleInputChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
   }
-
-
+  handleSubmit(e) {
+    window.scrollTo(0, 0);
+    e.preventDefault();
+    const user = {
+      userId: this.props.auth.user.id,
+      current_password: this.state.current_password,
+      password: this.state.password,
+      password_confirm: this.state.password_confirm
+    };
+    this.props.passwordChange(user,this.props.history)
+    .then(response => {
+      if(response){
+              this.props.emptyReducer();
+      this.setState({ current_password:'',password:'',password_confirm:'',alert_message: {class:'success',message: 'Password changed successfully!'}});
+      setTimeout(function(){
+          this.setState({alert_message:false});
+      }.bind(this),5000);
+    }
+    });
+  }
   render() {
-    const { errors } = this.state;
+    const { errors } = this.props;
     return (
       <main className="profile_main">
         <div className="container">
           <div className="row">
             <Sidebar route_name={route_name} />
             <div className="col-md-8 col-lg-9">
+            {this.state.alert_message  && (
+              <div className={'alert alert-'+this.state.alert_message.class}>
+                 {this.state.alert_message.message}
+              </div>
+            )}
               <div className="p-5">
                 <div className="text-center">
                   <h1 className="h4 text-gray-900 mb-4">
@@ -49,7 +78,7 @@ class Password extends Component {
                         "is-invalid": errors.current_password
                       }
                     )}
-                    name="password"
+                    name="current_password"
                     placeholder="Current Password"
                     onChange={this.handleInputChange}
                     value={this.state.current_password}
@@ -109,9 +138,10 @@ class Password extends Component {
   }
 }
 const mapStateToProps = state => ({
+  auth: state.auth,
   errors: state.errors
 });
 export default connect(
   mapStateToProps,
-  {  }
+  { passwordChange,emptyReducer }
 )(withRouter(Password));

@@ -8,7 +8,7 @@ const passport = require("passport");
 const multer = require("multer");
 const config = require('../../config');
 const fs = require("fs");
-const validateStaticPageInput = require("../../validation/static_page");
+const validateStaticPageInput = require("../../validation/admin/static_page");
 
 const StaticPage = require("../../models/StaticPage");
 

@@ -14,6 +14,8 @@ const static_pages = require('./routes/admin/static_page');
 const media = require('./routes/admin/media');
 const front_courses = require('./routes/course');
 const front_modules = require('./routes/course_module');
+const front_quizes = require('./routes/quiz');
+const front_users = require('./routes/user');
 
 mongoose.connect(config.DB, { useNewUrlParser: true }).then(
     () => {console.log('Database is connected') },
@@ -43,6 +45,8 @@ app.use('/api/pages', static_pages);
 app.use('/api/media', media);
 app.use('/api/course', front_courses);
 app.use('/api/course/module', front_modules);
+app.use('/api/quiz/module', front_quizes);
+app.use('/api/account/users', front_users);
 app.get('/', function(req, res) {
     res.send('hello');
 });

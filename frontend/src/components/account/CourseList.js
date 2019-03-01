@@ -6,7 +6,6 @@ import PropTypes from "prop-types";
 import { withRouter, Link } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import { getCourseByUserId } from "../../actions/course";
-import classnames from "classnames";
 
 let route_name;
 

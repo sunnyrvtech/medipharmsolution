@@ -736,6 +736,60 @@ button#dropdownMenuButton {
     right: 0;
     left: auto;
 }
+a.btn.btn-user.btn-block.btn_quiz {
+    display: inline-block;
+    width: auto;
+}
+
+/*************/
+#quizcontainer input[type=radio].css-checkbox {
+position:absolute; z-index:-1000; left:-1000px; overflow: hidden; clip: rect(0 0 0 0); height:1px; width:1px; margin:-1px; padding:0; border:0;
+}
+
+#quizcontainer input[type=radio].css-checkbox + label.css-label {
+    padding-left: 33px;
+    height: 28px;
+    display: inline-block;
+    line-height: 24px;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    font-size: 16px;
+    vertical-align: middle;
+    cursor: pointer;
+
+}
+
+#quizcontainer input[type=radio].css-checkbox:checked + label.css-label {
+background-position: 0 -28px;
+}
+#quizcontainer label.css-label {
+background-image:url(http://192.168.1.39:3000/images/csscheckbox.png);
+-webkit-touch-callout: none;
+-webkit-user-select: none;
+-khtml-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+}
+
+.quiz_wrap,#quizcontainer {
+    margin-bottom: 50px;
+}
+#altcontainer {
+    margin-bottom: 20px;
+}
+.quiz_result {
+    text-align: center;
+        color: #000;
+}
+.time_span p {
+    margin: 0;
+    font-size: 20px;
+    color: #000;
+}
+.test_detail {
+    font-size: 20px;
+}
 @media(max-width: 1366px){
 	.navbar-expand-lg .navbar-nav .nav-link{
 		font-size: 12px;

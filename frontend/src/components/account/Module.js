@@ -5,9 +5,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withRouter, Link } from "react-router-dom";
 import Sidebar from "./Sidebar";
-import PageNotFound from "../PageNotFound";
 import { getModuleByCourseId } from "../../actions/course";
-import classnames from "classnames";
 
 let route_name;
 
@@ -40,16 +38,15 @@ class Module extends Component {
       });
   }
 
-  renderContent(courses) {
+  renderContent() {
     const { module,module_count,current_count } = this.state;
-    console.log(module_count,+   +current_count);
     return (
       <div className="text-center module_content">
         <h2 className="h4 text-gray-900 mb-4">
           {module.name}
         </h2>
         <div className="content_des" dangerouslySetInnerHTML={{ __html: module.content }} />
-        <div className="nxt_btn"><a href="#" className="btn btn-primary">Play Quiz</a></div>
+        <div className="nxt_btn"><Link to={"/account/quiz/"+module._id} className="btn btn-primary">Play Quiz</Link></div>
         <div className="btn_profile">
             {current_count != 0 && current_count < module_count &&
               <a onClick={() => this.backModule()} href="#" className="btn btn-primary">Back</a>
@@ -72,7 +69,7 @@ class Module extends Component {
             <div className="col-md-8 col-lg-9">
               <div className="p-5">
               {module ?
-                this.renderContent(module)
+                this.renderContent()
                 :
                 <span>No module found!</span>
               }

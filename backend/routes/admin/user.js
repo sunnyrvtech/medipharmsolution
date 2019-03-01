@@ -5,7 +5,7 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 const passport = require('passport');
-const validateUserInput = require('../../validation/user');
+const validateUserInput = require('../../validation/admin/user');
 const User = require('../../models/User');
 
 router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => {

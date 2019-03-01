@@ -6,7 +6,7 @@ const router = express.Router();
 
 const mongoose = require('mongoose');
 const passport = require('passport');
-const validateCourseModuleInput = require('../../validation/course_module');
+const validateCourseModuleInput = require('../../validation/admin/course_module');
 
 const CourseModule = require('../../models/CourseModule');
 router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => {

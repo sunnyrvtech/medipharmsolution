@@ -7,7 +7,7 @@ const passport = require("passport");
 const multer = require("multer");
 const config = require('../../config');
 const fs = require("fs");
-const validateCourseInput = require("../../validation/course");
+const validateCourseInput = require("../../validation/admin/course");
 
 const Course = require("../../models/Course");
 
@@ -144,6 +144,8 @@ router.put(
               });
           });
       } else {
+        if (req.file != undefined)
+          fs.unlinkSync("public/course/" + req.file.filename);
         return res.status(400).json({
           name: "Course not found!"
         });

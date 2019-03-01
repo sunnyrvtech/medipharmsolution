@@ -1,7 +1,7 @@
 // register.js
 
 const Validator = require('validator');
-const isEmpty = require('./is-empty');
+const isEmpty = require('../is-empty');
 
 module.exports = function validateCourseModuleInput(data) {
     let errors = {};

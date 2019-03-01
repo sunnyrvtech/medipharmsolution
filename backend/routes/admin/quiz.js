@@ -5,7 +5,7 @@ const router = express.Router();
 
 const mongoose = require("mongoose");
 const passport = require("passport");
-const validateQuizInput = require("../../validation/quiz");
+const validateQuizInput = require("../../validation/admin/quiz");
 
 const Quiz = require("../../models/Quiz");
 

@@ -1,6 +1,6 @@
 // course.js
 
-import { GET_ERRORS, ADMIN_GET_COURSES } from "./types";
+import { GET_ERRORS } from "./types";
 import client from "../client";
 
 export const emptyReducer =() => dispatch => {

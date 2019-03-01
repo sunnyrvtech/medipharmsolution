@@ -4,7 +4,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withRouter, Link } from "react-router-dom";
-import { createUser } from "../../../actions/admin/user";
+import { createUser,emptyReducer } from "../../../actions/admin/user";
 import classnames from "classnames";
 
 class UserAdd extends Component {
@@ -20,6 +20,9 @@ class UserAdd extends Component {
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  componentDidMount() {
+    this.props.emptyReducer();
   }
   handleInputChange(e) {
     this.setState({
@@ -172,5 +175,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { createUser }
+  { createUser,emptyReducer }
 )(withRouter(UserAdd));

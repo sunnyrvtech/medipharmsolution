@@ -101,11 +101,17 @@ router.post("/login", (req, res) => {
     }
     bcrypt.compare(password, user.password).then(isMatch => {
       if (isMatch) {
+        if(user.user_image){
+           var user_image = config.USET_IMAGE_URL + user.user_image;
+        }else{
+           var user_image = config.USET_IMAGE_URL + "default.png";
+        }
         const payload = {
           id: user.id,
           role: user.role,
           first_name: user.first_name,
-          last_name: user.last_name
+          last_name: user.last_name,
+          user_image: user_image
         };
         jwt.sign(
           payload,

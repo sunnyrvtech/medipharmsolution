@@ -1,0 +1,24 @@
+// quiz.js
+
+import { GET_ERRORS } from "./types";
+import client from "../client";
+
+export const emptyReducer =() => dispatch => {
+  dispatch({
+    type: GET_ERRORS,
+    payload: ''
+  });
+};
+export const getQuizByModuleId = (moduleId, history) => dispatch =>
+  client()
+    .get("/quiz/module/" + moduleId)
+    .then(res => {
+      return res.data;
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });

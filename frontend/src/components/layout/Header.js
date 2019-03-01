@@ -22,7 +22,7 @@ class Header extends Component {
             <li>
                 <div className="dropdown">
                   <button className="btn btn-secondary dropdown-toggle" type="button" onClick={this.toggleAccountDropDown} id="dropdownMenuButton">
-                    <img src="/images/12.png" />
+                    <img src={user.user_image} />
                   </button>
                   <div className="dropdown-menu" id="account_drop_down" aria-labelledby="dropdownMenuButton">
                     <a className="dropdown-item" href="/account/profile" onClick={this.toggleAccountDropDown}><i className="fa fa-cog" aria-hidden="true"></i><span>My Account</span></a>
