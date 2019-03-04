@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import { withRouter, Link } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import { getCourseByUserId } from "../../actions/course";
+const moment = require('moment');
 
 let route_name;
 
@@ -26,7 +27,7 @@ class CourseList extends Component {
       });
   }
 
-  renderContent(courses) {
+  renderList(courses) {
     return (
       <tbody>
         {courses.map((course, i) => {
@@ -34,8 +35,8 @@ class CourseList extends Component {
             <tr key={i}>
               <th scope="row">{i + 1}</th>
               <td>{course.name}</td>
-              <td>{course.created_at}</td>
-              <td>{course.created_at}</td>
+              <td>{moment(course.created_at).format('YYYY-MM-DD hh:mm A')}</td>
+              <td>{moment(course.created_at).format('YYYY-MM-DD hh:mm A')}</td>
               <td>
                 <Link to={"/account/modules/"+course._id} tooltip="View Module"><i className="fa fa-low-vision"></i></Link>
               </td>
@@ -69,7 +70,7 @@ class CourseList extends Component {
                     </tr>
                   </thead>
                   {courses && courses.length != undefined ?
-                    this.renderContent(courses)
+                    this.renderList(courses)
                     :
                           <tbody>
                           <tr><td colSpan={5}>No course found!</td></tr>

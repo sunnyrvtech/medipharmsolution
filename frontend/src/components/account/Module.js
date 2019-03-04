@@ -49,10 +49,10 @@ class Module extends Component {
         <div className="nxt_btn"><Link to={"/account/quiz/"+module._id} className="btn btn-primary">Play Quiz</Link></div>
         <div className="btn_profile">
             {current_count != 0 && current_count < module_count &&
-              <a onClick={() => this.backModule()} href="#" className="btn btn-primary">Back</a>
+              <a onClick={() => this.backModule()} href="#" className="btn btn-primary">❮ Back</a>
             }
             {current_count+1 < module_count &&
-            <a href="#" className="btn btn-primary pull-right" onClick={() => this.nextModule()}>Next</a>
+            <a href="#" className="btn btn-primary pull-right" onClick={() => this.nextModule()}>Next ❯</a>
             }
         </div>
       </div>

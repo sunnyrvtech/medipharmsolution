@@ -15,7 +15,6 @@ class Login extends Component {
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-     document.body.classList.add('bg-gradient-danger');
   }
 
   handleInputChange(e) {
@@ -43,9 +42,11 @@ class Login extends Component {
     }
   }
   componentDidMount() {
-        this.props.emptyReducer();
+    this.props.emptyReducer();
     if (this.props.auth.isAuthenticated) {
       this.props.history.push("/");
+    }else{
+      document.body.classList.add('bg-gradient-danger');
     }
   }
   render() {
