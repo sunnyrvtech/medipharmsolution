@@ -32,8 +32,8 @@ class QuizDetail extends Component {
           return (
             <tr key={i}>
               <th scope="row">{i + 1}</th>
-              <td>{quiz.module_id.course_id.name}</td>
               <td>{quiz.module_id.name}</td>
+              <td>{quiz.course_id.name}</td>
               <td>{quiz.score}%</td>
               <td>{moment(quiz.created_at).format('YYYY-MM-DD hh:mm A')}</td>
             </tr>
@@ -61,8 +61,8 @@ class QuizDetail extends Component {
                   <thead>
                     <tr>
                       <th>#</th>
-                      <th>Course Name</th>
                       <th>Module Name</th>
+                      <th>Course Name</th>
                       <th>Score</th>
                       <th>Created At</th>
                     </tr>

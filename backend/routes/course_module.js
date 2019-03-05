@@ -11,7 +11,9 @@ const CourseModule = require('../models/CourseModule');
 
 router.get('/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
   CourseModule.find({course_id: req.params.id}).then(modules => {
-     res.json(modules)
+     res.json(modules);
+  }).catch(err=>{
+    res.json([]);
   });
 });
 

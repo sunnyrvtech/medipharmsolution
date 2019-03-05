@@ -178,6 +178,11 @@ section.list_sec {
 [tooltip]::after{ content: attr(tooltip);position: absolute;left:50%;top:-6px;transform: translateX(-50%) translateY(-100%);background: rgba(0,0,0,0.7);text-align: center;color: #fff;padding:4px 2px;font-size: 11px;min-width:46px;border-radius: 5px;pointer-events: none;padding: 4px 4px;z-index:99;opacity:0; }
 [tooltip]:hover::after,[tooltip]:hover::before { opacity:1; }
 #content-wrapper .react-bs-table table td:last-child,#content-wrapper .react-bs-container-body { overflow: visible; }
+#certificate { width:800px; height:600px; padding:20px; text-align:center; border: 10px solid #004dda; }
+#certificate .cert-content { width:750px; height:550px; padding:20px; text-align:center; border: 5px solid #004dda; }
+#certificate .cert-title { font-size:50px; font-weight:bold; }
+#certificate .cert-lg-txt { font-size:30px; }
+#certificate .cert-sm-txt { font-size:25px; }
 
 @media (min-width: 1200px){
 .container {

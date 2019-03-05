@@ -62,3 +62,17 @@ export const getCourseByCourseSlug = (courseSlug, history) => dispatch =>
             payload: err.response.data
           });
         });
+
+        export const getCertificateByCourseId = (courseId, history) => dispatch =>
+          client()
+            .get("/course/certificate/" + courseId)
+            .then(res => {
+              return res.data;
+            })
+            .catch(err => {
+              console.log(err);
+              dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data
+              });
+            });

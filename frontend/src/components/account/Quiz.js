@@ -65,6 +65,7 @@ class Quiz extends Component {
       } else {
         const quiz_array = {
           user_id: this.props.auth.user.id,
+          course_id: quizes[index].module_id.course_id,
           module_id: quizes[index].module_id,
           score: (quiz_result.length*100)/this.state.quiz_count
         }

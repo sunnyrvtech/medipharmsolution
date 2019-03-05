@@ -22,6 +22,7 @@ import CourseList from "./components/account/CourseList";
 import PaymentHistory from "./components/account/PaymentHistory";
 import Module from "./components/account/Module";
 import Quiz from "./components/account/Quiz";
+import Certificate from "./components/account/Certificate";
 import QuizDetail from "./components/account/QuizDetail";
 import Course from "./components/courses/Course";
 import CourseView from "./components/courses/CourseView";
@@ -43,12 +44,9 @@ if (localStorage.jwtToken) {
   const currentTime = Date.now() / 1000;
   if (decoded.exp < currentTime) {
     isAuthenticated = false;
-    store.dispatch(logoutUser());
-    window.location.href = "/login";
+    store.dispatch(logoutUser(false));
   }
 }
-
-
 
 class App extends Component {
   render() {
@@ -79,6 +77,7 @@ class App extends Component {
             <RouteLayout exact path="/account/password/change" component={PasswordChange} />
             <RouteLayout exact path="/account/courses" component={CourseList} />
             <RouteLayout exact path="/account/modules/:courseId" component={Module} />
+            <RouteLayout exact path="/account/cert/:courseId" component={Certificate} />
             <RouteLayout exact path="/account/quiz/summary" component={QuizDetail} />
             <RouteLayout exact path="/account/quiz/:moduleId" component={Quiz} />
             <RouteLayout exact path="/account/payment/history" component={PaymentHistory} />

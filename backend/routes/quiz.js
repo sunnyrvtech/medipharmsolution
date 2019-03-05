@@ -12,7 +12,8 @@ router.get(
   "/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    Quiz.find({ module_id: req.params.id }).then(quizs => {
+    Quiz.find({ module_id: req.params.id }).populate('module_id','course_id')
+    .exec(function(err, quizs) {
       res.json(quizs);
     });
   }
@@ -26,17 +27,15 @@ router.post(
       user_id: req.body.user_id,
       module_id: req.body.module_id
     }).then(quiz_detail => {
-      console.log(quiz_detail);
       if (quiz_detail) {
-        console.log('update');
         quiz_detail.score = req.body.score;
         quiz_detail.save().then(detail => {
           res.json(detail);
         });
       } else {
-        console.log('add');
         var newQuizDetail = new QuizDetail();
         newQuizDetail.user_id = req.body.user_id;
+        newQuizDetail.course_id = req.body.course_id;
         newQuizDetail.module_id = req.body.module_id;
         newQuizDetail.score = req.body.score;
         newQuizDetail.save(function(err, quiz_detail) {
@@ -49,9 +48,8 @@ router.post(
 
 router.get('/history/:userId', passport.authenticate('jwt', { session: false }), (req, res) => {
         QuizDetail.find({ user_id: req.params.userId })
-          .populate({path : 'module_id',select: 'name', populate : {path : 'course_id',select: 'name'}})
+          .populate('module_id course_id','name')
           .exec(function(err, quiz_detail) {
-            console.log(quiz_detail);
             res.json(quiz_detail);
           });
 });

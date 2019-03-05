@@ -11,13 +11,18 @@ const QuizDetailSchema = new Schema({
     ref: 'users',
     required: true
   },
+  course_id: {
+    type: Schema.Types.ObjectId,
+    ref: 'courses',
+    required: true
+  },
   module_id: {
     type: Schema.Types.ObjectId,
     ref: 'course_modules',
     required: true
   },
   score: {
-    type: String,
+    type: Number,
     required: true
   },
   created_at: {

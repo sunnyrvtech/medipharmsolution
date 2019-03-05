@@ -7,6 +7,8 @@ const passport = require("passport");
 const config = require("../config");
 
 const Course = require("../models/Course");
+const CourseModule = require("../models/CourseModule");
+const QuizDetail = require("../models/QuizDetail");
 const Category = require("../models/Category");
 
 router.get("/category/:categorySlug", function(req, res) {
@@ -45,6 +47,18 @@ router.get('/user/:userId', passport.authenticate('jwt', { session: false }), (r
         Course.find({ _id: '5c70e72a093dbd32c6155519' }).then(courses => {
           res.json(courses);
         });
+});
+
+router.get('/certificate/:courseId', passport.authenticate('jwt', { session: false }), async(req, res) => {
+      var module_count = await CourseModule.find({ course_id: req.params.courseId }).countDocuments({});
+      var quiz_module_count = await QuizDetail.find({ course_id: req.params.courseId,score: { $gt: 80 } }).countDocuments({});
+      if(module_count == quiz_module_count){
+
+      }else{
+            res.json([]);
+      }
+
+      console.log(module_count+"   "+quiz_module_count);
 });
 
 module.exports = router;
