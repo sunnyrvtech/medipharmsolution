@@ -11,7 +11,7 @@ export const emptyReducer =() => dispatch => {
 };
 export const courseAdd = (course, history) => dispatch => {
   client()
-    .post("/courses/course", course)
+    .post("/admin/courses/course", course)
     .then(res => history.push({ pathname: '/admin/courses',state: { alert_message:{class:'success',message: 'New course added successfully!'}}}))
     .catch(err => {
       console.log(err);
@@ -23,7 +23,7 @@ export const courseAdd = (course, history) => dispatch => {
 };
 export const courseUpdate = (course, history) => dispatch => {
   client()
-    .put("/courses/course", course)
+    .put("/admin/courses/course", course)
     .then(res => history.push({ pathname: '/admin/courses',state: { alert_message:{class:'success',message: 'Updated successfully!'}}}))
     .catch(err => {
       console.log(err);
@@ -35,7 +35,7 @@ export const courseUpdate = (course, history) => dispatch => {
 };
 export const courseDelete = (courseId, history) => dispatch =>
   client()
-    .delete("/courses/course/"+courseId)
+    .delete("/admin/courses/course/"+courseId)
     .then(res => {return res.data;})
     .catch(err => {
       console.log(err);
@@ -47,7 +47,7 @@ export const courseDelete = (courseId, history) => dispatch =>
 
 export const getCourses = course => async dispatch => {
   client()
-    .get("/courses/course")
+    .get("/admin/courses/course")
     .then(res => {
       dispatch({
         type: ADMIN_GET_COURSES,
@@ -64,7 +64,7 @@ export const getCourses = course => async dispatch => {
 };
 export const getCourseById = (courseId, history) => dispatch =>
   client()
-    .get("/courses/course/" + courseId)
+    .get("/admin/courses/course/" + courseId)
     .then(res => {
       return res.data;
     })

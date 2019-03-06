@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withRouter, Link } from "react-router-dom";
 import Sidebar from "./Sidebar";
-import { getUserByUserId,updateUserInfo } from "../../actions/user";
+import { updateUserInfo } from "../../actions/user";
 import classnames from "classnames";
 
 let route_name;
@@ -37,7 +37,6 @@ class Profile extends Component {
     const user = new FormData();
     user.append("first_name", this.state.first_name);
     user.append("last_name", this.state.last_name);
-    user.append("user_id", this.props.auth.user.id);
     user.append("user_image", this.state.user_image);
     this.props.updateUserInfo(user, this.props.history)
         .then(response => {
@@ -64,11 +63,7 @@ class Profile extends Component {
   }
 
   componentWillMount() {
-    this.props
-      .getUserByUserId(this.props.auth.user.id, this.props.history)
-      .then(response => {
-        this.setState({ first_name: response.first_name,last_name: response.last_name,user_image: response.user_image});
-      });
+    this.setState({ first_name: this.props.auth.user.first_name,last_name: this.props.auth.user.last_name,user_image: this.props.auth.user.user_image});
   }
 
   render() {
@@ -162,5 +157,5 @@ const mapStateToProps = state => ({
 });
 export default connect(
   mapStateToProps,
-  { getUserByUserId,updateUserInfo }
+  { updateUserInfo }
 )(withRouter(Profile));

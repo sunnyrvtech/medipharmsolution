@@ -36,9 +36,9 @@ export const getCourseByCourseSlug = (courseSlug, history) => dispatch =>
       });
     });
 
-    export const getCourseByUserId = (userId, history) => dispatch =>
+    export const getCourses = () => dispatch =>
       client()
-        .get("/course/user/" + userId)
+        .get("/course")
         .then(res => {
           return res.data;
         })
@@ -51,7 +51,7 @@ export const getCourseByCourseSlug = (courseSlug, history) => dispatch =>
         });
     export const getModuleByCourseId = (courseId, history) => dispatch =>
       client()
-        .get("/course/module/" + courseId)
+        .get("/module/" + courseId)
         .then(res => {
           return res.data;
         })

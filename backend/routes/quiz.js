@@ -29,6 +29,8 @@ router.post(
     }).then(quiz_detail => {
       if (quiz_detail) {
         quiz_detail.score = req.body.score;
+        quiz_detail.total_question = req.body.total_question;
+        quiz_detail.total_answer = req.body.total_answer;
         quiz_detail.save().then(detail => {
           res.json(detail);
         });
@@ -36,6 +38,9 @@ router.post(
         var newQuizDetail = new QuizDetail();
         newQuizDetail.user_id = req.body.user_id;
         newQuizDetail.course_id = req.body.course_id;
+        newQuizDetail.module_id = req.body.module_id;
+        newQuizDetail.total_question = req.body.total_question;
+        newQuizDetail.total_answer = req.body.total_answer;
         newQuizDetail.module_id = req.body.module_id;
         newQuizDetail.score = req.body.score;
         newQuizDetail.save(function(err, quiz_detail) {

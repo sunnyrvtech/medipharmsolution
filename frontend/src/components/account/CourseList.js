@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withRouter, Link } from "react-router-dom";
 import Sidebar from "./Sidebar";
-import { getCourseByUserId } from "../../actions/course";
+import { getCourses } from "../../actions/course";
 const moment = require('moment');
 
 let route_name;
@@ -21,7 +21,7 @@ class CourseList extends Component {
 
   componentWillMount() {
     this.props
-      .getCourseByUserId(this.props.auth.user.id, this.props.history)
+      .getCourses()
       .then(response => {
         this.setState({ courses: response });
       });
@@ -91,5 +91,5 @@ const mapStateToProps = state => ({
 });
 export default connect(
   mapStateToProps,
-  { getCourseByUserId }
+  { getCourses }
 )(withRouter(CourseList));

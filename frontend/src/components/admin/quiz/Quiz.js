@@ -44,7 +44,7 @@ class Quiz extends Component {
   }
   componentWillMount() {
     window.scrollTo(0, 0);
-    this.props.getQuizes().then(response => {
+    this.props.getQuizes(this.props.match.params.moduleId).then(response => {
       this.setState({ quizes: response });
     });
     if (this.props.location.state) {

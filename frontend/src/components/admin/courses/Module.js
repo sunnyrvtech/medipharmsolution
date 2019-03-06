@@ -60,17 +60,12 @@ class Module extends Component {
 ActionButton(cell, row) {
     return (
       <div>
+      <Link to={`${route_name+'/'+cell+'/'+'quiz'}`} className="btn btn-info btn-circle" tooltip="view quiz"><i className="fa fa-low-vision"></i></Link>{' '}
       <a href={`${route_name+'/'+cell}`} className="btn btn-info btn-circle" tooltip="update"><i className="fa fa-pencil-square-o"></i></a>{' '}
       <a onClick={() => this.onDelete(cell,row.id-1)} className="btn btn-danger btn-circle" tooltip="delete"><i className="fa fa-trash"></i></a>
       </div>
     );
   }
-  QuizeButton(cell, row) {
-      return (
-        <Link to={`${route_name+'/'+cell+'/'+'quiz'}`} className="btn btn-info btn-circle" tooltip="view quiz"><i className="fa fa-low-vision"></i></Link>
-
-      );
-    }
   createCustomInsertButton = (onClick) => {
     return (
       <div>
@@ -96,8 +91,7 @@ ActionButton(cell, row) {
         <TableHeaderColumn width='60' isKey dataSort dataField='id'>ID</TableHeaderColumn>
         <TableHeaderColumn dataSort dataField='course_name'>Course</TableHeaderColumn>
         <TableHeaderColumn dataSort dataField='name'>Module</TableHeaderColumn>
-        <TableHeaderColumn dataField='_id' dataFormat={ this.QuizeButton.bind(this) }>View Quiz</TableHeaderColumn>
-        <TableHeaderColumn width='100' dataField='_id' dataFormat={ this.ActionButton.bind(this) }>Action</TableHeaderColumn>
+        <TableHeaderColumn width='150' dataField='_id' dataFormat={ this.ActionButton.bind(this) }>Action</TableHeaderColumn>
         </BootstrapTable>
     </div>
     );

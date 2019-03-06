@@ -67,6 +67,8 @@ class Quiz extends Component {
           user_id: this.props.auth.user.id,
           course_id: quizes[index].module_id.course_id,
           module_id: quizes[index].module_id,
+          total_question: this.state.quiz_count,
+          total_answer: quiz_result.length,
           score: (quiz_result.length*100)/this.state.quiz_count
         }
         this.props.addQuizResult(quiz_array,this.props.history)

@@ -1,6 +1,7 @@
 @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 @import url('https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i');
 @import url('https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i');
+@import url('https://fonts.googleapis.com/css?family=Courgette');
 
 body {
   margin: 0;
@@ -177,12 +178,61 @@ section.list_sec {
 [tooltip]::before { content: "";position: absolute;top:-6px;left:50%;transform: translateX(-50%);border-width: 4px 6px 0 6px;border-style: solid;border-color: rgba(0,0,0,0.7) transparent;z-index: 99;opacity:0; }
 [tooltip]::after{ content: attr(tooltip);position: absolute;left:50%;top:-6px;transform: translateX(-50%) translateY(-100%);background: rgba(0,0,0,0.7);text-align: center;color: #fff;padding:4px 2px;font-size: 11px;min-width:46px;border-radius: 5px;pointer-events: none;padding: 4px 4px;z-index:99;opacity:0; }
 [tooltip]:hover::after,[tooltip]:hover::before { opacity:1; }
-#content-wrapper .react-bs-table table td:last-child,#content-wrapper .react-bs-container-body { overflow: visible; }
-#certificate { width:800px; height:600px; padding:20px; text-align:center; border: 10px solid #004dda; }
-#certificate .cert-content { width:750px; height:550px; padding:20px; text-align:center; border: 5px solid #004dda; }
-#certificate .cert-title { font-size:50px; font-weight:bold; }
-#certificate .cert-lg-txt { font-size:30px; }
-#certificate .cert-sm-txt { font-size:25px; }
+#content-wrapper .react-bs-table table td,#content-wrapper .react-bs-container-body { overflow: visible; }
+#certificate .cert-content {
+    width: 100%;
+    height: auto;
+    padding: 50px 20px;
+    text-align: center;
+    border: 1px dashed #004dda;
+    font-family: 'Lato', sans-serif;
+    color: #555;
+    float: left;
+}
+#certificate {
+    width: 100%;
+    height: auto;
+    padding: 8px;
+    text-align: center;
+    border: 5px solid #004dda;
+    float: left;
+    background: url(/images/certificate_bg.jpg);
+    background-size: cover;
+    min-width: 700px;
+}
+#certificate .cert-sm-txt.subtext {
+    font-size: 22px;
+    position: relative;
+    top: -7px;
+    font-weight: 300;
+}
+.logoimg{max-width: 160px}
+span.certificatename {
+    font-weight: bold;
+    color: #444;
+    margin: 10px 0;
+    display: inline-block;
+}
+.score_line{
+    margin: 7px 0;
+    display: inline-block;
+}
+.medipharm_color{
+    color: #004dda;
+    font-weight: bold;
+}
+#certificate .cert-lg-txt b {
+    font-family: 'Courgette', cursive;
+    font-size: 36px;
+}
+.profile_main .p-5 .nxt_btn.print {
+    position: relative;
+    margin-bottom: 20px;
+    float: right;
+}
+#certificate .cert-title { font-size:50px; font-weight:bold;  margin-top: 15px; float: left; width: 100%; color: #444; font-family: 'Courgette', cursive;}
+#certificate .cert-lg-txt { font-size:24px;float: left;width: 100%; }
+#certificate .cert-sm-txt { font-size:18px; }
 
 @media (min-width: 1200px){
 .container {
@@ -697,6 +747,9 @@ main.profile_main form.user .btn-user{
 }
 .profile_main .p-5 {
     background: #f8f9fa;
+    float: left;
+    width: 100%;
+    overflow: auto;
 }
 .profile_main table.table {
     background: #fff;
@@ -738,6 +791,9 @@ button#dropdownMenuButton {
     margin-right: 5px;
 }
 .dropdown .dropdown-menu {
+    left: auto;
+}
+header .dropdown .dropdown-menu {
     right: 0;
     left: auto;
 }

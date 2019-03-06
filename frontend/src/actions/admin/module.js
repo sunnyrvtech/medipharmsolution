@@ -11,7 +11,7 @@ export const emptyReducer =() => dispatch => {
 };
 export const createModule = (module, history) => dispatch => {
   client()
-    .post("/courses/module", module)
+    .post("/admin/courses/module", module)
     .then(res => history.push({ pathname: '/admin/courses/module',state: { alert_message:{class:'success',message: 'Module added successfully!'}}}))
     .catch(err => {
       console.log(err);
@@ -23,7 +23,7 @@ export const createModule = (module, history) => dispatch => {
 };
 export const updateModule = (module, history) => dispatch => {
   client()
-    .put("/courses/module", module)
+    .put("/admin/courses/module", module)
     .then(res => history.push({ pathname: '/admin/courses/module',state: { alert_message:{class:'success',message: 'Updated successfully!'}}}))
     .catch(err => {
       console.log(err);
@@ -35,7 +35,7 @@ export const updateModule = (module, history) => dispatch => {
 };
 export const deleteModule = (moduleId, history) => dispatch =>
   client()
-    .delete("/courses/module/" + moduleId)
+    .delete("/admin/courses/module/" + moduleId)
     .then(res => {
       return res.data;
     })
@@ -50,7 +50,7 @@ export const deleteModule = (moduleId, history) => dispatch =>
 
 export const getModules = () => async dispatch =>
   client()
-    .get("/courses/module")
+    .get("/admin/courses/module")
     .then(res => {return res.data;})
     .catch(err => {
       console.log(err);
@@ -61,7 +61,7 @@ export const getModules = () => async dispatch =>
     });
 export const getModuleById = (moduleId, history) => dispatch =>
   client()
-    .get("/courses/module/" + moduleId)
+    .get("/admin/courses/module/" + moduleId)
     .then(res => {
       return res.data;
     })

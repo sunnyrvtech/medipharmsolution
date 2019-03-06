@@ -48,16 +48,3 @@ export const setCurrentUser = decoded => {
     payload: decoded
   };
 };
-export const getUserByUserId = (userId, history) => dispatch =>
-  client()
-    .get("/account/users/" + userId)
-    .then(res => {
-      return res.data;
-    })
-    .catch(err => {
-      console.log(err);
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      });
-    });

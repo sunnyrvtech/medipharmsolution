@@ -12,7 +12,7 @@ export const emptyReducer = () => dispatch => {
 
 export const getGalleries = () => async dispatch =>
   client()
-    .get("/media")
+    .get("/admin/media")
     .then(res => {
       return res.data;
     })
@@ -29,7 +29,7 @@ export const uploadImage = (file, route_name, history) => dispatch => {
         formData.append('myImage',file);
 
   client()
-    .post("/media/upload", formData)
+    .post("/admin/media/upload", formData)
     .then(res =>
       history.push({
         pathname: route_name.split("/upload")[0],
@@ -52,7 +52,7 @@ export const uploadImage = (file, route_name, history) => dispatch => {
 
 export const deleteImage = (images, history) => dispatch =>
   client()
-    .post("/media/delete" , images)
+    .post("/admin/media/delete" , images)
     .then(res => {
       return res.data;
     })

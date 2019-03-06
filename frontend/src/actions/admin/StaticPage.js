@@ -11,7 +11,7 @@ export const emptyReducer =() => dispatch => {
 };
 export const createStaticPage = (page,route_name, history) => dispatch => {
   client()
-    .post("/pages/create", page)
+    .post("/admin/pages/create", page)
     .then(res => history.push({ pathname: route_name.split('/add')[0],state: { alert_message:{class:'success',message: 'Page added successfully!'}}}))
     .catch(err => {
       console.log(err);
@@ -23,7 +23,7 @@ export const createStaticPage = (page,route_name, history) => dispatch => {
 };
 export const updateStaticPage = (page,route_name, history) => dispatch => {
   client()
-    .put("/pages/update", page)
+    .put("/admin/pages/update", page)
     .then(res => history.push({ pathname: route_name.split('/'+page.pageId)[0],state: { alert_message:{class:'success',message: 'Updated successfully!'}}}))
     .catch(err => {
       console.log(err);
@@ -36,7 +36,7 @@ export const updateStaticPage = (page,route_name, history) => dispatch => {
 
 export const getstaticPages = () => async dispatch =>
   client()
-    .get("/pages")
+    .get("/admin/pages")
     .then(res => {return res.data;})
     .catch(err => {
       console.log(err);
@@ -47,7 +47,7 @@ export const getstaticPages = () => async dispatch =>
     });
 export const getPageContentById = (pageId, history) => dispatch =>
   client()
-    .get("/pages/" + pageId)
+    .get("/admin/pages/" + pageId)
     .then(res => {
       return res.data;
     })

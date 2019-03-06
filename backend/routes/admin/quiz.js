@@ -10,10 +10,10 @@ const validateQuizInput = require("../../validation/admin/quiz");
 const Quiz = require("../../models/Quiz");
 
 router.get(
-  "/",
+  "/module/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    Quiz.find()
+    Quiz.find({module_id: req.params.id})
       .populate("module_id", "name")
       .exec(function(err, quizes) {
         var result = [];

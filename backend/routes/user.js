@@ -52,7 +52,7 @@ router.put(
           user_image: err //////  this will handle image validation error
         });
       }
-      User.findOne({ _id: req.body.user_id }).then(user => {
+      User.findOne({ _id: req.user.id }).then(user => {
         if (user) {
           var old_user_image = user.user_image;
           user.first_name = req.body.first_name;
@@ -107,54 +107,47 @@ router.put(
   }
 );
 
-router.get(
-  "/:id",
+router.post(
+  "/password/change",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    User.findOne({ _id: req.params.id }).then(user => {
-      if (user.user_image) {
-        user.user_image = config.USET_IMAGE_URL + user.user_image;
+    const { errors, isValid } = Validation.validatePasswordChangeInput(
+      req.body
+    );
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+    User.findOne({ _id: req.user.id }).then(user => {
+      if (user) {
+        bcrypt
+          .compare(req.body.current_password, user.password)
+          .then(isMatch => {
+            if (!isMatch) {
+              errors.current_password = "Incorrect current password";
+              return res.status(400).json(errors);
+            }
+          });
+
+        bcrypt.genSalt(10, (err, salt) => {
+          if (err) console.error("There was an error", err);
+          else {
+            bcrypt.hash(req.body.password, salt, (err, hash) => {
+              if (err) console.error("There was an error", err);
+              else {
+                user.password = hash;
+                user.save().then(user => {
+                  res.json({ success: true });
+                });
+              }
+            });
+          }
+        });
       } else {
-        user.user_image = config.USET_IMAGE_URL + "default.png";
+        return res.status(400).json({
+          current_password: "User not found!"
+        });
       }
-      res.json(user);
     });
   }
 );
-
-router.post("/password/change", function(req, res) {
-  const { errors, isValid } = Validation.validatePasswordChangeInput(req.body);
-  if (!isValid) {
-    return res.status(400).json(errors);
-  }
-  User.findOne({ _id: req.body.userId }).then(user => {
-    if (user) {
-      bcrypt.compare(req.body.current_password, user.password).then(isMatch => {
-        if (!isMatch) {
-          errors.current_password = "Incorrect current password";
-          return res.status(400).json(errors);
-        }
-      });
-
-      bcrypt.genSalt(10, (err, salt) => {
-        if (err) console.error("There was an error", err);
-        else {
-          bcrypt.hash(req.body.password, salt, (err, hash) => {
-            if (err) console.error("There was an error", err);
-            else {
-              user.password = hash;
-              user.save().then(user => {
-                res.json({ success: true });
-              });
-            }
-          });
-        }
-      });
-    } else {
-      return res.status(400).json({
-        current_password: "User not found!"
-      });
-    }
-  });
-});
 module.exports = router;

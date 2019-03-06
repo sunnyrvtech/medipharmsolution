@@ -1043,13 +1043,12 @@
 form.user .custom-checkbox.small label {
   line-height: 1.5rem;
 }
-
 form.user .form-control-user {
-  font-size: 0.8rem;
-  border-radius: 10rem;
-  padding: 1.5rem 1rem;
+    font-size: 0.8rem;
+    border-radius: 10rem;
+    padding: 13px 15px;
+    height: auto;
 }
-
 form.user .btn-user {
   font-size: 0.8rem;
   border-radius: 10rem;

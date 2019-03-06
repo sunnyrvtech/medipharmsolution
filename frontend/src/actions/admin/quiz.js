@@ -11,7 +11,7 @@ export const emptyReducer =() => dispatch => {
 };
 export const createQuiz = (quiz,route_name, history) => dispatch => {
   client()
-    .post("/quiz/create", quiz)
+    .post("/admin/quiz/create", quiz)
     .then(res => history.push({ pathname: route_name.split('/add')[0],state: { alert_message:{class:'success',message: 'Quiz added successfully!'}}}))
     .catch(err => {
       console.log(err);
@@ -23,7 +23,7 @@ export const createQuiz = (quiz,route_name, history) => dispatch => {
 };
 export const updateQuiz = (quiz,route_name, history) => dispatch => {
   client()
-    .put("/quiz/update", quiz)
+    .put("/admin/quiz/update", quiz)
     .then(res => history.push({ pathname: route_name.split('/'+quiz.quizId)[0],state: { alert_message:{class:'success',message: 'Updated successfully!'}}}))
     .catch(err => {
       console.log(err);
@@ -35,7 +35,7 @@ export const updateQuiz = (quiz,route_name, history) => dispatch => {
 };
 export const deleteQuiz = (quizId, history) => dispatch =>
   client()
-    .delete("/quiz/delete/" + quizId)
+    .delete("/admin/quiz/delete/" + quizId)
     .then(res => {
       return res.data;
     })
@@ -48,9 +48,9 @@ export const deleteQuiz = (quizId, history) => dispatch =>
     });
 
 
-export const getQuizes = () => async dispatch =>
+export const getQuizes = (moduleId) => async dispatch =>
   client()
-    .get("/quiz")
+    .get("/admin/quiz/module/"+moduleId)
     .then(res => {return res.data;})
     .catch(err => {
       console.log(err);
@@ -61,7 +61,7 @@ export const getQuizes = () => async dispatch =>
     });
 export const getQuizById = (quizId, history) => dispatch =>
   client()
-    .get("/quiz/" + quizId)
+    .get("/admin/quiz/" + quizId)
     .then(res => {
       return res.data;
     })

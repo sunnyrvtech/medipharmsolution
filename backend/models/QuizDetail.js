@@ -21,6 +21,14 @@ const QuizDetailSchema = new Schema({
     ref: 'course_modules',
     required: true
   },
+  total_question: {
+    type: Number,
+    required: true
+  },
+  total_answer: {
+    type: Number,
+    required: true
+  },
   score: {
     type: Number,
     required: true

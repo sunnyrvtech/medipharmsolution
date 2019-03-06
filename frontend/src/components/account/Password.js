@@ -33,7 +33,6 @@ class Password extends Component {
     window.scrollTo(0, 0);
     e.preventDefault();
     const user = {
-      userId: this.props.auth.user.id,
       current_password: this.state.current_password,
       password: this.state.password,
       password_confirm: this.state.password_confirm
@@ -138,7 +137,6 @@ class Password extends Component {
   }
 }
 const mapStateToProps = state => ({
-  auth: state.auth,
   errors: state.errors
 });
 export default connect(

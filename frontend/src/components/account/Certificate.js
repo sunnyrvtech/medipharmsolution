@@ -8,6 +8,7 @@ import html2canvas from "html2canvas";
 import { getCertificateByCourseId } from "../../actions/course";
 import jsPDF from "jspdf";
 import Sidebar from "./Sidebar";
+const moment = require("moment");
 
 let route_name;
 
@@ -16,7 +17,7 @@ class Certificate extends Component {
     super();
     route_name = props.match.url;
     this.state = {
-      course: null
+      certificate: null
     };
   }
 
@@ -26,57 +27,67 @@ class Certificate extends Component {
       scale: quality
     }).then(canvas => {
       let pdf = new jsPDF("p", "mm", "a4");
-      pdf.addImage(canvas.toDataURL("image/png"), "PNG", 0, 0, 200, 250);
+      pdf.addImage(canvas.toDataURL("image/png"), "PNG", 0, 0, 210, 297);
       pdf.save(filename);
     });
   }
 
   componentWillMount() {
     this.props
-      .getCertificateByCourseId(this.props.match.params.courseId, this.props.history)
+      .getCertificateByCourseId(
+        this.props.match.params.courseId,
+        this.props.history
+      )
       .then(response => {
-        this.setState({ courses: response });
+        this.setState({ certificate: response });
       });
   }
 
   renderContent() {
+    const { certificate } = this.state;
     return (
       <div>
-        <a href="javascript:void(0);" onClick={() => this.print()}>
-          Print
-        </a>
+        <div className="nxt_btn print">
+          <a to="#" className="btn btn-primary" onClick={() => this.print()}>
+            Print
+          </a>
+        </div>
         <div id="certificate">
           <div className="cert-content">
+            <img src="/images/logo.png" className="logoimg" />
             <span className="cert-title">Certificate of Completion</span>
             <br />
             <br />
-            <span className="cert-sm-txt">
+            <span className="cert-sm-txt subtext">
               <i>This is to certify that</i>
             </span>
             <br />
-            <br />
             <span className="cert-lg-txt">
-              <b>$student.getFullName()</b>
+              <b>
+                {certificate.first_name +
+                  " " +
+                  certificate.last_name}
+              </b>
+              <br />
+              <span className="cert-sm-txt"> has completed the course</span>
+              <br />{" "}
+              <span className="certificatename">
+                {certificate.course_name}{" "}
+              </span>
+              <br />
+              <span className="score_line">
+                with score of <b>{certificate.score}%</b> from{" "}
+                <span className="medipharm_color">Medipharm</span> Solutions
+              </span>{" "}
+              <br />
+              <span>
+                <i> On dated </i>
+              </span>{" "}
+              <span className="cert-sm-txt">
+                {" "}
+                {moment(certificate.created_at).format("YYYY-MM-DD")}
+              </span>
             </span>
-            <br />
-            <br />
-            <span className="cert-sm-txt">
-              <i>has completed the course</i>
-            </span>{" "}
-            <br />
-            <br />
-            <span className="cert-lg-txt">$course.getName()</span> <br />
-            <br />
-            <span>
-              with score of <b>100%</b>
-            </span>{" "}
-            <br />
-            <br />
-            <span className="cert-lg-txt">
-              <i>dated</i>
-            </span>
-            <br />
-            <span className="cert-sm-txt">January 22,2013</span>
           </div>
         </div>
       </div>
@@ -84,8 +95,7 @@ class Certificate extends Component {
   }
 
   render() {
-    const { course } = this.state;
-    var link = 'sunny';
+    const { certificate } = this.state;
     return (
       <main className="profile_main">
         <div className="container">
@@ -93,10 +103,16 @@ class Certificate extends Component {
             <Sidebar route_name={route_name} />
             <div className="col-md-8 col-lg-9">
               <div className="p-5">
-                {course
-                  ? this.renderContent()
-                  : <span>Ceritificate will be available if you have scored above 80% in all modules.Please check <Link to="/account/quiz/summary">here</Link> your all module score.</span>
-                }
+                {certificate ? (
+                  this.renderContent()
+                ) : (
+                  <span>
+                    Ceritificate will be available if you have scored above 80%
+                    in all modules.Please check{" "}
+                    <Link to="/account/quiz/summary">here</Link> your all module
+                    score.
+                  </span>
+                )}
               </div>
             </div>
           </div>
@@ -107,5 +123,5 @@ class Certificate extends Component {
 }
 export default connect(
   null,
-  {getCertificateByCourseId}
+  { getCertificateByCourseId }
 )(withRouter(Certificate));
