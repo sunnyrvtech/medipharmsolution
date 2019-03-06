@@ -38,7 +38,7 @@ class CourseList extends Component {
               <td>{moment(course.created_at).format('YYYY-MM-DD hh:mm A')}</td>
               <td>{moment(course.created_at).format('YYYY-MM-DD hh:mm A')}</td>
               <td>
-                <Link to={"/account/modules/"+course._id} tooltip="View Module"><i className="fa fa-low-vision"></i></Link>{" "}
+                <Link to={"/account/modules/"+course._id} tooltip="View Modules"><i className="fa fa-low-vision"></i></Link>{" "}
                 <Link to={"/account/cert/"+course._id} tooltip="Get Certificate"><i className="fa fa-certificate"></i></Link>
               </td>
             </tr>
@@ -58,7 +58,7 @@ class CourseList extends Component {
             <div className="col-md-8 col-lg-9">
               <div className="p-5">
                 <div className="text-center">
-                  <h1 className="h4 text-gray-900 mb-4">Course Details</h1>
+                  <h1 className="h4 text-gray-900 mb-4">Courses Listing</h1>
                 </div>
                 <table className="table table-bordered">
                   <thead>
@@ -70,7 +70,7 @@ class CourseList extends Component {
                       <th>Action</th>
                     </tr>
                   </thead>
-                  {courses && courses.length != undefined ?
+                  {courses && courses.length > 0 ?
                     this.renderList(courses)
                     :
                           <tbody>
@@ -86,10 +86,7 @@ class CourseList extends Component {
     );
   }
 }
-const mapStateToProps = state => ({
-  auth: state.auth
-});
 export default connect(
-  mapStateToProps,
+  null,
   { getCourses }
 )(withRouter(CourseList));

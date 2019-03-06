@@ -11,7 +11,7 @@ export const emptyReducer =() => dispatch => {
 };
 export const getCourseByCategorySlug = (categorySlug, history) => dispatch =>
   client()
-    .get("/course/category/" + categorySlug)
+    .get("/courses/category/" + categorySlug)
     .then(res => {
       return res.data;
     })
@@ -24,7 +24,7 @@ export const getCourseByCategorySlug = (categorySlug, history) => dispatch =>
     });
 export const getCourseByCourseSlug = (courseSlug, history) => dispatch =>
   client()
-    .get("/course/" + courseSlug)
+    .get("/courses/" + courseSlug)
     .then(res => {
       return res.data;
     })
@@ -38,7 +38,7 @@ export const getCourseByCourseSlug = (courseSlug, history) => dispatch =>
 
     export const getCourses = () => dispatch =>
       client()
-        .get("/course")
+        .get("/courses")
         .then(res => {
           return res.data;
         })
@@ -49,23 +49,9 @@ export const getCourseByCourseSlug = (courseSlug, history) => dispatch =>
             payload: err.response.data
           });
         });
-    export const getModuleByCourseId = (courseId, history) => dispatch =>
-      client()
-        .get("/module/" + courseId)
-        .then(res => {
-          return res.data;
-        })
-        .catch(err => {
-          console.log(err);
-          dispatch({
-            type: GET_ERRORS,
-            payload: err.response.data
-          });
-        });
-
         export const getCertificateByCourseId = (courseId, history) => dispatch =>
           client()
-            .get("/course/certificate/" + courseId)
+            .get("/courses/certificate/" + courseId)
             .then(res => {
               return res.data;
             })

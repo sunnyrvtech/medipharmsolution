@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withRouter, Link } from "react-router-dom";
 import Sidebar from "./Sidebar";
-import { getModuleByCourseId } from "../../actions/course";
+import { getModuleByModuleId } from "../../actions/module";
 
 let route_name;
 
@@ -17,29 +17,17 @@ class Module extends Component {
       module: null
     };
   }
-
-  nextModule(){
-    var index = this.state.current_count;
-    var modules = this.state.modules;
-    this.setState({ current_count: index+1,module: modules[index+1] });
-  }
-  backModule(){
-    var index = this.state.current_count;
-    var modules = this.state.modules;
-    this.setState({ current_count: index-1,module: modules[index-1] });
-  }
-
   componentWillMount() {
-    const courseId = this.props.match.params.courseId;
+    const moduleId = this.props.match.params.moduleId;
     this.props
-      .getModuleByCourseId(courseId, this.props.history)
+      .getModuleByModuleId(moduleId, this.props.history)
       .then(response => {
-        this.setState({ current_count: 0,module_count: response.length,modules: response,module: response[0] });
+        this.setState({ module: response });
       });
   }
 
   renderContent() {
-    const { module,module_count,current_count } = this.state;
+    const { module } = this.state;
     return (
       <div className="text-center module_content">
         <h2 className="h4 text-gray-900 mb-4">
@@ -47,14 +35,6 @@ class Module extends Component {
         </h2>
         <div className="content_des" dangerouslySetInnerHTML={{ __html: module.content }} />
         <div className="nxt_btn"><Link to={"/account/quiz/"+module._id} className="btn btn-primary">Play Quiz</Link></div>
-        <div className="btn_profile">
-            {current_count != 0 && current_count < module_count &&
-              <a onClick={() => this.backModule()} href="#" className="btn btn-primary">❮ Back</a>
-            }
-            {current_count+1 < module_count &&
-            <a href="#" className="btn btn-primary pull-right" onClick={() => this.nextModule()}>Next ❯</a>
-            }
-        </div>
       </div>
     );
   }
@@ -86,5 +66,5 @@ const mapStateToProps = state => ({
 });
 export default connect(
   mapStateToProps,
-  { getModuleByCourseId }
+  { getModuleByModuleId }
 )(withRouter(Module));

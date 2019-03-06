@@ -51,13 +51,4 @@ router.post(
   }
 );
 
-router.get('/history/:userId', passport.authenticate('jwt', { session: false }), (req, res) => {
-        QuizDetail.find({ user_id: req.params.userId })
-          .populate('module_id course_id','name')
-          .exec(function(err, quiz_detail) {
-            res.json(quiz_detail);
-          });
-});
-
-
 module.exports = router;

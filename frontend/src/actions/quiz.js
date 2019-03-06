@@ -35,16 +35,3 @@ export const addQuizResult = (quiz, history) => dispatch =>
         payload: err.response.data
       });
     });
-    export const getQuizHistoryByUserId = (userId, history) => dispatch =>
-      client()
-        .get("/quiz/module/history/" + userId)
-        .then(res => {
-          return res.data;
-        })
-        .catch(err => {
-          console.log(err);
-          dispatch({
-            type: GET_ERRORS,
-            payload: err.response.data
-          });
-        });

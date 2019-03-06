@@ -43,8 +43,8 @@ app.use('/api/admin/categories', categories);
 app.use('/api/admin/quiz', quizes);
 app.use('/api/admin/pages', static_pages);
 app.use('/api/admin/media', media);
-app.use('/api/course', front_courses);
-app.use('/api/module', front_modules);
+app.use('/api/courses', front_courses);
+app.use('/api/modules', front_modules);
 app.use('/api/quiz/module', front_quizes);
 app.use('/api/account/users', front_users);
 app.get('/', function(req, res) {

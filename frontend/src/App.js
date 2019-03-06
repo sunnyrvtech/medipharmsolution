@@ -23,7 +23,7 @@ import PaymentHistory from "./components/account/PaymentHistory";
 import Module from "./components/account/Module";
 import Quiz from "./components/account/Quiz";
 import Certificate from "./components/account/Certificate";
-import QuizDetail from "./components/account/QuizDetail";
+import ModuleList from "./components/account/ModuleList";
 import Course from "./components/courses/Course";
 import CourseView from "./components/courses/CourseView";
 import StaticPage from "./components/StaticPage";
@@ -76,9 +76,9 @@ class App extends Component {
             <RouteLayout exact path="/account/profile" component={Profile} />
             <RouteLayout exact path="/account/password/change" component={PasswordChange} />
             <RouteLayout exact path="/account/courses" component={CourseList} />
-            <RouteLayout exact path="/account/modules/:courseId" component={Module} />
+            <RouteLayout exact path="/account/modules/:courseId" component={ModuleList} />
+            <RouteLayout exact path="/account/modules/module/:moduleId" component={Module} />
             <RouteLayout exact path="/account/cert/:courseId" component={Certificate} />
-            <RouteLayout exact path="/account/quiz/summary" component={QuizDetail} />
             <RouteLayout exact path="/account/quiz/:moduleId" component={Quiz} />
             <RouteLayout exact path="/account/payment/history" component={PaymentHistory} />
             <RouteLayout exact path="/:categorySlug" component={Course} />
