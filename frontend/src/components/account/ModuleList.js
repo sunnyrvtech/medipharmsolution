@@ -10,6 +10,7 @@ const moment = require("moment");
 let route_name;
 let total_question;
 let total_answer;
+let quiz_count;
 
 class ModuleList extends Component {
   constructor(props) {
@@ -20,6 +21,7 @@ class ModuleList extends Component {
     };
     total_question = 0;
     total_answer = 0;
+    quiz_count = 0;
   }
 
   componentWillMount() {
@@ -29,7 +31,7 @@ class ModuleList extends Component {
       this.setState({ percentage: 0, modules: response });
     });
   }
-  reanderPercentage() {
+  reanderPercentage(module_count) {
     if (total_question != 0) {
       var percentage = (total_answer * 100) / total_question;
     } else {
@@ -40,24 +42,28 @@ class ModuleList extends Component {
       <tr>
         <td colSpan={3}>
           <div class="alert alert-info">
-            {percentage >= 80 ? (
+            {percentage >= 80 && module_count == quiz_count ? (
               <span>
                 <strong>Congratulation!</strong> You have scored above 80% .Get your certificate <b>  <Link to={"/account/cert/"+this.props.match.params.courseId} tooltip="Get Certificate">here</Link>
                 </b>
               </span>
             ) : (
               <span>
-                <strong>Note!</strong> Certificate will be avialable if your
+                <strong>Note!</strong> Certificate will be available if your
                 overall percentage above 80%
               </span>
             )}
           </div>
         </td>
         <td colSpan={3}>
+          {module_count == quiz_count &&
+            <div>
           <p>
             <b>Percentage</b>
           </p>
           <span>{percentage}%</span>
+          </div>
+        }
         </td>
       </tr>
     );
@@ -69,6 +75,7 @@ class ModuleList extends Component {
           if (module.quiz_detail) {
             total_question += module.quiz_detail.total_question;
             total_answer += module.quiz_detail.total_answer;
+            quiz_count++;
           }
           return (
             <tr key={i}>
@@ -97,7 +104,7 @@ class ModuleList extends Component {
             </tr>
           );
         })}
-        {this.reanderPercentage()}
+        {this.reanderPercentage(modules.length)}
       </tbody>
     );
   }
@@ -114,7 +121,7 @@ class ModuleList extends Component {
                 <div className="text-center module_content">
                   <h1 className="h4 text-gray-900 mb-4">Modules Listing</h1>
                   <div className="nxt_btn"><Link to={"/account/courses"} className="btn btn-primary">Back Course Listing</Link></div>
-                  
+
                 </div>
                 <table className="table table-bordered">
                   <thead>
