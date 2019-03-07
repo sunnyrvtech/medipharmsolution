@@ -39,7 +39,6 @@ class CourseList extends Component {
               <td>{moment(course.created_at).format('YYYY-MM-DD hh:mm A')}</td>
               <td>
                 <Link to={"/account/modules/"+course._id} tooltip="View Modules"><i className="fa fa-low-vision"></i></Link>{" "}
-                <Link to={"/account/cert/"+course._id} tooltip="Get Certificate"><i className="fa fa-certificate"></i></Link>
               </td>
             </tr>
           );

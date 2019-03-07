@@ -106,12 +106,9 @@ class Certificate extends Component {
                 {certificate ? (
                   this.renderContent()
                 ) : (
-                  <span>
-                    Ceritificate will be available if you have scored above 80%
-                    in all modules.Please check{" "}
-                    <Link to="/account/quiz/summary">here</Link> your all module
-                    score.
-                  </span>
+                        <div class="alert alert-info">
+                          <strong>Warning!</strong> No certificate available !
+                        </div>
                 )}
               </div>
             </div>

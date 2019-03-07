@@ -6,7 +6,6 @@ import PropTypes from "prop-types";
 import { withRouter, Link } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import { getModuleByModuleId } from "../../actions/module";
-
 let route_name;
 
 class Module extends Component {
@@ -16,6 +15,12 @@ class Module extends Component {
     this.state = {
       module: null
     };
+    document.addEventListener('contextmenu', event => event.preventDefault());
+    document.addEventListener("keydown", function(event){
+      if(event.code == "F12"){
+        event.preventDefault();
+      }
+    });
   }
   componentWillMount() {
     const moduleId = this.props.match.params.moduleId;
@@ -34,7 +39,7 @@ class Module extends Component {
           {module.name}
         </h2>
         <div className="content_des" dangerouslySetInnerHTML={{ __html: module.content }} />
-        <div className="nxt_btn"><Link to={"/account/quiz/"+module._id} className="btn btn-primary">Play Quiz</Link></div>
+        <div className="nxt_btn"><Link to={"/account/modules/"+module.course_id} className="btn btn-primary">Back Module Listing</Link>{" "}<Link to={"/account/quiz/"+module._id} className="btn btn-primary">Play Quiz</Link></div>
       </div>
     );
   }

@@ -6,8 +6,10 @@ import PropTypes from "prop-types";
 import { withRouter, Link } from "react-router-dom";
 import { getModules } from "../../actions/module";
 import Sidebar from "./Sidebar";
-const moment = require('moment');
+const moment = require("moment");
 let route_name;
+let total_question;
+let total_answer;
 
 class ModuleList extends Component {
   constructor(props) {
@@ -16,33 +18,86 @@ class ModuleList extends Component {
     this.state = {
       modules: {}
     };
+    total_question = 0;
+    total_answer = 0;
   }
 
   componentWillMount() {
     const courseId = this.props.match.params.courseId;
 
-    this.props
-      .getModules(courseId)
-      .then(response => {
-        this.setState({ modules: response });
-      });
+    this.props.getModules(courseId).then(response => {
+      this.setState({ percentage: 0, modules: response });
+    });
+  }
+  reanderPercentage() {
+    if (total_question != 0) {
+      var percentage = (total_answer * 100) / total_question;
+    } else {
+      var percentage = 0;
+    }
+
+    return (
+      <tr>
+        <td colSpan={3}>
+          <div class="alert alert-info">
+            {percentage >= 80 ? (
+              <span>
+                <strong>Congratulation!</strong> You have scored above 80% .Get your certificate <b>  <Link to={"/account/cert/"+this.props.match.params.courseId} tooltip="Get Certificate">here</Link>
+                </b>
+              </span>
+            ) : (
+              <span>
+                <strong>Note!</strong> Certificate will be avialable if your
+                overall percentage above 80%
+              </span>
+            )}
+          </div>
+        </td>
+        <td colSpan={3}>
+          <p>
+            <b>Percentage</b>
+          </p>
+          <span>{percentage}%</span>
+        </td>
+      </tr>
+    );
   }
   renderList(modules) {
     return (
       <tbody>
         {modules.map((module, i) => {
+          if (module.quiz_detail) {
+            total_question += module.quiz_detail.total_question;
+            total_answer += module.quiz_detail.total_answer;
+          }
           return (
             <tr key={i}>
               <th scope="row">{i + 1}</th>
               <td>{module.name}</td>
               <td>{module.courses.name}</td>
-              <td>{module.quiz_detail.score}%</td>
               <td>
-                <Link to={"/account/modules/module/"+module._id} tooltip="View Detail"><i className="fa fa-low-vision"></i></Link>
+                {module.quiz_detail != undefined
+                  ? module.quiz_detail.score + "%"
+                  : "......."}
+              </td>
+              <td>
+                <Link
+                  to={"/account/modules/module/" + module._id}
+                  tooltip="View Detail"
+                >
+                  <i className="fa fa-low-vision" />
+                </Link>{" "}
+                <Link
+                  to={"/account/quiz/" + module._id}
+                  tooltip="Play Quiz"
+                >
+                  <i className="fa fa-question-circle" />
+                </Link>
               </td>
             </tr>
           );
         })}
+        {this.reanderPercentage()}
       </tbody>
     );
   }
@@ -56,8 +111,10 @@ class ModuleList extends Component {
             <Sidebar route_name={route_name} />
             <div className="col-md-8 col-lg-9">
               <div className="p-5">
-                <div className="text-center">
+                <div className="text-center module_content">
                   <h1 className="h4 text-gray-900 mb-4">Modules Listing</h1>
+                  <div className="nxt_btn"><Link to={"/account/courses"} className="btn btn-primary">Back Course Listing</Link></div>
+                  
                 </div>
                 <table className="table table-bordered">
                   <thead>
@@ -69,13 +126,15 @@ class ModuleList extends Component {
                       <th>Action</th>
                     </tr>
                   </thead>
-                  {modules && modules.length > 0 ?
+                  {modules && modules.length > 0 ? (
                     this.renderList(modules)
-                    :
-                          <tbody>
-                          <tr><td colSpan={5}>No module found!</td></tr>
-                          </tbody>
-                  }
+                  ) : (
+                    <tbody>
+                      <tr>
+                        <td colSpan={5}>No module found!</td>
+                      </tr>
+                    </tbody>
+                  )}
                 </table>
               </div>
             </div>

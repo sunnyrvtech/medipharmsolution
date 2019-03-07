@@ -16,6 +16,7 @@ const front_courses = require('./routes/course');
 const front_modules = require('./routes/course_module');
 const front_quizes = require('./routes/quiz');
 const front_users = require('./routes/user');
+const pages = require('./routes/page');
 
 mongoose.connect(config.DB, { useNewUrlParser: true }).then(
     () => {console.log('Database is connected') },
@@ -47,6 +48,7 @@ app.use('/api/courses', front_courses);
 app.use('/api/modules', front_modules);
 app.use('/api/quiz/module', front_quizes);
 app.use('/api/account/users', front_users);
+app.use('/api/pages', pages);
 app.get('/', function(req, res) {
     res.send('hello');
 });
