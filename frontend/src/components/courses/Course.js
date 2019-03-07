@@ -25,6 +25,14 @@ class Course extends Component {
     });
   }
 
+
+    componentWillReceiveProps(nextProps) {
+      var categorySlug = window.location.pathname.split("/").pop();
+      this.props.getCourseByCategorySlug(categorySlug, this.props.history).then(response => {
+        this.setState({ IMAGE_CATEGORY_URL:response.IMAGE_CATEGORY_URL,IMAGE_COURSE_URL:response.IMAGE_COURSE_URL,category: response.category,courses: response.courses });
+      });
+    }
+
   renderContent(courses) {
     var category_banner = this.state.IMAGE_CATEGORY_URL+this.state.category.banner;
     return (

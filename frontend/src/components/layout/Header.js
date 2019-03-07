@@ -56,13 +56,13 @@ class Header extends Component {
                             <div className="col-sm-6 text-center">
                                 <ul id="course-menu" className="course-menu">
                                     <li>
-                                    <h3><a href="/clinical-research">Clinical Research</a></h3>
+                                    <h3><Link to="/clinical-research">Clinical Research</Link></h3>
                                     </li>
                                     <li>
-                                    <h3><a href="/drug-safety">Drug Safety</a></h3>
+                                    <h3><Link to="/drug-safety">Drug Safety</Link></h3>
                                     </li>
                                     <li>
-                                    <h3><a href="/data-management">Data Management</a></h3>
+                                    <h3><Link to="/data-management">Data Management</Link></h3>
                                     </li>
                                 </ul>
                             </div>
@@ -86,14 +86,14 @@ class Header extends Component {
                             <Link className="nav-link" to="/">Home <span className="sr-only">(current)</span></Link>
                           </li>
                           <li className="nav-item">
-                            <a className="nav-link" href="/about-us">About Us</a>
+                            <Link className="nav-link" to="/about-us">About Us</Link>
                           </li>
                           <li className="nav-item parent">
                             <a className="nav-link" href="#">Explore programs <i className="fa fa-chevron-down" aria-hidden="true"></i></a>
                               <ul className="submenu">
-                                  <li><a className="nav-link" href="/clinical-research">Clinical Research</a></li>
-                                  <li><a className="nav-link" href="/drug-safety">Drug Safety</a></li>
-                                  <li><a className="nav-link" href="/data-management">Data Science</a></li>
+                                  <li><Link className="nav-link" to="/clinical-research">Clinical Research</Link></li>
+                                  <li><Link className="nav-link" to="/drug-safety">Drug Safety</Link></li>
+                                  <li><Link className="nav-link" to="/data-management">Data Science</Link></li>
                               </ul>
                           </li>
                           {/*<li className="nav-item">
@@ -102,23 +102,23 @@ class Header extends Component {
                           <li className="nav-item parent">
                             <a className="nav-link" href="#">E-learning <i className="fa fa-chevron-down" aria-hidden="true"></i></a>
                             <ul className="submenu">
-                                <li><a className="nav-link" href="/blog">Blog</a></li>
-                                <li><a className="nav-link" href="/free-website-resources-to-be-added">Free website resources to be added </a></li>
+                                <li><Link className="nav-link" to="/blog">Blog</Link></li>
+                                <li><Link className="nav-link" to="/free-website-resources-to-be-added">Free website resources to be added </Link></li>
                             </ul>
                           </li>
                           <li className="nav-item parent">
                             <a className="nav-link" href="#">Careers <i className="fa fa-chevron-down" aria-hidden="true"></i></a>
                             <ul className="submenu">
-                                <li><a className="nav-link" href="/resume-writing">Resume writing</a></li>
-                                <li><a className="nav-link" href="/job-search">Job search </a></li>
-                                <li><a className="nav-link" href="/interview-preparation">Interview preparation </a></li>
-                                <li><a className="nav-link" href="/phone-interview-preparation">Phone interview preparation </a></li>
-                                <li><a className="nav-link" href="/in-person-interview-preparation">In-person interview preparation </a></li>
-                                <li><a className="nav-link" href="/after-interview">After interview </a></li>
+                                <li><Link className="nav-link" to="/resume-writing">Resume writing</Link></li>
+                                <li><Link className="nav-link" to="/job-search">Job search </Link></li>
+                                <li><Link className="nav-link" to="/interview-preparation">Interview preparation </Link></li>
+                                <li><Link className="nav-link" to="/phone-interview-preparation">Phone interview preparation </Link></li>
+                                <li><Link className="nav-link" to="/in-person-interview-preparation">In-person interview preparation </Link></li>
+                                <li><Link className="nav-link" to="/after-interview">After interview </Link></li>
                             </ul>
                           </li>
                           <li className="nav-item">
-                            <a className="nav-link" href="/collaborations">Collaborations </a>
+                            <Link className="nav-link" to="/collaborations">Collaborations </Link>
                           </li>
                           {/*<li className="nav-item">
                             <a className="nav-link" href="#">Student log in </a>

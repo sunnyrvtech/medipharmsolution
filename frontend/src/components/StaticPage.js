@@ -28,6 +28,13 @@ class StaticPage extends Component {
     });
   }
 
+  componentWillReceiveProps(nextProps) {
+    var slug = window.location.pathname.split("/").pop();
+    this.props.getPageContentBySlug(slug, this.props.history).then(response => {
+      this.setState({ static_page: response });
+    });
+  }
+
   renderContent(static_page) {
     return (
       <main>
