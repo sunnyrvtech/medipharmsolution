@@ -25,7 +25,7 @@ class Header extends Component {
                     <img src={user.user_image} />
                   </button>
                   <div className="dropdown-menu" id="account_drop_down" aria-labelledby="dropdownMenuButton">
-                    <a className="dropdown-item" href="/account/profile" onClick={this.toggleAccountDropDown}><i className="fa fa-cog" aria-hidden="true"></i><span>My Account</span></a>
+                    <Link className="dropdown-item" to="/account/profile" onClick={this.toggleAccountDropDown}><i className="fa fa-cog" aria-hidden="true"></i><span>My Account</span></Link>
                     <a className="dropdown-item" href="#" onClick={this.onLogout.bind(this)}><i className="fa fa-sign-out" aria-hidden="true"></i><span>Logout</span></a>
                   </div>
                 </div>

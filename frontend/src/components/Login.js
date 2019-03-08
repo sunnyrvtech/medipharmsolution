@@ -34,11 +34,11 @@ class Login extends Component {
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.auth.isAuthenticated) {
-      this.props.history.push("/");
+      this.props.history.push("/account/profile");
     }
   }
   componentDidMount() {
-        window.scrollTo(0, 0);
+    window.scrollTo(0, 0);
     this.props.emptyReducer();
     if (this.props.auth.isAuthenticated) {
       this.props.history.push("/");

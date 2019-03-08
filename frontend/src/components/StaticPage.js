@@ -22,14 +22,14 @@ class StaticPage extends Component {
   }
 
   componentWillMount() {
-    var slug = window.location.pathname.split("/").pop();
+    var slug = this.props.location.pathname.split("/").pop();
     this.props.getPageContentBySlug(slug, this.props.history).then(response => {
       this.setState({ static_page: response });
     });
   }
 
   componentWillReceiveProps(nextProps) {
-    var slug = window.location.pathname.split("/").pop();
+    var slug = nextProps.location.pathname.split("/").pop();
     this.props.getPageContentBySlug(slug, this.props.history).then(response => {
       this.setState({ static_page: response });
     });
@@ -59,7 +59,6 @@ class StaticPage extends Component {
 
   render() {
     const { static_page } = this.state;
-    console.log(static_page.length);
     return (
       <div>
         {this.renderContent(static_page)}

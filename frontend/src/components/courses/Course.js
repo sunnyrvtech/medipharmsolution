@@ -27,7 +27,7 @@ class Course extends Component {
 
 
     componentWillReceiveProps(nextProps) {
-      var categorySlug = window.location.pathname.split("/").pop();
+      var categorySlug = nextProps.location.pathname.split("/").pop();
       this.props.getCourseByCategorySlug(categorySlug, this.props.history).then(response => {
         this.setState({ IMAGE_CATEGORY_URL:response.IMAGE_CATEGORY_URL,IMAGE_COURSE_URL:response.IMAGE_COURSE_URL,category: response.category,courses: response.courses });
       });
@@ -63,17 +63,17 @@ class Course extends Component {
                         </figure>
                         <div className="cta">
                           <span>
-                            <a href={`${route_name +"/"+ course.slug}`} className="btn btn-ghost btn-white">
+                            <Link to={`${route_name +"/"+ course.slug}`} className="btn btn-ghost btn-white">
                               Learn More
-                            </a>
+                            </Link>
                           </span>
                         </div>
                       </div>
                       <div className="content-holder">
                         <h3>
-                          <a href={`${route_name +"/"+ course.slug}`}>
+                          <Link to={`${route_name +"/"+ course.slug}`}>
                             {course.name}
-                          </a>
+                          </Link>
                         </h3>
                         <span dangerouslySetInnerHTML={{__html: course.description}} />
                       </div>
