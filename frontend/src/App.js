@@ -26,6 +26,8 @@ import Certificate from "./components/account/Certificate";
 import ModuleList from "./components/account/ModuleList";
 import Course from "./components/courses/Course";
 import CourseView from "./components/courses/CourseView";
+import Blog from "./components/blog/Blog";
+import BlogView from "./components/blog/BlogView";
 import StaticPage from "./components/StaticPage";
 import PageNotFound from "./components/PageNotFound";
 
@@ -62,7 +64,6 @@ class App extends Component {
             <RouteLayout exact path="/account/activate/:code" component={Verification} />
             <Route path="/admin" component={AdminRoute} />
             <RouteLayout exact path="/about-us" component={StaticPage} />
-            <RouteLayout exact path="/blog" component={StaticPage} />
             <RouteLayout exact path="/free-website-resources-to-be-added" component={StaticPage} />
             <RouteLayout exact path="/resume-writing" component={StaticPage} />
             <RouteLayout exact path="/job-search" component={StaticPage} />
@@ -71,6 +72,8 @@ class App extends Component {
             <RouteLayout exact path="/in-person-interview-preparation" component={StaticPage} />
             <RouteLayout exact path="/after-interview" component={StaticPage} />
             <RouteLayout exact path="/collaborations" component={StaticPage} />
+            <RouteLayout exact path="/blog" component={Blog} />
+            <RouteLayout exact path="/blog/:blogSlug" component={BlogView} />
             { isAuthenticated == true &&
             <Switch>
             <RouteLayout exact path="/account/profile" component={Profile} />

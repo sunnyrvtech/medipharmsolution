@@ -1,24 +1,23 @@
-// CourseUpdate.js
+// BlogAdd.js
 
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withRouter, Link } from "react-router-dom";
-import { getCourseById,courseUpdate,emptyReducer } from "../../../actions/admin/course";
-import { getCategories } from "../../../actions/admin/category";
+import { createBlog,emptyReducer } from "../../../actions/admin/blog";
 import classnames from "classnames";
 import CKEditor from "react-ckeditor-component";
-
-class CourseUpdate extends Component {
-  constructor() {
+let route_name;
+class BlogAdd extends Component {
+  constructor(props) {
     super();
     this.state = {
       name: "",
-      category: "",
       description: "",
       banner: "",
-      errors: { }
+      errors: {}
     };
+    route_name = props.match.url;
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -33,6 +32,10 @@ class CourseUpdate extends Component {
       [e.target.name]: e.target.value
     });
   }
+
+  componentDidMount() {
+    this.props.emptyReducer();
+  }
   onChange(e) {
     e.preventDefault();
     var file = e.target.files[0];
@@ -46,48 +49,23 @@ class CourseUpdate extends Component {
       banner: file
     });
   }
-  componentDidMount() {
-    this.props.emptyReducer();
-    const courseId = this.props.match.params.courseId;
-    this.props
-      .getCourseById(courseId, this.props.history)
-      .then(response => {
-        if (response) {
-          this.setState({ name: response.name,category: response.category_id,description: response.description,banner: response.banner });
-        }
-      });
-      this.props.getCategories()
-      .then(response => {
-        this.setState({ categories: response});
-      });
-  }
 
   handleSubmit(e) {
     e.preventDefault();
-    const course = new FormData();
-    course.append("name", this.state.name);
-    course.append("courseId", this.props.match.params.courseId);
-    course.append("category", this.state.category);
-    course.append("description", this.state.description);
-    course.append("banner", this.state.banner);
-    this.props.courseUpdate(course,this.props.history);
+    const blog = new FormData();
+    blog.append("name", this.state.name);
+    blog.append("description", this.state.description);
+    blog.append("banner", this.state.banner);
+    var routeName = route_name.split('/add')[0];
+    this.props.createBlog(blog,routeName,this.props.history);
   }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.errors) {
-      this.setState({
-        errors: nextProps.errors
-      });
-    }
-  }
-
   render() {
-    const { errors,categories } = this.state;
+    const { errors } = this.props;
     return (
       <div className="container datatable">
         <div className="row form-group">
           <div className="col-lg-12">
-            <h3>Update Course</h3>
+            <h3>Add New Blog</h3>
             <hr />
           </div>
         </div>
@@ -98,39 +76,20 @@ class CourseUpdate extends Component {
               <label htmlFor="name">Name:</label>
               <input
                 type="text"
-                className={classnames("form-control", {
-                  "is-invalid": errors.name
-                })}
+                className={classnames(
+                  "form-control",
+                  {
+                    "is-invalid": errors.name
+                  }
+                )}
                 name="name"
                 onChange={this.handleInputChange}
                 value={this.state.name}
               />
-              {errors.name  && (
-                <div className="invalid-feedback">{errors.name}</div>
-              )}
-            </div>
-            <div className="form-group">
-              <label htmlFor="course">Category:</label>
-              <select
-                className={classnames("form-control", {
-                  "is-invalid": errors.category
-                })}
-                name="category"
-                onChange={this.handleInputChange}
-                value={this.state.category}
-              >
-                <option value="">Choose category...</option>
-                {categories != undefined &&
-                  categories.map(option => {
-                    return (
-                      <option value={option._id} key={option._id}>
-                        {option.name}
-                      </option>
-                    );
-                  })}
-              </select>
-              {errors.category && (
-                <div className="invalid-feedback">{errors.category}</div>
+              {errors.name && (
+                <div className="invalid-feedback">
+                  {errors.name}
+                </div>
               )}
             </div>
               <div className={classnames("form-group", {
@@ -163,10 +122,10 @@ class CourseUpdate extends Component {
                 )}
               </div>
               <div className="form-group">
-                <img src={this.state.banner} id="output" />
+                <img id="output" />
               </div>
               <button type="submit" className="btn btn-info mr-2">
-                Update
+                Add
               </button>
               <a className="btn btn-info" onClick={this.props.history.goBack}>Back</a>
             </form>
@@ -176,18 +135,15 @@ class CourseUpdate extends Component {
     );
   }
 }
-
-CourseUpdate.propTypes = {
-  courseUpdate: PropTypes.func.isRequired,
-  getCourseById: PropTypes.func.isRequired
+BlogAdd.propTypes = {
+  createBlog: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   errors: state.errors
 });
 
-
 export default connect(
   mapStateToProps,
-  { getCourseById,courseUpdate,getCategories,emptyReducer }
-)(withRouter(CourseUpdate));
+  { createBlog,emptyReducer }
+)(withRouter(BlogAdd));

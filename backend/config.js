@@ -8,5 +8,6 @@ module.exports = {
     APP_BACK_URL: process.env.APP_ENV === 'production' ? process.env.PROD_BACK_BASE_URL : process.env.DEV_BACK_BASE_URL,
     IMAGE_CATEGORY_URL: process.env.APP_ENV === 'production' ? process.env.PROD_BACK_BASE_URL+"/category/" : process.env.DEV_BACK_BASE_URL+"/category/",
     IMAGE_COURSE_URL: process.env.APP_ENV === 'production' ? process.env.PROD_BACK_BASE_URL+"/course/" : process.env.DEV_BACK_BASE_URL+"/course/",
-    USET_IMAGE_URL: process.env.APP_ENV === 'production' ? process.env.PROD_BACK_BASE_URL+"/user/" : process.env.DEV_BACK_BASE_URL+"/user/",
+    USER_IMAGE_URL: process.env.APP_ENV === 'production' ? process.env.PROD_BACK_BASE_URL+"/user/" : process.env.DEV_BACK_BASE_URL+"/user/",
+    BLOG_IMAGE_URL: process.env.APP_ENV === 'production' ? process.env.PROD_BACK_BASE_URL+"/blog/" : process.env.DEV_BACK_BASE_URL+"/blog/",
 }

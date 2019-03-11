@@ -67,9 +67,9 @@ router.put(
               fs.unlinkSync("public/user/" + old_user_image);
 
             if (user.user_image) {
-              var user_image = config.USET_IMAGE_URL + user.user_image;
+              var user_image = config.USER_IMAGE_URL + user.user_image;
             } else {
-              var user_image = config.USET_IMAGE_URL + "default.png";
+              var user_image = config.USER_IMAGE_URL + "default.png";
             }
             const payload = {
               id: user.id,

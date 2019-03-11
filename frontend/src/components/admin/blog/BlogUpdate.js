@@ -1,24 +1,24 @@
-// CourseUpdate.js
+// BlogUpdate.js
 
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withRouter, Link } from "react-router-dom";
-import { getCourseById,courseUpdate,emptyReducer } from "../../../actions/admin/course";
-import { getCategories } from "../../../actions/admin/category";
+import { getBlogById,updateBlog,emptyReducer } from "../../../actions/admin/blog";
 import classnames from "classnames";
 import CKEditor from "react-ckeditor-component";
+let route_name;
 
-class CourseUpdate extends Component {
-  constructor() {
+class BlogUpdate extends Component {
+  constructor(props) {
     super();
     this.state = {
       name: "",
-      category: "",
       description: "",
       banner: "",
       errors: { }
     };
+    route_name = props.match.url;
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -48,46 +48,34 @@ class CourseUpdate extends Component {
   }
   componentDidMount() {
     this.props.emptyReducer();
-    const courseId = this.props.match.params.courseId;
+    const blogId = this.props.match.params.blogId;
     this.props
-      .getCourseById(courseId, this.props.history)
+      .getBlogById(blogId, this.props.history)
       .then(response => {
         if (response) {
-          this.setState({ name: response.name,category: response.category_id,description: response.description,banner: response.banner });
+          this.setState({ name: response.name,description: response.description,banner: response.banner });
         }
-      });
-      this.props.getCategories()
-      .then(response => {
-        this.setState({ categories: response});
       });
   }
 
   handleSubmit(e) {
     e.preventDefault();
-    const course = new FormData();
-    course.append("name", this.state.name);
-    course.append("courseId", this.props.match.params.courseId);
-    course.append("category", this.state.category);
-    course.append("description", this.state.description);
-    course.append("banner", this.state.banner);
-    this.props.courseUpdate(course,this.props.history);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.errors) {
-      this.setState({
-        errors: nextProps.errors
-      });
-    }
+    const blog = new FormData();
+    blog.append("name", this.state.name);
+    blog.append("blogId", this.props.match.params.blogId);
+    blog.append("description", this.state.description);
+    blog.append("banner", this.state.banner);
+    var routeName = route_name.split('/'+this.props.match.params.blogId)[0];
+    this.props.updateBlog(blog,routeName,this.props.history);
   }
 
   render() {
-    const { errors,categories } = this.state;
+    const { errors } = this.props;
     return (
       <div className="container datatable">
         <div className="row form-group">
           <div className="col-lg-12">
-            <h3>Update Course</h3>
+            <h3>Update Blog</h3>
             <hr />
           </div>
         </div>
@@ -107,30 +95,6 @@ class CourseUpdate extends Component {
               />
               {errors.name  && (
                 <div className="invalid-feedback">{errors.name}</div>
-              )}
-            </div>
-            <div className="form-group">
-              <label htmlFor="course">Category:</label>
-              <select
-                className={classnames("form-control", {
-                  "is-invalid": errors.category
-                })}
-                name="category"
-                onChange={this.handleInputChange}
-                value={this.state.category}
-              >
-                <option value="">Choose category...</option>
-                {categories != undefined &&
-                  categories.map(option => {
-                    return (
-                      <option value={option._id} key={option._id}>
-                        {option.name}
-                      </option>
-                    );
-                  })}
-              </select>
-              {errors.category && (
-                <div className="invalid-feedback">{errors.category}</div>
               )}
             </div>
               <div className={classnames("form-group", {
@@ -177,9 +141,9 @@ class CourseUpdate extends Component {
   }
 }
 
-CourseUpdate.propTypes = {
-  courseUpdate: PropTypes.func.isRequired,
-  getCourseById: PropTypes.func.isRequired
+BlogUpdate.propTypes = {
+  updateBlog: PropTypes.func.isRequired,
+  getBlogById: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -189,5 +153,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getCourseById,courseUpdate,getCategories,emptyReducer }
-)(withRouter(CourseUpdate));
+  { getBlogById,updateBlog,emptyReducer }
+)(withRouter(BlogUpdate));

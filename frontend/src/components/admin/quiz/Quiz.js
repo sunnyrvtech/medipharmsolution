@@ -140,7 +140,7 @@ class Quiz extends Component {
             {this.state.alert_message.message}
           </div>
         )}
-        {quizes != undefined && this.rendertable(quizes)}
+        {this.rendertable(quizes)}
       </div>
     );
   }

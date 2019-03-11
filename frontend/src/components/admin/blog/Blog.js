@@ -1,37 +1,37 @@
-// Category.js
+// Blog.js
 
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withRouter, Link } from "react-router-dom";
-import { getCategories,deleteCategory } from "../../../actions/admin/category";
+import { getBlogs,deleteBlog } from "../../../actions/admin/blog";
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 
 let route_name;
 
-class Category extends Component {
+class Blog extends Component {
 
   constructor(props) {
     super();
     this.state = {
       alert_message: null
     };
-  route_name= props.match.url
+   route_name= props.match.path
   }
 
   onDelete(cell,index) {
-    this.props.deleteCategory(cell, this.props.history)
+    this.props.deleteBlog(cell, this.props.history)
     .then(response => {
       if (response) {
-        var categories = this.state.categories;
-        delete categories[index]; // this is used to remove item from the list after delete
-        categories = categories.filter(function(obj) {
+        var blogs = this.state.blogs;
+        delete blogs[index]; // this is used to remove item from the list after delete
+        blogs = blogs.filter(function(obj) {
           if (obj.id > index) {
             return (obj.id = obj.id - 1);
           }
           return true;
         });
-        this.setState({ categories: categories,alert_message: {class:'success',message: 'Deleted successfully!'}});
+        this.setState({ blogs: blogs,alert_message: {class:'success',message: 'Deleted successfully!'}});
         setTimeout(function(){
             this.setState({alert_message:false});
         }.bind(this),5000);
@@ -40,9 +40,9 @@ class Category extends Component {
 }
   componentWillMount() {
       window.scrollTo(0, 0);
-      this.props.getCategories()
+      this.props.getBlogs()
       .then(response => {
-        this.setState({ categories: response});
+        this.setState({ blogs: response});
       });
       if(this.props.location.state){
         if(this.props.location.state.alert_message){
@@ -59,7 +59,7 @@ class Category extends Component {
 ActionButton(cell, row) {
     return (
       <div>
-      <Link to={`${route_name+'/'+cell}`} className="btn btn-info btn-circle" tooltip="update"><i className="fa fa-pencil-square-o"></i></Link>{' '}
+      <a href={`${route_name+'/'+cell}`} className="btn btn-info btn-circle" tooltip="update"><i className="fa fa-pencil-square-o"></i></a>{' '}
       <a onClick={() => this.onDelete(cell,row.id-1)} className="btn btn-danger btn-circle" tooltip="delete"><i className="fa fa-trash"></i></a>
       </div>
     );
@@ -71,8 +71,9 @@ ActionButton(cell, row) {
       </div>
     );
   }
-  rendertable(categories)
+  rendertable(blogs)
   {
+
     const options = {
       clearSearch: true,
       defaultSortName: 'id',
@@ -83,7 +84,7 @@ ActionButton(cell, row) {
     };
     return (
       <div>
-        <BootstrapTable data={categories} version='4' search={ true } options={ options } insertRow pagination>
+        <BootstrapTable data={blogs} version='4' search={ true } options={ options } insertRow pagination>
         <TableHeaderColumn width='60' isKey dataSort dataField='id'>ID</TableHeaderColumn>
         <TableHeaderColumn dataSort dataField='name'>Name</TableHeaderColumn>
         <TableHeaderColumn width='100' dataField='_id' dataFormat={ this.ActionButton.bind(this) }>Action</TableHeaderColumn>
@@ -94,7 +95,8 @@ ActionButton(cell, row) {
 
 
   render() {
-    const { categories }= this.state;
+    const { blogs }= this.state;
+    console.log(blogs);
     return (
       <div className="container datatable">
       {this.state.alert_message  && (
@@ -102,14 +104,12 @@ ActionButton(cell, row) {
            {this.state.alert_message.message}
         </div>
       )}
-        {this.rendertable(categories)}
+      {this.rendertable(blogs)}
       </div>
     );
   }
 }
-
-
 export default connect(
   null,
-  { getCategories,deleteCategory }
-)(withRouter(Category));
+  { getBlogs,deleteBlog }
+)(withRouter(Blog));
