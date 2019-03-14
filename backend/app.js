@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const passport = require('passport');
+const path = require('path');
 const config = require('./config');
 const auth = require('./routes/auth');
 const users = require('./routes/admin/user');
@@ -37,7 +38,6 @@ require('./passport')(passport);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(express.static('public'));
 app.use('/api/users', auth);
 app.use('/api/admin/users', users);
 app.use('/api/admin/courses', courses);
@@ -53,8 +53,10 @@ app.use('/api/quiz/module', front_quizes);
 app.use('/api/account/users', front_users);
 app.use('/api/pages', pages);
 app.use('/api/blogs', front_blogs);
-app.get('/', function(req, res) {
-    res.send('hello');
+app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'www')));
+app.get('*', function(req, res) {
+    res.sendFile(path.join(__dirname , 'www' , 'index.html'));
 });
 
 const PORT = process.env.PORT || 5000;

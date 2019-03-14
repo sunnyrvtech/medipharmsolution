@@ -50,7 +50,7 @@ router.post("/register", function(req, res) {
               newUser.save().then(user => {
                 nodemailer.mailOptions.to = user.email;
                 nodemailer.mailOptions.subject = "Email Verification !";
-                var link = config.APP_FRONT_URL + "/account/activate/" + verify_token;
+                var link = config.APP_URL + "/account/activate/" + verify_token;
                 var html = "Hello " + user.first_name + "<br><br>";
                 html +=
                   "Please activate your account using the following link.<br><br>";
@@ -154,7 +154,7 @@ router.post("/password/forgot", function(req, res) {
       ).then(result => {
         nodemailer.mailOptions.to = user.email;
         nodemailer.mailOptions.subject = "Password Reset From Sollers!";
-        var link = config.APP_FRONT_URL + "/password/reset/" + reset_token;
+        var link = config.APP_URL + "/password/reset/" + reset_token;
         var html = "Hello " + user.first_name + "<br><br>";
         html +=
           "You have recently requested for a password reset on your account.<br>";

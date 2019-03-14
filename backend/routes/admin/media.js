@@ -39,7 +39,7 @@ router.get(
       var result = [];
       filenames.forEach(function(element, i) {
         result.unshift({
-          imageUrl: `${config.APP_BACK_URL +'/gallery/'+ element}`,
+          imageUrl: `${config.APP_URL +'/gallery/'+ element}`,
           imageName: element
         });
       });
@@ -58,7 +58,7 @@ router.post(
         });
       else
         res.json({
-          imageUrl: `${config.APP_BACK_URL +'/gallery/'+ req.file.filename}`
+          imageUrl: `${config.APP_URL +'/gallery/'+ req.file.filename}`
         });
     });
   }
