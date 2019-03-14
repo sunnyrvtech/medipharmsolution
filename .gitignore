@@ -2,7 +2,6 @@
 /frontend/build
 /backend/node_modules
 /frontend/.env
-/backend/.env
 /backend/public/gallery
 /backend/public/category
 /backend/public/course
