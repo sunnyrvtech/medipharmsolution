@@ -113,11 +113,11 @@ class Quiz extends Component {
           <TableHeaderColumn width="60" isKey dataSort dataField="id">
             ID
           </TableHeaderColumn>
-          <TableHeaderColumn dataSort dataField="module_name">
-            Module
-          </TableHeaderColumn>
           <TableHeaderColumn dataSort dataField="name">
             Quiz
+          </TableHeaderColumn>
+          <TableHeaderColumn dataSort dataField="module_name">
+            Module
           </TableHeaderColumn>
           <TableHeaderColumn
             width="100"

@@ -89,8 +89,8 @@ ActionButton(cell, row) {
       <div>
         <BootstrapTable data={courses_modules} version='4' search={ true } options={ options } insertRow pagination>
         <TableHeaderColumn width='60' isKey dataSort dataField='id'>ID</TableHeaderColumn>
-        <TableHeaderColumn dataSort dataField='course_name'>Course</TableHeaderColumn>
         <TableHeaderColumn dataSort dataField='name'>Module</TableHeaderColumn>
+        <TableHeaderColumn dataSort dataField='course_name'>Course</TableHeaderColumn>
         <TableHeaderColumn width='150' dataField='_id' dataFormat={ this.ActionButton.bind(this) }>Action</TableHeaderColumn>
         </BootstrapTable>
     </div>

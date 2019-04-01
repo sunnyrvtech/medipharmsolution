@@ -203,7 +203,7 @@ class Quiz extends Component {
       <div className="quiz_result">
         <h2>Result</h2>
         <p>{quiz_result.length} of {quiz_count}</p>
-        <strong>{percentage}%</strong>
+        <strong>{percentage.toFixed(2)}%</strong>
         <p className="test_detail">
           {result_text}
         </p>
