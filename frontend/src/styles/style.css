@@ -196,7 +196,7 @@ section.list_sec {
     text-align: center;
     border: 5px solid #004dda;
     float: left;
-    background: url(/images/certificate_bg.jpg);
+    background: url('/images/certificate_bg.jpg');
     background-size: cover;
     min-width: 700px;
 }
@@ -390,7 +390,7 @@ section.hero-banner {
     text-decoration: underline !important;
 }
 section.learn-interest-wpr {
-       background-image: url(/images/college-home-interest.jpg);
+       background-image: url('/images/college-home-interest.jpg');
     background-size: cover;
     background-position: center;
 }
@@ -419,7 +419,7 @@ section.where-do-wpr .row {
     padding-top: 30px;
 }
 section.future-wpr {
-    background-image: url(/images/cl-bg.jpg);
+    background-image: url('/images/cl-bg.jpg');
      background-size: cover;
     background-position: center;
 }
@@ -830,7 +830,7 @@ position:absolute; z-index:-1000; left:-1000px; overflow: hidden; clip: rect(0 0
 background-position: 0 -28px;
 }
 #quizcontainer label.css-label {
-background-image:url(http://192.168.1.39:3000/images/csscheckbox.png);
+background-image:url('/images/csscheckbox.png');
 -webkit-touch-callout: none;
 -webkit-user-select: none;
 -khtml-user-select: none;
