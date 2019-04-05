@@ -10,6 +10,10 @@ const Course = require("../models/Course");
 const CourseModule = require("../models/CourseModule");
 const QuizDetail = require("../models/QuizDetail");
 const Category = require("../models/Category");
+const Enrollment = require("../models/Enrollment");
+
+const validateEnrollmentInput = require("../validation/enrollment");
+
 
 router.get("/category/:categorySlug", function(req, res) {
   Category.findOne({
@@ -95,6 +99,29 @@ router.get(
     });
 
     console.log(module_count + "   " + quiz_module_count);
+  }
+);
+
+router.post(
+  "/enrollment",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const { errors, isValid } = validateEnrollmentInput(req.body);
+
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+    var newEnrollment = new Enrollment();
+    newEnrollment.user_id =  req.user.id;
+    newEnrollment.course_id = req.body.course_id;
+    newEnrollment.first_name = req.body.first_name;
+    newEnrollment.last_name = req.body.last_name;
+    newEnrollment.phone_number = req.body.phone_number;
+    newEnrollment.message = req.body.message;
+    newEnrollment.save(function(err, enrollment) {
+      //console.log(err);
+      res.json(enrollment);
+    });
   }
 );
 

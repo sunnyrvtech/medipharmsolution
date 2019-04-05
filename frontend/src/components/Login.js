@@ -1,9 +1,9 @@
 // Login.js
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { loginUser,emptyReducer } from "../actions/authentication";
+import { loginUser, emptyReducer } from "../actions/authentication";
 import classnames from "classnames";
 
 class Login extends Component {
@@ -34,7 +34,12 @@ class Login extends Component {
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.auth.isAuthenticated) {
-      window.location.href="/account/profile";
+      if (nextProps.location.state != undefined) {
+        if (nextProps.location.state.route != undefined)
+          window.location.href = nextProps.location.state.route;
+      } else {
+        window.location.href = "/account/profile";
+      }
     }
   }
   componentDidMount() {
@@ -43,25 +48,28 @@ class Login extends Component {
     if (this.props.auth.isAuthenticated) {
       this.props.history.push("/");
     }
-    if(this.props.location.state){
-      if(this.props.location.state.alert_message){
-          this.setState({
-            alert_message: this.props.location.state.alert_message
-          });
-          setTimeout(function(){
-              this.setState({alert_message:false});
-          }.bind(this),10000);
-          this.props.history.replace({ state: null });
-        }
+    if (this.props.location.state) {
+      if (this.props.location.state.alert_message) {
+        this.setState({
+          alert_message: this.props.location.state.alert_message
+        });
+        setTimeout(
+          function() {
+            this.setState({ alert_message: false });
+          }.bind(this),
+          10000
+        );
+        this.props.history.replace({ state: null });
+      }
     }
   }
   render() {
     const { errors } = this.props;
     return (
       <div>
-        {this.state.alert_message  && (
-          <div class={'alert alert-'+this.state.alert_message.class}>
-             {this.state.alert_message.message}
+        {this.state.alert_message && (
+          <div class={"alert alert-" + this.state.alert_message.class}>
+            {this.state.alert_message.message}
           </div>
         )}
         <div className="container auth">
@@ -91,7 +99,9 @@ class Login extends Component {
                             value={this.state.email}
                           />
                           {errors.email && (
-                            <div className="invalid-feedback">{errors.email}</div>
+                            <div className="invalid-feedback">
+                              {errors.email}
+                            </div>
                           )}
                         </div>
                         <div className="form-group">
@@ -120,12 +130,18 @@ class Login extends Component {
                           value="Login"
                         />
                       </form>
-                        <hr />
+                      <hr />
                       <div className="text-center">
-                        <Link className="small" to="/password/forgot"> Forgot Password?</Link>
+                        <Link className="small" to="/password/forgot">
+                          {" "}
+                          Forgot Password?
+                        </Link>
                       </div>
                       <div className="text-center">
-                        <Link className="small" to="/register"> Create an Account!</Link>
+                        <Link className="small" to="/register">
+                          {" "}
+                          Create an Account!
+                        </Link>
                       </div>
                     </div>
                   </div>
@@ -151,5 +167,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { loginUser,emptyReducer }
+  { loginUser, emptyReducer }
 )(Login);

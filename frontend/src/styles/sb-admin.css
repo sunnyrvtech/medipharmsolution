@@ -467,6 +467,7 @@
 #adminSetting span {cursor: pointer;}
 .upload_image_file { display: none; }
 .upload-img-galley { border: 1px solid #dee2e6; padding: 50px;position: relative;top: 100px;}
+.react-bs-table-container .table td { overflow: hidden !important; }
 @media (min-width: 576px) {
   .topbar .dropdown {
     position: relative;

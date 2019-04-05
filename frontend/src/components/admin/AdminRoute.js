@@ -11,6 +11,8 @@ import UserSubLayout from "./users/UserSubLayout";
 import PageSubLayout from "./pages/PageSubLayout";
 import MediaSubLayout from "./gallery/MediaSubLayout";
 import BlogSubLayout from "./blog/BlogSubLayout";
+import EnrollmentSubLayout from "./enrollment/EnrollmentSubLayout";
+import EnrolledSubLayout from "./enrolled/EnrolledSubLayout";
 import AdminRouteLayout from "./layout/AdminRouteLayout";
 import RouteLayout from "../layout/RouteLayout";
 import jwt_decode from "jwt-decode";
@@ -32,6 +34,8 @@ const AdminRoute = ({ match }) => {
       <AdminRouteLayout path={`${match.path}/categories`} component={CategorySubLayout} />
       <AdminRouteLayout path={`${match.path}/users`} component={UserSubLayout} />
       <AdminRouteLayout path={`${match.path}/courses`} component={CourseSubLayout} />
+      <AdminRouteLayout path={`${match.path}/enrollments`} component={EnrollmentSubLayout} />
+      <AdminRouteLayout path={`${match.path}/enrolled/users`} component={EnrolledSubLayout} />
       <AdminRouteLayout path={`${match.path}/static/pages`} component={PageSubLayout} />
       <AdminRouteLayout component={PageNotFound} />
     </Switch>

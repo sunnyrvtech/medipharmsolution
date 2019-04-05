@@ -27,24 +27,6 @@ class Sidebar extends Component {
       </li>
       <hr className="sidebar-divider" />
       <li className="nav-item">
-        <Link className="nav-link" to="/admin/blogs">
-          <i className="fa fa-forumbee"></i>
-          <span>Blog</span></Link>
-      </li>
-      <hr className="sidebar-divider" />
-      <li className="nav-item">
-        <Link className="nav-link" to="/admin/media/gallery">
-          <i className="fa fa-picture-o"></i>
-          <span>Media Gallery</span></Link>
-      </li>
-      <hr className="sidebar-divider my-0" />
-      <li className="nav-item active">
-        <Link className="nav-link" to="/admin/static/pages">
-          <i className="fa fa-files-o"></i>
-          <span>Pages</span></Link>
-      </li>
-      <hr className="sidebar-divider" />
-      <li className="nav-item">
         <Link className="nav-link" to="/admin/users">
           <i className="fa fa-user"></i>
           <span>Users</span></Link>
@@ -67,7 +49,36 @@ class Sidebar extends Component {
           <i className="fa fa-list-alt"></i>
           <span>Modules</span></Link>
       </li>
-
+      <hr className="sidebar-divider" />
+      <li className="nav-item">
+        <Link className="nav-link" to="/admin/enrollments">
+          <i className="fa fa-bell"></i>
+          <span>Enrollment Requests</span></Link>
+      </li>
+      <hr className="sidebar-divider" />
+      <li className="nav-item">
+        <Link className="nav-link" to="/admin/enrolled/users">
+          <i className="fa fa-user"></i>
+          <span>Enrolled Users</span></Link>
+      </li>
+      <hr className="sidebar-divider" />
+      <li className="nav-item">
+        <Link className="nav-link" to="/admin/blogs">
+          <i className="fa fa-forumbee"></i>
+          <span>Blog</span></Link>
+      </li>
+      <hr className="sidebar-divider" />
+      <li className="nav-item">
+        <Link className="nav-link" to="/admin/media/gallery">
+          <i className="fa fa-picture-o"></i>
+          <span>Media Gallery</span></Link>
+      </li>
+      <hr className="sidebar-divider my-0" />
+      <li className="nav-item active">
+        <Link className="nav-link" to="/admin/static/pages">
+          <i className="fa fa-files-o"></i>
+          <span>Pages</span></Link>
+      </li>
       <hr className="sidebar-divider d-none d-md-block" />
       <div className="text-center d-none d-md-inline">
         <button className="rounded-circle border-0" id="sidebarToggle" onClick={this.toggleSidebar}></button>

@@ -88,7 +88,6 @@ class Profile extends Component {
                     <div className="col-sm-6">
                       <input
                         type="text"
-                        className="form-control form-control-user"
                         placeholder="First Name"
                         className={classnames(
                           "form-control form-control-user",
