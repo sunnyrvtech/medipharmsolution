@@ -41,7 +41,7 @@ class ModuleList extends Component {
     return (
       <tr>
         <td colSpan={3}>
-          <div class="alert alert-info">
+          <div className="alert alert-info">
             {percentage >= 80 && module_count == quiz_count ? (
               <span>
                 <strong>Congratulation!</strong> You have scored above 80% .Get your certificate <b>  <Link to={"/account/cert/"+this.props.match.params.courseId} tooltip="Get Certificate">here</Link>

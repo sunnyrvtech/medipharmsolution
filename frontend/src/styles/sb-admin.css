@@ -461,8 +461,9 @@
   color: #3a3b45;
 }
 #wrapper .datatable,#wrapper .not-found { min-height: 500px;}
-.ck_text .cke.cke_reset { border: 1px solid #dc3545; }
-.ck_text .invalid-feedback { display: block; }
+.ck_text .cke.cke_reset,.css-10nd86i.is-invalid { border: 1px solid #dc3545; }
+.ck_text .invalid-feedback,.invalid-feedback.out_side { display: block; }
+.enrollForm .react-datepicker-wrapper,.enrollForm .react-datepicker__input-container {display: block;}
 .text-gray-600 b.fa-caret-down:before { font-size: 18px;top: 1px;position: relative;left: 3px; }
 #adminSetting span {cursor: pointer;}
 .upload_image_file { display: none; }

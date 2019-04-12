@@ -9,7 +9,7 @@ const validateRegisterInput = require("../validation/register");
 const validateLoginInput = require("../validation/login");
 const validateResetPasswordInput = require("../validation/reset_password");
 const config = require("../config");
-var nodemailer = require("../mailer");
+const nodemailer = require("../mailer");
 const User = require("../models/User");
 
 router.post("/register", function(req, res) {

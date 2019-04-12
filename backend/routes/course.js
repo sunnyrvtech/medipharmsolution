@@ -11,8 +11,12 @@ const CourseModule = require("../models/CourseModule");
 const QuizDetail = require("../models/QuizDetail");
 const Category = require("../models/Category");
 const Enrollment = require("../models/Enrollment");
+const Enrolled = require("../models/Enrolled");
 
 const validateEnrollmentInput = require("../validation/enrollment");
+const nodemailer = require("../mailer");
+const enrollmentNotification = require("../notification/enrollment");
+const moment = require('moment');
 
 
 router.get("/category/:categorySlug", function(req, res) {
@@ -55,8 +59,9 @@ router.get("/:courseSlug", function(req, res) {
 router.get("/",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    Course.find({ }).then(courses => {
-      res.json(courses);
+    Enrolled.find({ user_id: req.user.id,expired_at: {"$gte": moment().toISOString()}}).populate("course_id", "name")
+    .exec(function(err, response) {
+      res.json(response);
     });
   }
 );
@@ -118,8 +123,21 @@ router.post(
     newEnrollment.last_name = req.body.last_name;
     newEnrollment.phone_number = req.body.phone_number;
     newEnrollment.message = req.body.message;
+    const { html } = enrollmentNotification.adminEnrollmentNotification(req.body);
     newEnrollment.save(function(err, enrollment) {
-      //console.log(err);
+      nodemailer.mailOptions.to = process.env.MAIL_FROM_ADDRESS;
+      nodemailer.mailOptions.subject = "New Enrollment Request Received !";
+      nodemailer.mailOptions.html = html;
+      nodemailer.transporter.sendMail(
+        nodemailer.mailOptions,
+        function(error, info) {
+          if (error) {
+            console.log(error);
+          } else {
+            console.log("Email sent: " + info.response);
+          }
+        }
+      );
       res.json(enrollment);
     });
   }

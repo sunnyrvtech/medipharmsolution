@@ -34,11 +34,11 @@ class CourseList extends Component {
           return (
             <tr key={i}>
               <th scope="row">{i + 1}</th>
-              <td>{course.name}</td>
+              <td>{course.course_id.name}</td>
               <td>{moment(course.created_at).format('YYYY-MM-DD hh:mm A')}</td>
-              <td>{moment(course.created_at).format('YYYY-MM-DD hh:mm A')}</td>
+              <td>{moment(course.expired_at).format('YYYY-MM-DD hh:mm A')}</td>
               <td>
-                <Link to={"/account/modules/"+course._id} tooltip="View Modules"><i className="fa fa-low-vision"></i></Link>{" "}
+                <Link to={"/account/modules/"+course.course_id._id} tooltip="View Modules"><i className="fa fa-low-vision"></i></Link>{" "}
               </td>
             </tr>
           );

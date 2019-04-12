@@ -66,7 +66,7 @@ class CourseView extends Component {
           last_name: "",
           phone_number: "",
           message: "",
-          alert_message: { class: "success", message: "Your Enrollment request has been successfully placed.Admin will contact you soon!" }
+          alert_message: { class: "success", message: "Your Enrollment request has been successfully sect.Admin will contact you soon!" }
         });
         setTimeout(
           function() {
@@ -291,6 +291,7 @@ class CourseView extends Component {
                   <label>Message:</label>
                   <textarea
                     name="message"
+                    maxlength="500"
                     className={classnames("form-control", {
                       "is-invalid": errors.message
                     })}

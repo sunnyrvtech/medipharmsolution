@@ -50,7 +50,9 @@ router.get(
             _id: element._id,
             id: i + 1,
             name: element.name,
-            category_name: category_name
+            category_name: category_name,
+            label: element.name,
+            value: element._id
           });
         });
         res.json(result);

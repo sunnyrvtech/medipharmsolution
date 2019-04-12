@@ -4,8 +4,10 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withRouter, Link } from "react-router-dom";
-import { getEnrolledUsers, deleteEnrolledUser } from "../../../actions/admin/enrolled";
+import { getEnrolledUsers,deleteEnrolledUser } from "../../../actions/admin/enrolled";
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
+const moment = require('moment');
 
 let route_name;
 
@@ -13,9 +15,19 @@ class Enrolled extends Component {
   constructor(props) {
     super();
     this.state = {
+      modal: false,
+      modal_value: null,
       alert_message: null
     };
     route_name = props.match.url;
+    this.open_model = this.open_model.bind(this);
+  }
+
+  open_model(row) {
+    this.setState({
+      modal_value: row,
+      modal: !this.state.modal
+    });
   }
 
   onDelete(cell, index) {
@@ -44,9 +56,11 @@ class Enrolled extends Component {
   }
   componentWillMount() {
     window.scrollTo(0, 0);
-    this.props.getEnrolledUsers(this.props.match.params.enrolledId).then(response => {
-      this.setState({ enrolled_users: response });
-    });
+    this.props
+      .getEnrolledUsers(this.props.match.params.enrolledId)
+      .then(response => {
+        this.setState({ enrolled_users: response });
+      });
     if (this.props.location.state) {
       if (this.props.location.state.alert_message) {
         this.setState({
@@ -65,6 +79,13 @@ class Enrolled extends Component {
   ActionButton(cell, row) {
     return (
       <div>
+        <a
+          onClick={() => this.open_model(row)}
+          className="btn btn-info btn-circle"
+          tooltip="View Details"
+        >
+          <i className="fa fa-low-vision" />
+        </a>{" "}
         <Link
           to={`${route_name + "/" + cell}`}
           className="btn btn-info btn-circle"
@@ -113,20 +134,115 @@ class Enrolled extends Component {
           <TableHeaderColumn width="60" isKey dataSort dataField="id">
             ID
           </TableHeaderColumn>
-          <TableHeaderColumn dataSort dataField="name">
-            Quiz
+          <TableHeaderColumn dataSort dataField="course_name">
+            Course Name
           </TableHeaderColumn>
-          <TableHeaderColumn dataSort dataField="module_name">
-            Module
+          <TableHeaderColumn dataSort dataField="email">
+            Email
+          </TableHeaderColumn>
+          <TableHeaderColumn dataSort dataField="start_at">
+            Start At
+          </TableHeaderColumn>
+          <TableHeaderColumn dataSort dataField="expired_at">
+            Expired At
           </TableHeaderColumn>
           <TableHeaderColumn
-            width="100"
+            width="150"
             dataField="_id"
             dataFormat={this.ActionButton.bind(this)}
           >
             Action
           </TableHeaderColumn>
         </BootstrapTable>
+        {this.state.modal_value && (
+          <Modal isOpen={this.state.modal} className="">
+            <div className="modal-header">
+              <div className="text-center">
+                <h4 className="modal-title">Enrolled User Details</h4>
+              </div>
+              <button type="button" className="close" onClick={this.open_model}>
+                &times;
+              </button>
+            </div>
+            <ModalBody>
+                  <div class="card">
+                    <div class="card-body">
+                      <div className="row border-bottom mb-2">
+                        <div className="col-md-6 border-right">
+                          <strong>Course Name</strong>
+                        </div>
+                        <div className="col-md-6">
+                          <p class="card-text">
+                            {this.state.modal_value.course_name}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="row border-bottom mb-2">
+                        <div className="col-md-6 border-right">
+                          <strong>First Name</strong>
+                        </div>
+                        <div className="col-md-6">
+                          <p class="card-text">
+                            {this.state.modal_value.first_name}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="row border-bottom mb-2">
+                        <div className="col-md-6 border-right">
+                          <strong>Last Name</strong>
+                        </div>
+                        <div className="col-md-6">
+                          <p class="card-text">
+                            {this.state.modal_value.last_name}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="row border-bottom mb-2">
+                        <div className="col-md-6 border-right">
+                          <strong>Email</strong>
+                        </div>
+                        <div className="col-md-6">
+                          <p class="card-text">
+                            {this.state.modal_value.email}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="row border-bottom mb-2">
+                        <div className="col-md-6 border-right">
+                          <strong>Price</strong>
+                        </div>
+                        <div className="col-md-6">
+                          <p class="card-text">
+                            $ {this.state.modal_value.price}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="row border-bottom mb-2">
+                        <div className="col-md-6 border-right">
+                          <strong>Start At</strong>
+                        </div>
+                        <div className="col-md-6">
+                          <p class="card-text">
+                            {moment(this.state.modal_value.start_at).format('YYYY-MM-DD hh:mm A')}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="row border-bottom mb-2">
+                        <div className="col-md-6 border-right">
+                          <strong>Expired At</strong>
+                        </div>
+                        <div className="col-md-6">
+                          <p class="card-text">
+                            {moment(this.state.modal_value.expired_at).format('YYYY-MM-DD hh:mm A')}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+            </ModalBody>
+            <ModalFooter />
+          </Modal>
+        )}
       </div>
     );
   }

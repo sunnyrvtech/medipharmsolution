@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withRouter, Link } from "react-router-dom";
 import { getEnrollmentRequest, deleteEnrollemntRequest } from "../../../actions/admin/enrollment";
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
 
 let route_name;
@@ -13,9 +14,19 @@ class Enrollment extends Component {
   constructor(props) {
     super();
     this.state = {
+      modal: false,
+      modal_value: null,
       alert_message: null
     };
     route_name = props.match.path;
+    this.open_model = this.open_model.bind(this);
+  }
+
+  open_model(row) {
+    this.setState({
+      modal_value: row,
+      modal: !this.state.modal
+    });
   }
 
   onDelete(cell, index) {
@@ -67,6 +78,13 @@ class Enrollment extends Component {
   ActionButton(cell, row) {
     return (
       <div>
+      <a
+        onClick={() => this.open_model(row)}
+        className="btn btn-info btn-circle"
+        tooltip="View Details"
+      >
+        <i className="fa fa-low-vision" />
+      </a>{" "}
         <a
           onClick={() => this.onDelete(cell, row.id - 1)}
           className="btn btn-danger btn-circle"
@@ -124,6 +142,85 @@ class Enrollment extends Component {
             Action
           </TableHeaderColumn>
         </BootstrapTable>
+        {this.state.modal_value && (
+          <Modal isOpen={this.state.modal} className="">
+            <div className="modal-header">
+              <div className="text-center">
+                <h4 className="modal-title">Enrollment Details</h4>
+              </div>
+              <button type="button" className="close" onClick={this.open_model}>
+                &times;
+              </button>
+            </div>
+            <ModalBody>
+                  <div class="card">
+                    <div class="card-body">
+                      <div className="row border-bottom mb-2">
+                        <div className="col-md-6 border-right">
+                          <strong>Course Name</strong>
+                        </div>
+                        <div className="col-md-6">
+                          <p class="card-text">
+                            {this.state.modal_value.course_name}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="row border-bottom mb-2">
+                        <div className="col-md-6 border-right">
+                          <strong>First Name</strong>
+                        </div>
+                        <div className="col-md-6">
+                          <p class="card-text">
+                            {this.state.modal_value.first_name}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="row border-bottom mb-2">
+                        <div className="col-md-6 border-right">
+                          <strong>Last Name</strong>
+                        </div>
+                        <div className="col-md-6">
+                          <p class="card-text">
+                            {this.state.modal_value.last_name}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="row border-bottom mb-2">
+                        <div className="col-md-6 border-right">
+                          <strong>Email</strong>
+                        </div>
+                        <div className="col-md-6">
+                          <p class="card-text">
+                            {this.state.modal_value.email}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="row border-bottom mb-2">
+                        <div className="col-md-6 border-right">
+                          <strong>Phone Number</strong>
+                        </div>
+                        <div className="col-md-6">
+                          <p class="card-text">
+                            {this.state.modal_value.phone_number}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="row">
+                        <div className="col-md-12 border-bottom text-center mb-2">
+                          <strong>Message</strong>
+                        </div>
+                        <div className="col-md-12">
+                          <p class="card-text">
+                            {this.state.modal_value.message}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+            </ModalBody>
+            <ModalFooter />
+          </Modal>
+        )}
       </div>
     );
   }

@@ -14,7 +14,7 @@ router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => 
       user.forEach(function(element,i) {
         var account_status = element.status == true? "Active":"Not Active";
         console.log(account_status);
-        result.push({ _id: element._id,id: i+1,email: element.email,first_name: element.first_name,last_name: element.last_name,status: element.status,account_status: account_status});
+        result.push({ _id: element._id,id: i+1,email: element.email,first_name: element.first_name,last_name: element.last_name,status: element.status,account_status: account_status,label: element.email,value: element._id});
       });
      res.json(result)
   });

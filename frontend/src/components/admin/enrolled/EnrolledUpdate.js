@@ -1,18 +1,19 @@
-// EnrolledAdd.js
+// EnrolledUpdate.js
 
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withRouter, Link } from "react-router-dom";
-import { addEnrolledUser, emptyReducer } from "../../../actions/admin/enrolled";
+import { getEnrolledUserById,updateEnrolledUser, emptyReducer } from "../../../actions/admin/enrolled";
 import { getCourses } from "../../../actions/admin/course";
 import { getUsers } from "../../../actions/admin/user";
 import Select from "react-select";
 import DatePicker from "react-datepicker";
 import classnames from "classnames";
+import "react-datepicker/dist/react-datepicker.css";
 let route_name;
 
-class EnrolledAdd extends Component {
+class EnrolledUpdate extends Component {
   constructor(props) {
     super();
     this.state = {
@@ -34,7 +35,8 @@ class EnrolledAdd extends Component {
     });
   }
   handleSelect2Change = (column,selectedOption) => {
-    this.setState({ [column]: selectedOption.value });
+    console.log(selectedOption)
+    this.setState({ [column]: { value:selectedOption.value,label: selectedOption.label} });
   }
   handleDateChange = (column,date) => {
     this.setState({ [column]: date });
@@ -44,18 +46,28 @@ class EnrolledAdd extends Component {
     this.props.getUsers().then(response => {
       this.setState({ users: response });
     });
+    const enrolledId = this.props.match.params.enrolledId;
+    this.props
+      .getEnrolledUserById(enrolledId, this.props.history)
+      .then(response => {
+        if (response) {
+          this.setState({ user_id: { value:response.user_id._id,label: response.user_id.email},course_id: { value:response.course_id._id,label: response.course_id.name},price: response.price,start_at: response.created_at,expired_at: response.expired_at});
+        }
+      });
+
     this.props.emptyReducer();
   }
   handleSubmit(e) {
     e.preventDefault();
     const enrolled = {
-      user_id: this.state.user_id,
-      course_id: this.state.course_id,
+      enrolledId: this.props.match.params.enrolledId,
+      user_id: this.state.user_id.value,
+      course_id: this.state.course_id.value,
       price: this.state.price,
       start_at: this.state.start_at,
       expired_at: this.state.expired_at
     };
-   this.props.addEnrolledUser(enrolled, route_name, this.props.history);
+   this.props.updateEnrolledUser(enrolled, route_name, this.props.history);
   }
 
   render() {
@@ -79,6 +91,7 @@ class EnrolledAdd extends Component {
                     "is-invalid": errors.user_id
                   })}
                   placeholder="Select User"
+                  value={this.state.user_id}
                   onChange={(value) => this.handleSelect2Change("user_id", value)}
                   options={users}
                 />
@@ -93,6 +106,7 @@ class EnrolledAdd extends Component {
                     "is-invalid": errors.course_id
                   })}
                   placeholder="Select Course"
+                  value={this.state.course_id}
                   onChange={(value) => this.handleSelect2Change("course_id", value)}
                   options={courses}
                 />
@@ -151,7 +165,7 @@ class EnrolledAdd extends Component {
                 )}
               </div>
               <button type="submit" className="btn btn-info mr-2">
-                Add
+                Update
               </button>
               <a className="btn btn-info" onClick={this.props.history.goBack}>
                 Back
@@ -163,8 +177,9 @@ class EnrolledAdd extends Component {
     );
   }
 }
-EnrolledAdd.propTypes = {
-  addEnrolledUser: PropTypes.func.isRequired
+EnrolledUpdate.propTypes = {
+  updateEnrolledUser: PropTypes.func.isRequired,
+  getEnrolledUserById: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
@@ -176,5 +191,5 @@ function mapStateToProps(state) {
 
 export default connect(
   mapStateToProps,
-  { addEnrolledUser, getCourses, getUsers, emptyReducer }
-)(withRouter(EnrolledAdd));
+  { getEnrolledUserById,updateEnrolledUser, getCourses, getUsers, emptyReducer }
+)(withRouter(EnrolledUpdate));
