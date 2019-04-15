@@ -66,7 +66,7 @@ class CourseView extends Component {
           last_name: "",
           phone_number: "",
           message: "",
-          alert_message: { class: "success", message: "Your Enrollment request has been successfully sect.Admin will contact you soon!" }
+          alert_message: { class: "success", message: "Your Enrollment request has been successfully sent.Admin will contact you soon!" }
         });
         setTimeout(
           function() {
