@@ -84,7 +84,7 @@ class App extends Component {
             <RouteLayout exact path="/account/modules/module/:moduleId" component={Module} />
             <RouteLayout exact path="/account/cert/:courseId" component={Certificate} />
             <RouteLayout exact path="/account/quiz/:moduleId" component={Quiz} />
-            // <RouteLayout exact path="/account/payment/history" component={PaymentHistory} />
+          {/* <RouteLayout exact path="/account/payment/history" component={PaymentHistory} /> */}
             <RouteLayout exact path="/:categorySlug" component={Course} />
             <RouteLayout exact path="/:categorySlug/:courseSlug" component={CourseView} />
             <RouteLayout component={PageNotFound} />
