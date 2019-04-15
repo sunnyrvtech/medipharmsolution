@@ -7,14 +7,27 @@ const mongoose = require("mongoose");
 const passport = require("passport");
 const Quiz = require("../models/Quiz");
 const QuizDetail = require("../models/QuizDetail");
+const Enrolled = require("../models/Enrolled");
+const moment = require("moment");
 
 router.get(
   "/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Quiz.find({ module_id: req.params.id }).populate('module_id','course_id')
-    .exec(function(err, quizs) {
-      res.json(quizs);
+    .exec(async function(err, quizs) {
+      if(quizs.length > 0){
+        var isCourseEnrolled = await Enrolled.findOne({
+          user_id: req.user.id,
+          course_id: quizs[0].module_id.course_id,
+          expired_at: { $gte: moment().toISOString() }
+        }).countDocuments({});
+        if (isCourseEnrolled) res.json(quizs);
+        else res.json([]);
+      }else{
+        res.json([]);
+      }
+
     });
   }
 );
