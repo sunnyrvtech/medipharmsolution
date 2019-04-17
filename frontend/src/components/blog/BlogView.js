@@ -14,7 +14,8 @@ class BlogView extends Component {
     super();
     route_name = props.match.url;
     this.state = {
-      blog: null
+      blog: null,
+      page_not_found: false
     };
   }
 
@@ -23,9 +24,15 @@ class BlogView extends Component {
     this.props
       .getBlogBySlug(blogSlug, this.props.history)
       .then(response => {
-        this.setState({
-          blog: response
-        });
+        if(response){
+          this.setState({
+            blog: response
+          });
+        }else{
+          this.setState({
+            page_not_found: true
+          });
+        }
       });
   }
   renderContent(blog) {
@@ -67,12 +74,15 @@ class BlogView extends Component {
   }
 
   render() {
-    const { blog } = this.state;
+    const { blog,page_not_found } = this.state;
     return (
       <div>
-        {blog ?
+        {blog &&
           this.renderContent(blog)
-        : <PageNotFound />}
+        }
+        {page_not_found &&
+          <PageNotFound />
+        }
       </div>
     );
   }

@@ -26,6 +26,8 @@ router.get("/:slug", function(req, res) {
         else
         blog.banner = config.BLOG_IMAGE_URL+ "default.jpg";
       res.json(blog);
+      }).catch(err => {
+        res.json(null);
       });
   });
 

@@ -34,7 +34,10 @@ class Course extends Component {
     }
 
   renderContent(courses) {
-    var category_banner = this.state.IMAGE_CATEGORY_URL+this.state.category.banner;
+    var category_banner = this.state.IMAGE_CATEGORY_URL+"default.jpg";
+    if(this.state.category.banner)
+     category_banner = this.state.IMAGE_CATEGORY_URL+this.state.category.banner;
+
     return (
       <main>
         <section className="hero-banner" style={{ backgroundImage: "url("+category_banner+")"}}>
@@ -54,12 +57,15 @@ class Course extends Component {
           <div className="container">
             <div className="row">
             {courses.map((course, i) => {
+              var course_banner = this.state.IMAGE_COURSE_URL+"default.jpg";
+              if(course.banner)
+               course_banner = this.state.IMAGE_COURSE_URL+course.banner;
                 return (
                   <div className="col-md-6 col-lg-4" key={i}>
                     <div className="plp-wrapper">
                       <div className="cta-holder">
                         <figure>
-                          <img src={this.state.IMAGE_COURSE_URL+course.banner} />
+                          <img src={course_banner} />
                         </figure>
                         <div className="cta">
                           <span>

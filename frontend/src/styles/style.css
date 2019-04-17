@@ -295,7 +295,7 @@ a.btn:hover {
     background: #1f2222;    color: #fff;
 }
 section.hero-banner {
-    background-image:url('https://cdn2.hubspot.net/hubfs/2025588/landing-pages/home-page/sollers-hp-4.jpg');
+    background-image:url('/images/medi-default.jpg');
     min-height: 480px;
 }
 .modal-wrap .modal-table {
