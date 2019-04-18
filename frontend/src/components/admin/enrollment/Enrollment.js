@@ -78,6 +78,13 @@ class Enrollment extends Component {
   ActionButton(cell, row) {
     return (
       <div>
+      <Link
+        to={`${route_name + "/add/" + cell}`}
+        className="btn btn-info btn-circle"
+        tooltip="Enroll User"
+      >
+        <i className="fa fa-plus" />
+      </Link>{" "}
       <a
         onClick={() => this.open_model(row)}
         className="btn btn-info btn-circle"
@@ -135,7 +142,7 @@ class Enrollment extends Component {
             Message
           </TableHeaderColumn>
           <TableHeaderColumn
-            width="100"
+            width="150"
             dataField="_id"
             dataFormat={this.ActionButton.bind(this)}
           >

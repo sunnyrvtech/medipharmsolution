@@ -75,8 +75,6 @@ router.put(
           { _id: req.body.enrolledId },
           {
             $set: {
-              user_id: req.body.user_id,
-              course_id: req.body.course_id,
               price: req.body.price,
               created_at: moment(req.body.start_at).toISOString(),
               expired_at: moment(req.body.expired_at).toISOString()
@@ -112,7 +110,10 @@ router.get(
   (req, res) => {
     Enrolled.findOne({ _id: req.params.id }).populate("user_id course_id", "email first_name last_name name")
     .exec(function(err, enrolled) {
+      if(enrolled != undefined || enrolled)
       res.json(enrolled);
+      else
+        res.json(null);
     });
   }
 );

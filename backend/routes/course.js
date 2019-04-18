@@ -111,19 +111,23 @@ router.post(
   "/enrollment",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    const { errors, isValid } = validateEnrollmentInput(req.body);
+    // const { errors, isValid } = validateEnrollmentInput(req.body);
 
-    if (!isValid) {
-      return res.status(400).json(errors);
-    }
+    // if (!isValid) {
+    //   return res.status(400).json(errors);
+    // }
     var newEnrollment = new Enrollment();
     newEnrollment.user_id =  req.user.id;
     newEnrollment.course_id = req.body.course_id;
-    newEnrollment.first_name = req.body.first_name;
-    newEnrollment.last_name = req.body.last_name;
-    newEnrollment.phone_number = req.body.phone_number;
-    newEnrollment.message = req.body.message;
-    const { html } = enrollmentNotification.adminEnrollmentNotification(req.body);
+    var noti_data = {
+      first_name: req.user.first_name,
+      last_name: req.user.last_name,
+      email: req.user.email,
+      phone_number: req.user.phone_number,
+      course_name: req.body.course_name,
+    }
+
+    const { html } = enrollmentNotification.adminEnrollmentNotification(noti_data);
     newEnrollment.save(function(err, enrollment) {
       nodemailer.mailOptions.to = process.env.MAIL_FROM_ADDRESS;
       nodemailer.mailOptions.subject = "New Enrollment Request Received !";

@@ -14,6 +14,7 @@ class UserAdd extends Component {
       first_name: "",
       last_name: "",
       email: "",
+      phone_number: "",
       password: "",
       password_confirm: "",
       errors: {}
@@ -36,6 +37,7 @@ class UserAdd extends Component {
       first_name: this.state.first_name,
       last_name: this.state.last_name,
       email: this.state.email,
+      phone_number: this.state.phone_number,
       password: this.state.password,
       password_confirm: this.state.password_confirm
     };
@@ -92,6 +94,25 @@ class UserAdd extends Component {
                   <div className="invalid-feedback">
                     {errors.last_name}
                   </div>
+                )}
+              </div>
+              <div className="form-group">
+                <label htmlFor="last_name">Phone Number:</label>
+                <input
+                  type="phone_number"
+                  placeholder="Phone Number"
+                  className={classnames(
+                    "form-control form-control-user",
+                    {
+                      "is-invalid": errors.phone_number
+                    }
+                  )}
+                  name="phone_number"
+                  onChange={this.handleInputChange}
+                  value={this.state.phone_number}
+                />
+                {errors.phone_number && (
+                  <div className="invalid-feedback">{errors.phone_number}</div>
                 )}
               </div>
               <div className="form-group">

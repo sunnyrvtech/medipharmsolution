@@ -43,5 +43,15 @@ router.delete(
     );
   }
 );
+router.get(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Enrollment.findOne({ _id: req.params.id }).populate("user_id course_id", "email name")
+    .exec(function(err, enrolled) {
+      res.json(enrolled);
+    });
+  }
+);
 
 module.exports = router;

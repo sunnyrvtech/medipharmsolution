@@ -17,6 +17,7 @@ class Profile extends Component {
     this.state = {
       first_name: "",
       last_name: "",
+      phone_number: "",
       user_image: "",
       alert_message: null,
       errors: {}
@@ -37,6 +38,7 @@ class Profile extends Component {
     const user = new FormData();
     user.append("first_name", this.state.first_name);
     user.append("last_name", this.state.last_name);
+    user.append("phone_number", this.state.phone_number);
     user.append("user_image", this.state.user_image);
     this.props.updateUserInfo(user, this.props.history)
         .then(response => {
@@ -63,7 +65,7 @@ class Profile extends Component {
   }
 
   componentWillMount() {
-    this.setState({ first_name: this.props.auth.user.first_name,last_name: this.props.auth.user.last_name,user_image: this.props.auth.user.user_image});
+    this.setState({ first_name: this.props.auth.user.first_name,last_name: this.props.auth.user.last_name,phone_number: this.props.auth.user.phone_number,user_image: this.props.auth.user.user_image});
   }
 
   render() {
@@ -124,6 +126,28 @@ class Profile extends Component {
                       {errors.last_name && (
                         <div className="invalid-feedback">
                           {errors.last_name}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div className="form-group row">
+                    <div className="col-sm-6">
+                      <input
+                        type="text"
+                        placeholder="Phone Number"
+                        className={classnames(
+                          "form-control form-control-user",
+                          {
+                            "is-invalid": errors.phone_number
+                          }
+                        )}
+                        name="phone_number"
+                        onChange={this.handleInputChange}
+                        value={this.state.phone_number}
+                      />
+                      {errors.phone_number && (
+                        <div className="invalid-feedback">
+                          {errors.phone_number}
                         </div>
                       )}
                     </div>

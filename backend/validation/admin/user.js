@@ -8,6 +8,7 @@ module.exports = function validateUserInput(data, method) {
   data.first_name = !isEmpty(data.first_name) ? data.first_name : "";
   data.last_name = !isEmpty(data.last_name) ? data.last_name : "";
   data.email = !isEmpty(data.email) ? data.email : "";
+  data.phone_number = !isEmpty(data.phone_number) ? data.phone_number : '';
   data.password = !isEmpty(data.password) ? data.password : "";
   data.password_confirm = !isEmpty(data.password_confirm)
     ? data.password_confirm
@@ -27,6 +28,9 @@ module.exports = function validateUserInput(data, method) {
     errors.email = "Email is required";
   } else if (!Validator.isEmail(data.email)) {
     errors.email = "Email is invalid";
+  }
+  if(Validator.isEmpty(data.phone_number)) {
+      errors.phone_number = 'Phone number is required';
   }
   if (method == "create") {
     if (Validator.isEmpty(data.password)) {

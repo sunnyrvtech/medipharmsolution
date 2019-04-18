@@ -14,7 +14,7 @@ router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => 
       user.forEach(function(element,i) {
         var account_status = element.status == true? "Active":"Not Active";
         console.log(account_status);
-        result.push({ _id: element._id,id: i+1,email: element.email,first_name: element.first_name,last_name: element.last_name,status: element.status,account_status: account_status,label: element.email,value: element._id});
+        result.push({ _id: element._id,id: i+1,email: element.email,first_name: element.first_name,last_name: element.last_name,status: element.status,account_status: account_status});
       });
      res.json(result)
   });
@@ -38,6 +38,7 @@ router.post('/create', passport.authenticate('jwt', { session: false }), (req, r
               first_name: req.body.first_name,
               last_name: req.body.last_name,
               email: req.body.email,
+              phone_number: req.body.phone_number,
               password: req.body.password
           });
           bcrypt.genSalt(10, (err, salt) => {
@@ -69,7 +70,7 @@ router.put('/update', passport.authenticate('jwt', { session: false }), (req, re
         return res.status(400).json(errors);
     }
     if(user){
-      User.updateOne({_id: req.body.userId }, {$set: {first_name:req.body.first_name,last_name:req.body.last_name,email:req.body.email,status:req.body.status}})
+      User.updateOne({_id: req.body.userId }, {$set: {first_name:req.body.first_name,last_name:req.body.last_name,email:req.body.email,phone_number:req.body.phone_number,status:req.body.status}})
       .then(result => {
              res.json(result);
            });

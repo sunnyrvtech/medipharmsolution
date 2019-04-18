@@ -16,19 +16,7 @@ const EnrollmentSchema = new Schema({
     ref: 'courses',
     required: true
   },
-  first_name: {
-    type: String,
-    required: true
-  },
-  last_name: {
-    type: String,
-    required: true
-  },
-  phone_number: {
-    type: String,
-    required: true
-  },
-  message: {
+  term_pdf: {
     type: String,
     required: true
   },

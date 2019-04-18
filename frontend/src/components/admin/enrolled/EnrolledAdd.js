@@ -5,9 +5,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withRouter, Link } from "react-router-dom";
 import { addEnrolledUser, emptyReducer } from "../../../actions/admin/enrolled";
-import { getCourses } from "../../../actions/admin/course";
-import { getUsers } from "../../../actions/admin/user";
-import Select from "react-select";
+import { getUserEnrollmentById } from "../../../actions/admin/enrollment";
 import DatePicker from "react-datepicker";
 import classnames from "classnames";
 let route_name;
@@ -18,6 +16,8 @@ class EnrolledAdd extends Component {
     this.state = {
       user_id: "",
       course_id: "",
+      email: "",
+      course_name: "",
       price: "",
       start_at: null,
       expired_at: null,
@@ -40,11 +40,11 @@ class EnrolledAdd extends Component {
     this.setState({ [column]: date });
   }
   componentWillMount() {
-    this.props.getCourses();
-    this.props.getUsers().then(response => {
-      this.setState({ users: response });
-    });
     this.props.emptyReducer();
+    const enrollmentId = this.props.match.params.enrollmentId;
+    this.props.getUserEnrollmentById(enrollmentId, this.props.history).then(response => {
+      this.setState({ user_id: response.user_id._id,email: response.user_id.email,course_id: response.course_id._id,course_name: response.course_id.name });
+    });
   }
   handleSubmit(e) {
     e.preventDefault();
@@ -59,8 +59,7 @@ class EnrolledAdd extends Component {
   }
 
   render() {
-    const { errors, courses } = this.props;
-    const { users } = this.state;
+    const { errors } = this.props;
     return (
       <div className="container datatable">
         <div className="row form-group">
@@ -73,32 +72,24 @@ class EnrolledAdd extends Component {
           <div className="col-md-6">
             <form className="enrollForm" onSubmit={this.handleSubmit}>
               <div className="form-group">
-                <label htmlFor="name">User:</label>
-                <Select
-                  className={classnames("", {
-                    "is-invalid": errors.user_id
-                  })}
-                  placeholder="Select User"
-                  onChange={(value) => this.handleSelect2Change("user_id", value)}
-                  options={users}
-                />
-                {errors.user_id && (
-                  <div className="invalid-feedback out_side">{errors.user_id}</div>
-                )}
+              <label htmlFor="name">User:</label>
+              <input
+                type="text"
+                readOnly="readOnly"
+                className="form-control"
+                placeholder="User Email"
+                value={this.state.email}
+              />
               </div>
               <div className="form-group">
                 <label htmlFor="name">Course:</label>
-                <Select
-                  className={classnames("", {
-                    "is-invalid": errors.course_id
-                  })}
-                  placeholder="Select Course"
-                  onChange={(value) => this.handleSelect2Change("course_id", value)}
-                  options={courses}
+                <input
+                  type="text"
+                  readOnly="readOnly"
+                  className="form-control"
+                  placeholder="Course"
+                  value={this.state.course_name}
                 />
-                {errors.course_id && (
-                  <div className="invalid-feedback out_side">{errors.course_id}</div>
-                )}
               </div>
               <div className="form-group">
                 <label htmlFor="name">Price:</label>
@@ -169,12 +160,11 @@ EnrolledAdd.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    courses: state.courses.courses.length != undefined ? state.courses.courses : [],
     errors: state.errors
   };
 }
 
 export default connect(
   mapStateToProps,
-  { addEnrolledUser, getCourses, getUsers, emptyReducer }
+  { addEnrolledUser,getUserEnrollmentById, emptyReducer }
 )(withRouter(EnrolledAdd));

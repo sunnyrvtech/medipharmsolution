@@ -29,6 +29,7 @@ router.post("/register", function(req, res) {
         first_name: req.body.first_name,
         last_name: req.body.last_name,
         email: req.body.email,
+        phone_number: req.body.phone_number,
         password: req.body.password
       });
       bcrypt.genSalt(10, (err, salt) => {
@@ -111,6 +112,7 @@ router.post("/login", (req, res) => {
           role: user.role,
           first_name: user.first_name,
           last_name: user.last_name,
+          phone_number: user.phone_number,
           user_image: user_image
         };
         jwt.sign(

@@ -57,6 +57,7 @@ router.put(
           var old_user_image = user.user_image;
           user.first_name = req.body.first_name;
           user.last_name = req.body.last_name;
+          user.phone_number = req.body.phone_number;
           if (req.file != undefined) {
             user.user_image = req.file.filename;
           }
@@ -76,6 +77,7 @@ router.put(
               role: user.role,
               first_name: user.first_name,
               last_name: user.last_name,
+              phone_number: user.phone_number,
               user_image: user_image
             };
             jwt.sign(

@@ -47,7 +47,9 @@ router.get(
           _id: element._id,
           id: i + 1,
           name: element.name,
-          slug: element.slug
+          slug: element.slug,
+          label: element.name,
+          value: element._id
         });
       });
       res.json(result);

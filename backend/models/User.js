@@ -26,6 +26,10 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
+  phone_number: {
+    type: String,
+    required: true
+  },
   verify_token: {
     type: String
   },

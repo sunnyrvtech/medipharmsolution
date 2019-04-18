@@ -7,6 +7,7 @@ import { withRouter, Link } from "react-router-dom";
 import { courseAdd } from "../../../actions/admin/course";
 import { getCategories } from "../../../actions/admin/category";
 import classnames from "classnames";
+import Select from "react-select";
 import CKEditor from "react-ckeditor-component";
 
 class CourseAdd extends Component {
@@ -27,6 +28,9 @@ class CourseAdd extends Component {
     this.setState({
       description: newContent
     });
+  }
+  handleSelect2Change = (column,selectedOption) => {
+    this.setState({ [column]: selectedOption.value });
   }
   handleInputChange(e) {
     this.setState({
@@ -106,24 +110,14 @@ class CourseAdd extends Component {
             </div>
             <div className="form-group">
               <label htmlFor="course">Category:</label>
-              <select
-                className={classnames("form-control", {
+              <Select
+                className={classnames("", {
                   "is-invalid": errors.category
                 })}
-                name="category"
-                onChange={this.handleInputChange}
-                value={this.state.category}
-              >
-                <option value="">Choose category...</option>
-                {categories != undefined &&
-                  categories.map(option => {
-                    return (
-                      <option value={option._id} key={option._id}>
-                        {option.name}
-                      </option>
-                    );
-                  })}
-              </select>
+                placeholder="Choose category..."
+                onChange={(value) => this.handleSelect2Change("category", value)}
+                options={categories}
+              />
               {errors.category && (
                 <div className="invalid-feedback">{errors.category}</div>
               )}

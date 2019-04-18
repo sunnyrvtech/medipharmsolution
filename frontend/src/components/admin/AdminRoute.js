@@ -9,6 +9,7 @@ import CategorySubLayout from "./category/CategorySubLayout";
 import CourseSubLayout from "./courses/CourseSubLayout";
 import UserSubLayout from "./users/UserSubLayout";
 import PageSubLayout from "./pages/PageSubLayout";
+import SettingSubLayout from "./settings/SettingSubLayout";
 import MediaSubLayout from "./gallery/MediaSubLayout";
 import BlogSubLayout from "./blog/BlogSubLayout";
 import EnrollmentSubLayout from "./enrollment/EnrollmentSubLayout";
@@ -36,6 +37,7 @@ const AdminRoute = ({ match }) => {
       <AdminRouteLayout path={`${match.path}/courses`} component={CourseSubLayout} />
       <AdminRouteLayout path={`${match.path}/enrollments`} component={EnrollmentSubLayout} />
       <AdminRouteLayout path={`${match.path}/enrolled/users`} component={EnrolledSubLayout} />
+      <AdminRouteLayout path={`${match.path}/settings`} component={SettingSubLayout} />
       <AdminRouteLayout path={`${match.path}/static/pages`} component={PageSubLayout} />
       <AdminRouteLayout component={PageNotFound} />
     </Switch>

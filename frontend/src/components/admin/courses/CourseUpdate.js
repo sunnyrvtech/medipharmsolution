@@ -7,6 +7,7 @@ import { withRouter, Link } from "react-router-dom";
 import { getCourseById,courseUpdate,emptyReducer } from "../../../actions/admin/course";
 import { getCategories } from "../../../actions/admin/category";
 import classnames from "classnames";
+import Select from "react-select";
 import CKEditor from "react-ckeditor-component";
 
 class CourseUpdate extends Component {
@@ -33,6 +34,9 @@ class CourseUpdate extends Component {
       [e.target.name]: e.target.value
     });
   }
+  handleSelect2Change = (column,selectedOption) => {
+    this.setState({ [column]: { value:selectedOption.value,label: selectedOption.label} });
+  }
   onChange(e) {
     e.preventDefault();
     var file = e.target.files[0];
@@ -53,7 +57,7 @@ class CourseUpdate extends Component {
       .getCourseById(courseId, this.props.history)
       .then(response => {
         if (response) {
-          this.setState({ name: response.name,category: response.category_id,description: response.description,banner: response.banner });
+          this.setState({ name: response.name,category: { value:response.category_id._id,label: response.category_id.name},description: response.description,banner: response.banner });
         }
       });
       this.props.getCategories()
@@ -67,7 +71,7 @@ class CourseUpdate extends Component {
     const course = new FormData();
     course.append("name", this.state.name);
     course.append("courseId", this.props.match.params.courseId);
-    course.append("category", this.state.category);
+    course.append("category", this.state.category.value);
     course.append("description", this.state.description);
     course.append("banner", this.state.banner);
     this.props.courseUpdate(course,this.props.history);
@@ -111,24 +115,15 @@ class CourseUpdate extends Component {
             </div>
             <div className="form-group">
               <label htmlFor="course">Category:</label>
-              <select
-                className={classnames("form-control", {
+              <Select
+                className={classnames("", {
                   "is-invalid": errors.category
                 })}
-                name="category"
-                onChange={this.handleInputChange}
+                placeholder="Choose category..."
                 value={this.state.category}
-              >
-                <option value="">Choose category...</option>
-                {categories != undefined &&
-                  categories.map(option => {
-                    return (
-                      <option value={option._id} key={option._id}>
-                        {option.name}
-                      </option>
-                    );
-                  })}
-              </select>
+                onChange={(value) => this.handleSelect2Change("category", value)}
+                options={categories}
+              />
               {errors.category && (
                 <div className="invalid-feedback">{errors.category}</div>
               )}

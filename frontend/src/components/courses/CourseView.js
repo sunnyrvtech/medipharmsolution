@@ -33,10 +33,6 @@ class CourseView extends Component {
     route_name = props.match.url;
     this.state = {
       modal: false,
-      first_name: "",
-      last_name: "",
-      phone_number: "",
-      message: "",
       course: null,
       course_modules: null,
       page_not_found: false,
@@ -56,18 +52,11 @@ class CourseView extends Component {
     e.preventDefault();
     const enrollment = {
       course_id: this.state.course._id,
-      first_name: this.state.first_name,
-      last_name: this.state.last_name,
-      phone_number: this.state.phone_number,
-      message: this.state.message
+      course_name: this.state.course.name
     };
     this.props.courseEnrolled(enrollment, this.props.history).then(response => {
       if (response) {
         this.setState({
-          first_name: "",
-          last_name: "",
-          phone_number: "",
-          message: "",
           alert_message: {
             class: "success",
             message:
@@ -100,9 +89,7 @@ class CourseView extends Component {
           this.setState({
             IMAGE_COURSE_URL: response.IMAGE_COURSE_URL,
             course: response.course[0],
-            course_modules: course_modules,
-            first_name: this.props.auth.user.first_name,
-            last_name: this.props.auth.user.last_name
+            course_modules: course_modules
           });
         }else{
           this.setState({ page_not_found: true });
@@ -245,61 +232,6 @@ class CourseView extends Component {
               </div>
             )}
             <ModalBody>
-              <div className="row">
-                <div className="form-group col-md-12">
-                  <label>First Name:</label>
-                  <input
-                    type="text"
-                    readOnly="readOnly"
-                    className={classnames("form-control", {
-                      "is-invalid": errors.first_name
-                    })}
-                    name="first_name"
-                    onChange={this.handleInputChange}
-                    value={this.state.first_name}
-                  />
-                  {errors.first_name && (
-                    <div className="invalid-feedback">{errors.first_name}</div>
-                  )}
-                </div>
-              </div>
-              <div className="row">
-                <div className="form-group col-md-12">
-                  <label>Last Name:</label>
-                  <input
-                    type="text"
-                    name="last_name"
-                    readOnly="readOnly"
-                    className={classnames("form-control", {
-                      "is-invalid": errors.last_name
-                    })}
-                    onChange={this.handleInputChange}
-                    value={this.state.last_name}
-                  />
-                  {errors.last_name && (
-                    <div className="invalid-feedback">{errors.last_name}</div>
-                  )}
-                </div>
-              </div>
-              <div className="row">
-                <div className="form-group col-md-12">
-                  <label>Phone Number:</label>
-                  <input
-                    type="text"
-                    name="phone_number"
-                    className={classnames("form-control", {
-                      "is-invalid": errors.phone_number
-                    })}
-                    onChange={this.handleInputChange}
-                    value={this.state.phone_number}
-                  />
-                  {errors.phone_number && (
-                    <div className="invalid-feedback">
-                      {errors.phone_number}
-                    </div>
-                  )}
-                </div>
-              </div>
               <div className="row">
                 <div className="form-group col-md-12">
                   <label>Message:</label>

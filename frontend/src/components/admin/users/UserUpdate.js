@@ -14,6 +14,7 @@ class UserUpdate extends Component {
       first_name: "",
       last_name: "",
       email: "",
+      phone_number: "",
       errors: {}
     };
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -31,7 +32,7 @@ class UserUpdate extends Component {
       .getUserById(userId, this.props.history)
       .then(response => {
         if (response) {
-          this.setState({ first_name: response.first_name,last_name: response.last_name,email: response.email,status: response.status });
+          this.setState({ first_name: response.first_name,last_name: response.last_name,email: response.email,phone_number: response.phone_number,status: response.status });
         }
       });
   }
@@ -43,6 +44,7 @@ class UserUpdate extends Component {
       first_name: this.state.first_name,
       last_name: this.state.last_name,
       email: this.state.email,
+      phone_number: this.state.phone_number,
       status: this.state.status
     };
      this.props.updateUser(user,this.props.history);
@@ -108,6 +110,25 @@ class UserUpdate extends Component {
                 <div className="invalid-feedback">
                   {errors.last_name}
                 </div>
+              )}
+            </div>
+            <div className="form-group">
+              <label htmlFor="last_name">Phone Number:</label>
+              <input
+                type="phone_number"
+                placeholder="Phone Number"
+                className={classnames(
+                  "form-control form-control-user",
+                  {
+                    "is-invalid": errors.phone_number
+                  }
+                )}
+                name="phone_number"
+                onChange={this.handleInputChange}
+                value={this.state.phone_number}
+              />
+              {errors.phone_number && (
+                <div className="invalid-feedback">{errors.phone_number}</div>
               )}
             </div>
             <div className="form-group">

@@ -178,7 +178,7 @@ class Header extends Component {
                       categories.map(value => {
                         return (
                           <li key={value._id}>
-                            <Link className="nav-link" to={value.slug}>
+                            <Link className="nav-link" to={"/"+value.slug}>
                               {value.name}
                             </Link>
                           </li>

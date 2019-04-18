@@ -103,21 +103,11 @@ class Enrolled extends Component {
       </div>
     );
   }
-  createCustomInsertButton = onClick => {
-    return (
-      <div>
-        <Link to={`${route_name}/add`} className="btn btn-info">
-          Add New
-        </Link>
-      </div>
-    );
-  };
   rendertable(enrolled_users) {
     const options = {
       clearSearch: true,
       defaultSortName: "id",
       defaultSortOrder: "asc",
-      insertBtn: this.createCustomInsertButton,
       sizePerPage: 10,
       paginationSize: 6
     };
@@ -128,7 +118,6 @@ class Enrolled extends Component {
           version="4"
           search={true}
           options={options}
-          insertRow
           pagination
         >
           <TableHeaderColumn width="60" isKey dataSort dataField="id">

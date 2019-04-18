@@ -50,9 +50,7 @@ router.get(
             _id: element._id,
             id: i + 1,
             name: element.name,
-            category_name: category_name,
-            label: element.name,
-            value: element._id
+            category_name: category_name
           });
         });
         res.json(result);
@@ -175,8 +173,9 @@ router.get(
   "/course/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    Course.findOne({ _id: req.params.id }).then(course => {
-      if (course.banner)
+    Course.findOne({ _id: req.params.id }).populate("category_id", "name")
+    .exec(function(err, course) {
+      if (course && course.banner)
         course.banner = config.IMAGE_COURSE_URL+ course.banner;
       res.json(course);
     });
