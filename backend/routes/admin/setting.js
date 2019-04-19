@@ -26,6 +26,7 @@ router.post(
     newSetting.slug = req.body.slug;
     newSetting.content = req.body.content;
     newSetting.save(function(err, setting) {
+      console.log(err);
       res.json(setting);
     });
   }

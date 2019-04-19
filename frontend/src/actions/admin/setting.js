@@ -12,7 +12,7 @@ export const emptyReducer =() => dispatch => {
 export const createSetting = (setting,route_name, history) => dispatch => {
   client()
     .post("/admin/settings/create", setting)
-    .then(res => history.push({ pathname: route_name,state: { alert_message:{class:'success',message: 'Page added successfully!'}}}))
+    .then(res => history.push({ pathname: route_name.split('/'+setting.slug)[0],state: { alert_message:{class:'success',message: 'Page added successfully!'}}}))
     .catch(err => {
       console.log(err);
       dispatch({
@@ -24,7 +24,7 @@ export const createSetting = (setting,route_name, history) => dispatch => {
 export const updateSetting = (setting,route_name, history) => dispatch => {
   client()
     .put("/admin/settings/update", setting)
-    .then(res => history.push({ pathname: route_name,state: { alert_message:{class:'success',message: 'Updated successfully!'}}}))
+    .then(res => history.push({ pathname: route_name.split('/'+setting.slug)[0],state: { alert_message:{class:'success',message: 'Updated successfully!'}}}))
     .catch(err => {
       console.log(err);
       dispatch({

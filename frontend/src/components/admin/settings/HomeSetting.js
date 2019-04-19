@@ -16,10 +16,19 @@ class HomeSetting extends Component {
   constructor(props) {
     super();
     this.state = {
+      banner_title: "",
       learn_more_title: "",
+      learn_more_text: "",
       admission_title: "",
+      admission_text: "",
       about_us_title: "",
+      about_us_text: "",
       talk_us_title: "",
+      talk_us_text: "",
+      experience_title: "",
+      experience_text: "",
+      graduates_title: "",
+      graduates_text: "",
       page_not_found: false,
       alert_message: null
     };
@@ -33,13 +42,16 @@ class HomeSetting extends Component {
     });
   }
   handleCard(e) {
-    console.log(e.target.closest(".card-header").nextSibling);
+    //console.log(e.target.closest(".card-header").nextSibling);
     let nextElment = e.target.closest(".card-header").nextSibling;
     nextElment.classList.toggle("show");
   }
   handleSubmit(e) {
     e.preventDefault();
     const content = {
+      banner: {
+        title: this.state.banner_title
+      },
       learn_more: {
         title: this.state.learn_more_title,
         text: this.state.learn_more_text
@@ -55,6 +67,14 @@ class HomeSetting extends Component {
       talk_us: {
         title: this.state.talk_us_title,
         text: this.state.talk_us_text
+      },
+      experience: {
+        title: this.state.experience_title,
+        text: this.state.experience_text
+      },
+      graduates: {
+        title: this.state.graduates_title,
+        text: this.state.graduates_text
       }
     };
     const setting = {
@@ -68,6 +88,7 @@ class HomeSetting extends Component {
     this.props.getSettingBySlug(slug, this.props.history).then(response => {
       if (response) {
         this.setState({
+          banner_title: response.content.banner.title,
           learn_more_title: response.content.learn_more.title,
           learn_more_text: response.content.learn_more.text,
           admission_title: response.content.admission.title,
@@ -75,7 +96,11 @@ class HomeSetting extends Component {
           about_us_title: response.content.about_us.title,
           about_us_text: response.content.about_us.text,
           talk_us_title: response.content.talk_us.title,
-          talk_us_text: response.content.talk_us.text
+          talk_us_text: response.content.talk_us.text,
+          experience_title: response.content.experience.title,
+          experience_text: response.content.experience.text,
+          graduates_title: response.content.graduates.title,
+          graduates_text: response.content.graduates.text
         });
       } else {
         this.setState({ page_not_found: true });
@@ -89,7 +114,25 @@ class HomeSetting extends Component {
         <form onSubmit={this.handleSubmit}>
           <div className="card mb-2">
             <div className="card-header" onClick={this.handleCard}>
-              <h2 className="btn">Exploring Today</h2>
+              <h2 className="btn">Home Banner</h2>
+              <b className="close fa fa-caret-down" />
+            </div>
+            <div className="card-body">
+              <div className="form-group">
+                <label htmlFor="text">Title:</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="banner_title"
+                  onChange={this.handleInputChange}
+                  value={this.state.banner_title}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="card mb-2">
+            <div className="card-header" onClick={this.handleCard}>
+              <h2 className="btn">Exploring Today Section</h2>
               <b className="close fa fa-caret-down" />
             </div>
             <div className="card-body">
@@ -112,7 +155,7 @@ class HomeSetting extends Component {
                         />
                       </div>
                       <div className="form-group">
-                        <label htmlFor="name">Text:</label>
+                        <label htmlFor="text">Text:</label>
                         <textarea
                           className="form-control"
                           name="learn_more_text"
@@ -141,7 +184,7 @@ class HomeSetting extends Component {
                         />
                       </div>
                       <div className="form-group">
-                        <label htmlFor="name">Text:</label>
+                        <label htmlFor="text">Text:</label>
                         <textarea
                           className="form-control"
                           name="admission_text"
@@ -172,7 +215,7 @@ class HomeSetting extends Component {
                         />
                       </div>
                       <div className="form-group">
-                        <label htmlFor="name">Text:</label>
+                        <label htmlFor="text">Text:</label>
                         <textarea
                           className="form-control"
                           name="about_us_text"
@@ -201,7 +244,7 @@ class HomeSetting extends Component {
                         />
                       </div>
                       <div className="form-group">
-                        <label htmlFor="name">Text:</label>
+                        <label htmlFor="text">Text:</label>
                         <textarea
                           className="form-control"
                           name="talk_us_text"
@@ -212,6 +255,60 @@ class HomeSetting extends Component {
                     </div>
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+          <div className="card mb-2">
+            <div className="card-header" onClick={this.handleCard}>
+              <h2 className="btn">Experience Section</h2>
+              <b className="close fa fa-caret-down" />
+            </div>
+            <div className="card-body">
+              <div className="form-group">
+                <label htmlFor="title">Title:</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="experience_title"
+                  onChange={this.handleInputChange}
+                  value={this.state.experience_title}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="text">Text:</label>
+                <textarea
+                  className="form-control"
+                  name="experience_text"
+                  onChange={this.handleInputChange}
+                  value={this.state.experience_text}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="card mb-2">
+            <div className="card-header" onClick={this.handleCard}>
+              <h2 className="btn">Our Graduates Section</h2>
+              <b className="close fa fa-caret-down" />
+            </div>
+            <div className="card-body">
+              <div className="form-group">
+                <label htmlFor="title">Title:</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="graduates_title"
+                  onChange={this.handleInputChange}
+                  value={this.state.graduates_title}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="text">Text:</label>
+                <textarea
+                  className="form-control"
+                  name="graduates_text"
+                  onChange={this.handleInputChange}
+                  value={this.state.graduates_text}
+                />
               </div>
             </div>
           </div>
