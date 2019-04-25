@@ -18,6 +18,9 @@ class Header extends Component {
   toggleAccountDropDown = () => {
     document.getElementById("account_drop_down").classList.toggle("show");
   };
+  toggleMenuDropDown = () => {
+    document.getElementById("navbarText").classList.toggle("show");
+  };
   onLogout(e) {
     e.preventDefault();
     this.props.logoutUser(this.props.history);
@@ -148,11 +151,7 @@ class Header extends Component {
             <button
               className="navbar-toggler"
               type="button"
-              data-toggle="collapse"
-              data-target="#navbarText"
-              aria-controls="navbarText"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
+              onClick={this.toggleMenuDropDown}
             >
               <span className="navbar-toggler-icon" />
             </button>

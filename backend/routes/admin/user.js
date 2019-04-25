@@ -16,7 +16,7 @@ router.get(
       var result = [];
       user.forEach(function(element, i) {
         var account_status = element.status == true ? "Active" : "Not Active";
-        console.log(account_status);
+        // console.log(account_status);
         result.push({
           _id: element._id,
           id: i + 1,
