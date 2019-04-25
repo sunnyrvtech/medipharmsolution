@@ -52,6 +52,7 @@ class EnrolledAdd extends Component {
     const enrolled = {
       user_id: this.state.user_id,
       user_name: this.state.user_name,
+      email: this.state.email,
       course_id: this.state.course_id,
       course_name: this.state.course_name,
       price: this.state.price,

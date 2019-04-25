@@ -63,7 +63,7 @@ router.post(
         course_name: req.body.course_name
       }
       var { html } = enrollmentNotification.userEnrolledNotification(noti_data);
-      nodemailer.mailOptions.to = process.env.MAIL_FROM_ADDRESS;
+      nodemailer.mailOptions.to = req.body.email;
       nodemailer.mailOptions.subject = "Enrolled Course-Medipharm Solutions";
       nodemailer.mailOptions.html = html;
       nodemailer.transporter.sendMail(
