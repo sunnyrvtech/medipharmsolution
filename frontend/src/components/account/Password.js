@@ -40,7 +40,7 @@ class Password extends Component {
     this.props.passwordChange(user,this.props.history)
     .then(response => {
       if(response){
-              this.props.emptyReducer();
+      this.props.emptyReducer();
       this.setState({ current_password:'',password:'',password_confirm:'',alert_message: {class:'success',message: 'Password changed successfully!'}});
       setTimeout(function(){
           this.setState({alert_message:false});
@@ -57,7 +57,7 @@ class Password extends Component {
             <Sidebar route_name={route_name} />
             <div className="col-md-8 col-lg-9">
             {this.state.alert_message  && (
-              <div className={'alert alert-'+this.state.alert_message.class}>
+              <div className={'text-center alert alert-'+this.state.alert_message.class}>
                  {this.state.alert_message.message}
               </div>
             )}

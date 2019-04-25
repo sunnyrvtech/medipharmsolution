@@ -9,6 +9,8 @@ const validateEnrolledInput = require("../../validation/admin/enrolled");
 
 const Enrolled = require("../../models/Enrolled");
 const Enrollment = require("../../models/Enrollment");
+const nodemailer = require("../../mailer");
+const enrollmentNotification = require("../../notification/enrollment");
 const moment = require('moment');
 
 router.get(
@@ -55,7 +57,25 @@ router.post(
     // newEnrolled.expired_at = moment().add(3, 'M').toISOString();
     newEnrolled.save(async function(err, enrolled) {
       //console.log(err);
-      await  Enrollment.deleteMany({ user_id: req.body.user_id,course_id: req.body.course_id });
+     await  Enrollment.deleteMany({ user_id: req.body.user_id,course_id: req.body.course_id });
+      var noti_data = {
+        user_name: req.body.user_name,
+        course_name: req.body.course_name
+      }
+      var { html } = enrollmentNotification.userEnrolledNotification(noti_data);
+      nodemailer.mailOptions.to = process.env.MAIL_FROM_ADDRESS;
+      nodemailer.mailOptions.subject = "Enrolled Course-Medipharm Solutions";
+      nodemailer.mailOptions.html = html;
+      nodemailer.transporter.sendMail(
+      nodemailer.mailOptions,
+      function(error, info) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("Email sent: " + info.response);
+        }
+      }
+    );
       res.json(enrolled);
     });
   }

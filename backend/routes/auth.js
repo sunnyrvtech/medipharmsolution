@@ -50,7 +50,7 @@ router.post("/register", function(req, res) {
               newUser.password = hash;
               newUser.save().then(user => {
                 nodemailer.mailOptions.to = user.email;
-                nodemailer.mailOptions.subject = "Email Verification !";
+                nodemailer.mailOptions.subject = "Email Verification From Medipharm Solutions";
                 var link = config.APP_URL + "/account/activate/" + verify_token;
                 var html = "Hello " + user.first_name + "<br><br>";
                 html +=
@@ -155,7 +155,7 @@ router.post("/password/forgot", function(req, res) {
         { $set: { reset_token: reset_token } }
       ).then(result => {
         nodemailer.mailOptions.to = user.email;
-        nodemailer.mailOptions.subject = "Password Reset From Sollers!";
+        nodemailer.mailOptions.subject = "Password Reset From Medipharm Solutions!";
         var link = config.APP_URL + "/password/reset/" + reset_token;
         var html = "Hello " + user.first_name + "<br><br>";
         html +=

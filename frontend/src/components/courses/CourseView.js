@@ -54,23 +54,7 @@ class CourseView extends Component {
       course_id: this.state.course._id,
       course_name: this.state.course.name
     };
-    this.props.courseEnrolled(enrollment, this.props.history).then(response => {
-      if (response) {
-        this.setState({
-          alert_message: {
-            class: "success",
-            message:
-              "Your Enrollment request has been sent successfully. Admin will contact you soon!"
-          }
-        });
-        setTimeout(
-          function() {
-            this.setState({ alert_message: false });
-          }.bind(this),
-          5000
-        );
-      }
-    });
+    this.props.courseEnrolled(enrollment, this.props.history);
   }
 
   apply_now() {
@@ -208,50 +192,29 @@ class CourseView extends Component {
             </div>
           </div>
         </section>
-        <Modal isOpen={this.state.modal} className="modal-lg">
+        <Modal isOpen={this.state.modal} className="">
           <form onSubmit={this.handleSubmit}>
             <div className="modal-header">
-              <div className="text-center">
-                <h4 className="modal-title">Enrollment Information</h4>
-                <span>
-                  You can apply online today for your program at Medipharm
-                  Solutions. Please complete the application form below and we
-                  will confirm the receipt of your application immediately. We
-                  will confirm your place within 10 working days.If you have not
-                  heard from us within this time, please contact us at
-                  admin@medipharmsolutions.com
-                </span>
+              <div className="">
+                <h5>Are you Sure ?</h5>
               </div>
               <button type="button" className="close" onClick={this.apply_now}>
                 &times;
               </button>
             </div>
-            {this.state.alert_message && (
-              <div className={"alert alert-" + this.state.alert_message.class}>
-                {this.state.alert_message.message}
-              </div>
-            )}
             <ModalBody>
-              <div className="row">
-                <div className="form-group col-md-12">
-                  <label>Message:</label>
-                  <textarea
-                    name="message"
-                    maxLength="500"
-                    className={classnames("form-control", {
-                      "is-invalid": errors.message
-                    })}
-                    onChange={this.handleInputChange}
-                    value={this.state.message}
-                  />
-                  {errors.message && (
-                    <div className="invalid-feedback">{errors.message}</div>
-                  )}
-                </div>
-              </div>
+            <div className="text-center">
+              <span>
+                we will confirm the receipt of your application immediately. We
+                will confirm your place within 10 working days.If you have not
+                heard from us within this time, please contact us at
+                admin@medipharmsolutions.com
+              </span>
+            </div>
             </ModalBody>
             <ModalFooter>
-              <input className="btn btn-primary" type="submit" value="Submit" />
+              <input className="btn btn-primary" type="submit" value="Yes" />
+              <button className="btn btn-primary" type="button" onClick={this.apply_now}>No</button>
             </ModalFooter>
           </form>
         </Modal>

@@ -60,7 +60,6 @@ class UserUpdate extends Component {
 
   render() {
     const { errors } = this.state;
-    console.log(this.state);
     return (
       <div className="container datatable">
         <div className="row form-group">

@@ -79,7 +79,7 @@ class Enrollment extends Component {
     return (
       <div>
       <Link
-        to={`${route_name + "/add/" + cell}`}
+        to={`${"/admin/enrolled/users/add/" + cell}`}
         className="btn btn-info btn-circle"
         tooltip="Enroll User"
       >
@@ -137,9 +137,6 @@ class Enrollment extends Component {
           </TableHeaderColumn>
           <TableHeaderColumn dataSort dataField="phone_number">
             Phone Number
-          </TableHeaderColumn>
-          <TableHeaderColumn dataSort dataField="message">
-            Message
           </TableHeaderColumn>
           <TableHeaderColumn
             width="150"
@@ -212,16 +209,6 @@ class Enrollment extends Component {
                           </p>
                         </div>
                       </div>
-                      <div className="row">
-                        <div className="col-md-12 border-bottom text-center mb-2">
-                          <strong>Message</strong>
-                        </div>
-                        <div className="col-md-12">
-                          <p class="card-text">
-                            {this.state.modal_value.message}
-                          </p>
-                        </div>
-                      </div>
                     </div>
                   </div>
             </ModalBody>
@@ -237,7 +224,7 @@ class Enrollment extends Component {
     return (
       <div className="container datatable">
         {this.state.alert_message && (
-          <div className={"alert alert-" + this.state.alert_message.class}>
+          <div className={"text-center alert alert-" + this.state.alert_message.class}>
             {this.state.alert_message.message}
           </div>
         )}

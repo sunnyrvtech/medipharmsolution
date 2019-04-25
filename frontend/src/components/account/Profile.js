@@ -77,7 +77,7 @@ class Profile extends Component {
             <Sidebar route_name={route_name} />
             <div className="col-md-8 col-lg-9">
             {this.state.alert_message  && (
-              <div className={'alert alert-'+this.state.alert_message.class}>
+              <div className={'text-center alert alert-'+this.state.alert_message.class}>
                  {this.state.alert_message.message}
               </div>
             )}

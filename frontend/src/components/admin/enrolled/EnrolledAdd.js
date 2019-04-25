@@ -43,14 +43,17 @@ class EnrolledAdd extends Component {
     this.props.emptyReducer();
     const enrollmentId = this.props.match.params.enrollmentId;
     this.props.getUserEnrollmentById(enrollmentId, this.props.history).then(response => {
-      this.setState({ user_id: response.user_id._id,email: response.user_id.email,course_id: response.course_id._id,course_name: response.course_id.name });
+      if(response)
+      this.setState({ user_id: response.user_id._id,user_name: response.user_id.first_name+" "+response.user_id.last_name,email: response.user_id.email,course_id: response.course_id._id,course_name: response.course_id.name });
     });
   }
   handleSubmit(e) {
     e.preventDefault();
     const enrolled = {
       user_id: this.state.user_id,
+      user_name: this.state.user_name,
       course_id: this.state.course_id,
+      course_name: this.state.course_name,
       price: this.state.price,
       start_at: this.state.start_at,
       expired_at: this.state.expired_at

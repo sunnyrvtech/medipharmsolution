@@ -25,7 +25,7 @@ class Upload extends Component {
     return (
       <div className="container datatable">
         {errors.message != undefined && (
-          <div className="alert alert-danger">{errors.message}</div>
+          <div className="text-center alert alert-danger">{errors.message}</div>
         )}
         <input
           className="upload_image_file"

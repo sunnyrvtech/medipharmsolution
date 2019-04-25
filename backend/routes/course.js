@@ -123,25 +123,43 @@ router.post(
       first_name: req.user.first_name,
       last_name: req.user.last_name,
       email: req.user.email,
-      phone_number: req.user.phone_number,
+      phone_number: req.user.phone_number != undefined ? req.user.phone_number:'',
       course_name: req.body.course_name,
     }
 
-    const { html } = enrollmentNotification.adminEnrollmentNotification(noti_data);
     newEnrollment.save(function(err, enrollment) {
+      ///  notification sent to admin
+      noti_data.title = "New enrollment request has been received.Please check following enrollment details below:-"
+      var { html } = enrollmentNotification.adminEnrollmentNotification(noti_data);
       nodemailer.mailOptions.to = process.env.MAIL_FROM_ADDRESS;
-      nodemailer.mailOptions.subject = "New Enrollment Request Received !";
+      nodemailer.mailOptions.subject = "New Enrollment Request Received-Medipharm Solutions";
       nodemailer.mailOptions.html = html;
       nodemailer.transporter.sendMail(
-        nodemailer.mailOptions,
-        function(error, info) {
-          if (error) {
-            console.log(error);
-          } else {
-            console.log("Email sent: " + info.response);
-          }
+      nodemailer.mailOptions,
+      function(error, info) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("Email sent: " + info.response);
         }
-      );
+      }
+    );
+      ///  notification sent to user
+      noti_data.title = "We have received your enrollement request  and we will contact you soon.If you have not heard from us within this time, please contact us at admin@medipharmsolutions.com.Please check following enrollment details below:-"
+      var { html } = enrollmentNotification.adminEnrollmentNotification(noti_data);
+      nodemailer.mailOptions.to = req.user.email;
+      nodemailer.mailOptions.subject = "Enrollment Request Received-Medipharm Solutions";
+      nodemailer.mailOptions.html = html;
+      nodemailer.transporter.sendMail(
+      nodemailer.mailOptions,
+      function(error, info) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("Email sent: " + info.response);
+        }
+      }
+    );
       res.json(enrollment);
     });
   }

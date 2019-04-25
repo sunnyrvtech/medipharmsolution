@@ -68,7 +68,7 @@ class Login extends Component {
     return (
       <div>
         {this.state.alert_message && (
-          <div class={"alert alert-" + this.state.alert_message.class}>
+          <div class={"text-center alert alert-" + this.state.alert_message.class}>
             {this.state.alert_message.message}
           </div>
         )}

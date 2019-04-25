@@ -23,8 +23,7 @@ class FooterSetting extends Component {
       footer_newsletter_text: "",
       footer_copyright_title: "",
       footer_copyright_text: "",
-      page_not_found: false,
-      alert_message: null
+      page_not_found: false
     };
     route_name = props.match.url;
     this.handleInputChange = this.handleInputChange.bind(this);

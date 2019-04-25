@@ -16,10 +16,6 @@ const EnrollmentSchema = new Schema({
     ref: 'courses',
     required: true
   },
-  term_pdf: {
-    type: String,
-    required: true
-  },
   created_at: {
     type: Date,
     default: Date.now

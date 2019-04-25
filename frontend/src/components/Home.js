@@ -1,6 +1,9 @@
 // Home.js
 
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import { getSettingBySlug } from "../actions/setting";
 import Slider from "react-slick";
 
 function NextArrow(props) {
@@ -21,9 +24,61 @@ function PrevArrow(props) {
   );
 }
 
-export default class Home extends Component {
-  componentDidMount() {
+class Home extends Component {
+  constructor(props) {
+    super();
+    this.state = {
+      banner_title: "",
+      learn_more_title: "",
+      learn_more_text: "",
+      admission_title: "",
+      admission_text: "",
+      about_us_title: "",
+      about_us_text: "",
+      talk_us_title: "",
+      talk_us_text: "",
+      experience_title: "",
+      experience_text: "",
+      graduates_title: "",
+      graduates_text: "",
+      page_not_found: false
+    };
+  }
+  componentWillMount() {
     window.scrollTo(0, 0);
+    this.props.getSettingBySlug('home', this.props.history).then(response => {
+      if (response) {
+        this.setState({
+          banner_title: response.content.banner.title,
+          learn_more_title: response.content.learn_more.title,
+          learn_more_text: response.content.learn_more.text,
+          admission_title: response.content.admission.title,
+          admission_text: response.content.admission.text,
+          about_us_title: response.content.about_us.title,
+          about_us_text: response.content.about_us.text,
+          talk_us_title: response.content.talk_us.title,
+          talk_us_text: response.content.talk_us.text,
+          experience_title: response.content.experience.title,
+          experience_text: response.content.experience.text,
+          graduates_title: response.content.graduates.title,
+          graduates_text: response.content.graduates.text
+        });
+      }
+    });
+    if (this.props.location.state) {
+      if (this.props.location.state.alert_message) {
+        this.setState({
+          alert_message: this.props.location.state.alert_message
+        });
+        setTimeout(
+          function() {
+            this.setState({ alert_message: false });
+          }.bind(this),
+          10000
+        );
+        this.props.history.replace({ state: null });
+      }
+    }
   }
   render() {
     var settings = {
@@ -45,18 +100,18 @@ export default class Home extends Component {
     };
     return (
       <main>
+      {this.state.alert_message && (
+        <div className={"text-center alert alert-" + this.state.alert_message.class}>
+          {this.state.alert_message.message}
+        </div>
+      )}
         <section className="hero-banner">
           <div className="container">
             <div className="modal-wrap">
               <div className="modal-table">
                 <div className="modal-cell">
                   <div className="homebanner-info">
-                    <h2>
-                      Step into
-                      <br />a world of
-                      <br />
-                      opportunities!
-                    </h2>
+                    <h2>{this.state.banner_title}</h2>
                     <a href="#" className="btn">
                       Learn
                     </a>
@@ -91,11 +146,8 @@ export default class Home extends Component {
                         <img src="/images/icon-1.png" />
                       </div>
                       <div className="info-box">
-                        <h3>The Jobs of the Future</h3>
-                        <p>
-                          Sollers bridges the gap between the theory and the
-                          applied skills required in the workplace
-                        </p>
+                        <h3>{this.state.learn_more_title}</h3>
+                        <p>{this.state.learn_more_text}</p>
                         <a href="#">Learn More</a>
                       </div>
                     </div>
@@ -106,12 +158,8 @@ export default class Home extends Component {
                         <img src="/images/icon-2.png" />
                       </div>
                       <div className="info-box">
-                        <h3>DON'T PAY UNTIL YOU PLAY</h3>
-                        <p>
-                          Our innovative income-sharing program means you may
-                          not have to pay tuition until after you've secured a
-                          decent job.
-                        </p>
+                        <h3>{this.state.admission_title}</h3>
+                        <p>{this.state.admission_text}</p>
                         <a href="#">Admissions</a>
                       </div>
                     </div>
@@ -122,11 +170,8 @@ export default class Home extends Component {
                         <img src="/images/icon-3.png" />
                       </div>
                       <div className="info-box">
-                        <h3>GUIDING PRINCIPLES</h3>
-                        <p>
-                          "The Sollers 7" is a blueprint for what we do and who
-                          we are.
-                        </p>
+                        <h3>{this.state.about_us_title}</h3>
+                        <p>{this.state.about_us_text}</p>
                         <a href="/about-us">About Us</a>
                       </div>
                     </div>
@@ -137,11 +182,8 @@ export default class Home extends Component {
                         <img src="/images/icon-4.png" />
                       </div>
                       <div className="info-box">
-                        <h3>TAKE THE FIRST STEP</h3>
-                        <p>
-                          Your journey starts with a single step. Will you step
-                          forward to transform your life?
-                        </p>
+                        <h3>{this.state.talk_us_title}</h3>
+                        <p>{this.state.talk_us_text}</p>
                         <a href="#">Talk to Us</a>
                       </div>
                     </div>
@@ -160,14 +202,10 @@ export default class Home extends Component {
                     <div className="learn-interest-info pad-70-all">
                       <div className="title">
                         <h2>
-                          <span>A unique learning </span>Experience
+                          <span>A unique learning </span>{this.state.experience_title}
                         </h2>
                       </div>
-                      <p>
-                        Sollers College graduates move on to outstanding careers
-                        in the Life Sciences, gaining employment among industry
-                        leaders, such as Bristol-Myers Squibb and Pfizer.
-                      </p>
+                      <p>{this.state.experience_text}</p>
                       <a href="#" className="btn btn-ghost btn-black-bg">
                         About Us
                       </a>
@@ -188,18 +226,10 @@ export default class Home extends Component {
                 <div className="graduate-wpr-rt">
                   <div className="title">
                     <h2>
-                      <span>Where do </span> Our graduates go?
+                      <span>Where do </span> {this.state.graduates_title}
                     </h2>
                   </div>
-                  <p>
-                    Sollers College graduates move on to outstanding careers in
-                    the pharmaceutical and medical fields, gaining employment
-                    among industry leaders, such as Bristol- Myers Squibb and
-                    Pfizer. Our Career Development Office supports our students
-                    as they advance in their careers by providing counseling and
-                    advice on choosing the program best suited to their
-                    ambitions.
-                  </p>
+                  <p>{this.state.graduates_text}</p>
                 </div>
               </div>
             </div>
@@ -591,3 +621,8 @@ export default class Home extends Component {
     );
   }
 }
+
+export default connect(
+  null,
+  { getSettingBySlug }
+)(withRouter(Home));

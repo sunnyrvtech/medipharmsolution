@@ -65,9 +65,7 @@ export const getCertificateByCourseId = (courseId, history) => dispatch =>
 export const courseEnrolled = (enrollment, history) => dispatch =>
   client()
     .post("/courses/enrollment", enrollment)
-    .then(res => {
-      return res.data;
-    })
+    .then(res => history.push({ pathname: '/',state: { alert_message:{class:'success',message: 'Your Enrollment request has been sent successfully. Admin will contact you soon!'}}}))
     .catch(err => {
       console.log(err);
       dispatch({

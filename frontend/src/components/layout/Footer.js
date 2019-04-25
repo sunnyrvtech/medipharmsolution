@@ -1,10 +1,40 @@
 // Header.js
 
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { connect } from "react-redux";
+import { withRouter,Link } from "react-router-dom";
+import { getSettingBySlug } from "../../actions/setting";
 import PropTypes from 'prop-types';
 
 class Footer extends Component {
+  constructor(props) {
+    super();
+    this.state = {
+      footer_about_us_text: "",
+      footer_contact_us_address: "",
+      footer_contact_us_phone: "",
+      footer_contact_us_email: "",
+      footer_newsletter_text: "",
+      footer_copyright_title: "",
+      footer_copyright_text: ""
+    };
+  }
+  componentDidMount() {
+    window.scrollTo(0, 0);
+    this.props.getSettingBySlug('footer', this.props.history).then(response => {
+      if (response) {
+        this.setState({
+          footer_about_us_text: response.content.footer_about_us.text,
+          footer_contact_us_address: response.content.footer_contact_us.address,
+          footer_contact_us_phone: response.content.footer_contact_us.phone,
+          footer_contact_us_email: response.content.footer_contact_us.email,
+          footer_newsletter_text: response.content.footer_newsletter.text,
+          footer_copyright_title: response.content.footer_copyright.title,
+          footer_copyright_text: response.content.footer_copyright.text
+        });
+      }
+    });
+  }
     render() {
         return(
             <footer>
@@ -12,7 +42,7 @@ class Footer extends Component {
             <div className="row">
               <div className="col-lg-3 col-md-6 col-sm-12 foo_sec">
                 <h5>About us</h5>
-                <p>tronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing.</p>
+                <p>{this.state.footer_about_us_text}</p>
               </div>
               <div className="col-lg-2 col-md-6 col-sm-12 foo_sec">
                 <h5>INFO</h5>
@@ -26,13 +56,13 @@ class Footer extends Component {
               </div>
               <div className="col-lg-3 col-md-6 col-sm-12 foo_sec">
                 <h5>Contact</h5>
-                <p>Sollers College, Unit 1850, 55 Parsonage Road, Edison, New Jersey 08837</p>
-                <p><a href="tel:18772906907">1-877-290-6907</a></p>
-                <p><a href="emailto:info@test1234.com">info@test1234.com</a></p>
+                <p>{this.state.footer_contact_us_address}</p>
+                <p><a href={"tel:"+this.state.footer_contact_us_phone}>{this.state.footer_contact_us_phone}</a></p>
+                <p><a href={"emailto:"+this.state.footer_contact_us_email}>{this.state.footer_contact_us_email}</a></p>
               </div>
               <div className="col-lg-4 col-md-6 col-sm-12 foo_sec">
                 <h5>SUBSCRIBE TO OUR NEWSLETTER</h5>
-                <p>Sign up for our weekly newsletter to learn more about how to break into or level up your career in the pharmaceutical or clinical research fields.</p>
+                <p>{this.state.footer_newsletter_text}</p>
                 <div className="newsletter newsletter-widget">
                   <form>
                     <input id="signup" placeholder="Your email" className="newsletter-email form-control" type="email" />
@@ -42,8 +72,8 @@ class Footer extends Component {
               </div>
               <div className="col-lg-12 col-md-12 col-sm-12 foo_sec">
                 <div className="copyright text-center">
-                  <p>&copy;   2019 SollersCollege. All rights reserved.</p>
-                  <div className="ft-disclaimber center">All product names, logos, and brands are property of their respective owners. All company, product and service names used in this website are for identification purposes only. Use of these names, logos, and brands does not imply endorsement.</div>
+                  <p>&copy;   {this.state.footer_copyright_title}</p>
+                  <div className="ft-disclaimber center">{this.state.footer_copyright_text}</div>
                 </div>
               </div>
             </div>
@@ -55,4 +85,7 @@ class Footer extends Component {
 }
 
 
-export default Footer;
+export default connect(
+  null,
+  { getSettingBySlug }
+)(withRouter(Footer));

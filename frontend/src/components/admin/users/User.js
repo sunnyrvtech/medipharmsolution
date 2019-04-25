@@ -22,17 +22,18 @@ class User extends Component {
     this.props.deleteUser(cell, this.props.history).then(response => {
       if (response) {
         var users = this.state.users;
-        delete users[index]; // this is used to remove item from the list after delete
-        //   used to filter array after remove
-        users = users.filter(function(obj) {
-          if (obj.id > index) {
-            return (obj.id = obj.id - 1);
-          }
-          return true;
-        });
+        if (response.status) {
+          users[index].status = true;
+          users[index].account_status = "Active";
+          var message = "Activate successfully!";
+        } else {
+          users[index].status = false;
+          users[index].account_status = "Not active";
+          var message = "Deactivate successfully!";
+        }
+
         this.setState({
-          users: users,
-          alert_message: { class: "success", message: "Deleted successfully!" }
+          alert_message: { class: "success", message: message }
         });
         setTimeout(
           function() {
@@ -76,10 +77,10 @@ class User extends Component {
         </Link>{" "}
         <a
           onClick={() => this.onDelete(cell, row.id - 1)}
-          className="btn btn-danger btn-circle"
-          tooltip="delete"
+          className={row.status?"btn btn-primary btn-circle":"btn btn-danger btn-circle"}
+          tooltip={row.status?"Deactivate":"Activate"}
         >
-          <i className="fa fa-trash" />
+          <i className={row.status?"fa fa-check":"fa fa-remove"} />
         </a>
       </div>
     );
@@ -144,7 +145,7 @@ class User extends Component {
     return (
       <div className="container datatable">
         {this.state.alert_message && (
-          <div className={"alert alert-" + this.state.alert_message.class}>
+          <div className={"text-center alert alert-" + this.state.alert_message.class}>
             {this.state.alert_message.message}
           </div>
         )}

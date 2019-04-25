@@ -268,11 +268,11 @@ class Header extends Component {
                   </a>
                 </li>
               </ul>
-              <span className="desktop-cta">
+              {/*<span className="desktop-cta">
                 <a href="#" className="btn btn-header">
                   Apply Now
                 </a>
-              </span>
+              </span>*/}
             </div>
           </div>
         </nav>

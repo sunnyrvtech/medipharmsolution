@@ -115,7 +115,7 @@ class Quiz extends Component {
     return (
       <div id="quizcontainer">
         {this.state.alert_message && (
-          <div className={"alert alert-" + this.state.alert_message.class}>
+          <div className={"text-center alert alert-" + this.state.alert_message.class}>
             {this.state.alert_message.message}
           </div>
         )}

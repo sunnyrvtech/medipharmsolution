@@ -22,6 +22,7 @@ const front_modules = require('./routes/course_module');
 const front_quizes = require('./routes/quiz');
 const front_users = require('./routes/user');
 const front_blogs = require('./routes/blog');
+const front_settings = require('./routes/setting');
 const front_categories = require('./routes/category');
 const pages = require('./routes/page');
 
@@ -61,6 +62,7 @@ app.use('/api/account/users', front_users);
 app.use('/api/categories', front_categories);
 app.use('/api/pages', pages);
 app.use('/api/blogs', front_blogs);
+app.use('/api/settings', front_settings);
 app.use(express.static('public'));
 app.use(express.static(path.join(__dirname, 'www')));
 app.get('*', function(req, res) {

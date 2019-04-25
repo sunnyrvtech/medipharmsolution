@@ -241,7 +241,7 @@ class Enrolled extends Component {
     return (
       <div className="container datatable">
         {this.state.alert_message && (
-          <div className={"alert alert-" + this.state.alert_message.class}>
+          <div className={"text-center alert alert-" + this.state.alert_message.class}>
             {this.state.alert_message.message}
           </div>
         )}

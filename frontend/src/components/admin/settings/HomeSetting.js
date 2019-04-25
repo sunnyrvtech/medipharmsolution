@@ -29,8 +29,7 @@ class HomeSetting extends Component {
       experience_text: "",
       graduates_title: "",
       graduates_text: "",
-      page_not_found: false,
-      alert_message: null
+      page_not_found: false
     };
     route_name = props.match.url;
     this.handleInputChange = this.handleInputChange.bind(this);
