@@ -17,6 +17,7 @@ router.get(
       .populate("module_id", "name")
       .exec(function(err, quizes) {
         var result = [];
+        if(!err){
         quizes.forEach(function(element, i) {
           result.push({
             _id: element._id,
@@ -25,6 +26,7 @@ router.get(
             module_name: element.module_id.name
           });
         });
+      }
         res.json(result);
       });
   }
@@ -107,8 +109,11 @@ router.get(
   "/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    Quiz.findOne({ _id: req.params.id }).then(quiz => {
-      res.json(quiz);
+    Quiz.findOne({_id: req.params.id}).populate('module_id','name').exec(function(err, quiz) {
+      if(!err)
+       res.json(quiz)
+      else
+       res.json(null)
     });
   }
 );

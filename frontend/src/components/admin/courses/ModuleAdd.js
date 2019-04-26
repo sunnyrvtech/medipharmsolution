@@ -5,12 +5,12 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withRouter, Link } from "react-router-dom";
 import { createModule } from "../../../actions/admin/module";
-import { getCourses,emptyReducer } from "../../../actions/admin/course";
+import { getCourseById,emptyReducer } from "../../../actions/admin/course";
 import classnames from "classnames";
 import CKEditor from "react-ckeditor-component";
-
+let route_name;
 class ModuleAdd extends Component {
-  constructor() {
+  constructor(props) {
     super();
     this.state = {
       name: "",
@@ -18,6 +18,7 @@ class ModuleAdd extends Component {
       content: "",
       errors: {}
     };
+    route_name = props.match.url;
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -39,15 +40,22 @@ class ModuleAdd extends Component {
     e.preventDefault();
     const module = {
       name: this.state.name,
-      course_id: this.state.course_id,
+      course_id: this.props.match.params.courseId,
       content: this.state.content
     };
-    this.props.createModule(module, this.props.history);
+    this.props.createModule(module,route_name,this.props.history);
   }
 
   componentDidMount() {
     this.props.emptyReducer();
-    this.props.getCourses();
+    var courseId = this.props.match.params.courseId;
+    this.props
+      .getCourseById(courseId)
+      .then(response => {
+        if (response) {
+          this.setState({ course_name: response.name });
+        }
+      });
   }
   render() {
     const { errors, courses } = this.props;
@@ -58,7 +66,7 @@ class ModuleAdd extends Component {
       <div className="container datatable">
         <div className="row form-group">
           <div className="col-lg-12">
-            <h3>Add New Module</h3>
+            <h3>Add New Module ({this.state.course_name})</h3>
             <hr />
           </div>
         </div>
@@ -78,30 +86,6 @@ class ModuleAdd extends Component {
                 />
                 {errors.name && (
                   <div className="invalid-feedback">{errors.name}</div>
-                )}
-              </div>
-              <div className="form-group">
-                <label htmlFor="course">Course:</label>
-                <select
-                  className={classnames("form-control", {
-                    "is-invalid": errors.course_id
-                  })}
-                  name="course_id"
-                  onChange={this.handleInputChange}
-                  value={this.state.value}
-                >
-                  <option value="">Choose course...</option>
-                  {courses.length != undefined &&
-                    courses.map(option => {
-                      return (
-                        <option value={option._id} key={option._id}>
-                          {option.name}
-                        </option>
-                      );
-                    })}
-                </select>
-                {errors.course_id && (
-                  <div className="invalid-feedback">{errors.course_id}</div>
                 )}
               </div>
               <div className={classnames("form-group", {
@@ -135,11 +119,10 @@ ModuleAdd.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  courses: state.courses.courses,
   errors: state.errors
 });
 
 export default connect(
   mapStateToProps,
-  { createModule, getCourses,emptyReducer }
+  { createModule,getCourseById,emptyReducer }
 )(withRouter(ModuleAdd));

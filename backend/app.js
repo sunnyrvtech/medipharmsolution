@@ -46,7 +46,7 @@ app.use(bodyParser.json());
 app.use('/api/users', auth);
 app.use('/api/admin/users', users);
 app.use('/api/admin/courses', courses);
-app.use('/api/admin/courses/module', course_modules);
+app.use('/api/admin/modules', course_modules);
 app.use('/api/admin/categories', categories);
 app.use('/api/admin/quiz', quizes);
 app.use('/api/admin/pages', static_pages);

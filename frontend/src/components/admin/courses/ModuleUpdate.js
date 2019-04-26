@@ -5,12 +5,11 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withRouter, Link } from "react-router-dom";
 import { updateModule,getModuleById,emptyReducer } from "../../../actions/admin/module";
-import { getCourses } from "../../../actions/admin/course";
 import classnames from "classnames";
 import CKEditor from "react-ckeditor-component";
-
+let route_name;
 class ModuleUpdate extends Component {
-  constructor() {
+  constructor(props) {
     super();
     this.state = {
       name: "",
@@ -18,6 +17,7 @@ class ModuleUpdate extends Component {
       content: "",
       errors: { }
     };
+    route_name = props.match.url;
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -39,22 +39,20 @@ class ModuleUpdate extends Component {
     e.preventDefault();
     const module = {
       name: this.state.name,
-      course_id: this.state.course_id,
       content: this.state.content,
       moduleId: this.props.match.params.moduleId
     };
-    this.props.updateModule(module, this.props.history);
+    this.props.updateModule(module,route_name,this.props.history);
   }
 
   componentDidMount() {
     this.props.emptyReducer();
-    this.props.getCourses();
     const moduleId = this.props.match.params.moduleId;
     this.props
       .getModuleById(moduleId, this.props.history)
       .then(response => {
         if (response) {
-          this.setState({ name: response.name,content: response.content,course_id: response.course_id});
+          this.setState({ name: response.name,content: response.content,course_id: response.course_id._id,course_name: response.course_id.name});
         }
       });
   }
@@ -67,7 +65,7 @@ class ModuleUpdate extends Component {
       <div className="container datatable">
         <div className="row form-group">
           <div className="col-lg-12">
-            <h3>Update Module</h3>
+            <h3>Update Module ({this.state.course_name})</h3>
             <hr />
           </div>
         </div>
@@ -87,30 +85,6 @@ class ModuleUpdate extends Component {
                 />
                 {errors.name && (
                   <div className="invalid-feedback">{errors.name}</div>
-                )}
-              </div>
-              <div className="form-group">
-                <label htmlFor="course">Course:</label>
-                <select
-                  className={classnames("form-control", {
-                    "is-invalid": errors.course_id
-                  })}
-                  name="course_id"
-                  onChange={this.handleInputChange}
-                  value={this.state.course_id}
-                >
-                  <option value="">Choose course...</option>
-                  {courses.length != undefined &&
-                    courses.map(option => {
-                      return (
-                        <option value={option._id} key={option._id}>
-                          {option.name}
-                        </option>
-                      );
-                    })}
-                </select>
-                {errors.course_id && (
-                  <div className="invalid-feedback">{errors.course_id}</div>
                 )}
               </div>
               <div className={classnames("form-group", {
@@ -141,17 +115,15 @@ class ModuleUpdate extends Component {
 }
 ModuleUpdate.propTypes = {
   updateModule: PropTypes.func.isRequired,
-  getCourses: PropTypes.func.isRequired,
   getModuleById: PropTypes.func.isRequired,
   emptyReducer: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  courses: state.courses.courses,
   errors: state.errors
 });
 
 export default connect(
   mapStateToProps,
-  { updateModule, getCourses,getModuleById,emptyReducer }
+  { updateModule,getModuleById,emptyReducer }
 )(withRouter(ModuleUpdate));

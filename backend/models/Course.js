@@ -34,8 +34,8 @@ const CourseSchema = new Schema({
 });
 
 CourseSchema.pre('remove', function(next){
-     CourseModule.update({ course_id: this._id },{ $set: { course_id: null }},{multi:true}).exec();
-    // CourseModule.deleteMany({course_id: this._id}).exec();
+     // CourseModule.update({ course_id: this._id },{ $set: { course_id: null }},{multi:true}).exec();
+    CourseModule.deleteMany({course_id: this._id}).exec();
     next();
 });
 CourseSchema.plugin(URLSlugs('name', {update: 'slug'}));

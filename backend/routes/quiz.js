@@ -55,7 +55,7 @@ router.post(
         newQuizDetail.total_question = req.body.total_question;
         newQuizDetail.total_answer = req.body.total_answer;
         newQuizDetail.module_id = req.body.module_id;
-        newQuizDetail.score = req.body.score.toFixed(2);
+        newQuizDetail.score = req.body.score;
         newQuizDetail.save(function(err, quiz_detail) {
           res.json(quiz_detail);
         });

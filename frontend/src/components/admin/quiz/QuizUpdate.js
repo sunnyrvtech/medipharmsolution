@@ -51,7 +51,7 @@ class QuizUpdate extends Component {
       .getQuizById(quizId, this.props.history)
       .then(response => {
         if (response) {
-          this.setState({ name: response.name,option1: response.options.option1,option2: response.options.option2,option3: response.options.option3,option4: response.options.option4,answer:response.answer});
+          this.setState({ name: response.name,option1: response.options.option1,option2: response.options.option2,option3: response.options.option3,option4: response.options.option4,answer:response.answer,module_name: response.module_id.name});
         }
       });
   }
@@ -64,7 +64,7 @@ class QuizUpdate extends Component {
       <div className="container datatable">
         <div className="row form-group">
           <div className="col-lg-12">
-            <h3>Update Quiz</h3>
+            <h3>Update Quiz ({this.state.module_name})</h3>
             <hr />
           </div>
         </div>

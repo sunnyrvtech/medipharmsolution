@@ -9,10 +9,10 @@ export const emptyReducer =() => dispatch => {
     payload: ''
   });
 };
-export const createModule = (module, history) => dispatch => {
+export const createModule = (module,route_name,history) => dispatch => {
   client()
-    .post("/admin/courses/module", module)
-    .then(res => history.push({ pathname: '/admin/courses/module',state: { alert_message:{class:'success',message: 'Module added successfully!'}}}))
+    .post("/admin/modules/create", module)
+    .then(res => history.push({ pathname: route_name.split('/add')[0],state: { alert_message:{class:'success',message: 'Module added successfully!'}}}))
     .catch(err => {
       console.log(err);
       dispatch({
@@ -21,10 +21,10 @@ export const createModule = (module, history) => dispatch => {
       });
     });
 };
-export const updateModule = (module, history) => dispatch => {
+export const updateModule = (module,route_name, history) => dispatch => {
   client()
-    .put("/admin/courses/module", module)
-    .then(res => history.push({ pathname: '/admin/courses/module',state: { alert_message:{class:'success',message: 'Updated successfully!'}}}))
+    .put("/admin/modules/update", module)
+    .then(res => history.push({ pathname: route_name.split('/'+module.moduleId)[0],state: { alert_message:{class:'success',message: 'Updated successfully!'}}}))
     .catch(err => {
       console.log(err);
       dispatch({
@@ -35,7 +35,7 @@ export const updateModule = (module, history) => dispatch => {
 };
 export const deleteModule = (moduleId, history) => dispatch =>
   client()
-    .delete("/admin/courses/module/" + moduleId)
+    .delete("/admin/modules/delete/" + moduleId)
     .then(res => {
       return res.data;
     })
@@ -47,10 +47,9 @@ export const deleteModule = (moduleId, history) => dispatch =>
       });
     });
 
-
-export const getModules = () => async dispatch =>
+export const getModules = (courseId) => async dispatch =>
   client()
-    .get("/admin/courses/module")
+    .get("/admin/modules/course/" + courseId)
     .then(res => {return res.data;})
     .catch(err => {
       console.log(err);
@@ -61,7 +60,7 @@ export const getModules = () => async dispatch =>
     });
 export const getModuleById = (moduleId, history) => dispatch =>
   client()
-    .get("/admin/courses/module/" + moduleId)
+    .get("/admin/modules/" + moduleId)
     .then(res => {
       return res.data;
     })

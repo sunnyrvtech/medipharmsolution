@@ -28,7 +28,7 @@ class ModuleList extends Component {
     const courseId = this.props.match.params.courseId;
 
     this.props.getModules(courseId).then(response => {
-      this.setState({ percentage: 0, modules: response });
+      this.setState({ percentage: 0, modules: response.modules,quiz_details: response.quiz_details });
     });
   }
   reanderPercentage(module_count) {
@@ -68,25 +68,24 @@ class ModuleList extends Component {
       </tr>
     );
   }
-  renderList(modules) {
+  renderList(modules,quiz_details) {
     return (
       <tbody>
         {modules.map((module, i) => {
-          if (module.quiz_detail) {
-            total_question += module.quiz_detail.total_question;
-            total_answer += module.quiz_detail.total_answer;
+          var quiz_index = quiz_details.findIndex(quiz_detail => quiz_detail.module_id == module._id);
+          var quiz_score = ".......";
+          if (quiz_index >= 0) {
+            total_question += quiz_details[quiz_index].total_question;
+            total_answer += quiz_details[quiz_index].total_answer;
+            quiz_score = quiz_details[quiz_index].score + " %";
             quiz_count++;
           }
           return (
             <tr key={i}>
               <th scope="row">{i + 1}</th>
               <td>{module.name}</td>
-              <td>{module.courses.name}</td>
-              <td>
-                {module.quiz_detail != undefined
-                  ? module.quiz_detail.score + "%"
-                  : "......."}
-              </td>
+              <td>{module.course_id.name}</td>
+              <td>{quiz_score}</td>
               <td>
                 <Link
                   to={"/account/modules/module/" + module._id}
@@ -110,7 +109,7 @@ class ModuleList extends Component {
   }
 
   render() {
-    const { modules } = this.state;
+    const { modules,quiz_details } = this.state;
     return (
       <main className="profile_main">
         <div className="container">
@@ -119,7 +118,7 @@ class ModuleList extends Component {
             <div className="col-md-8 col-lg-9">
               <div className="p-5">
                 <div className="text-center module_content">
-                  <h1 className="h4 text-gray-900 mb-4">Modules Listing</h1>
+                  <h1 className="h4 text-gray-900 mb-4">Module Listing</h1>
                   <div className="nxt_btn"><Link to={"/account/courses"} className="btn btn-primary">Back Course Listing</Link></div>
 
                 </div>
@@ -134,7 +133,7 @@ class ModuleList extends Component {
                     </tr>
                   </thead>
                   {modules && modules.length > 0 ? (
-                    this.renderList(modules)
+                    this.renderList(modules,quiz_details)
                   ) : (
                     <tbody>
                       <tr>

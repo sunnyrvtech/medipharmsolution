@@ -53,12 +53,6 @@ class Sidebar extends Component {
           <span>Courses</span></Link>
       </li>
       <hr className="sidebar-divider" />
-      <li className={this.state.route_name == "/admin/courses/module"?"nav-item active":"nav-item"}>
-        <Link className="nav-link" to="/admin/courses/module">
-          <i className="fa fa-list-alt"></i>
-          <span>Modules</span></Link>
-      </li>
-      <hr className="sidebar-divider" />
       <li className={this.state.route_name == "/admin/enrollments"?"nav-item active":"nav-item"}>
         <Link className="nav-link" to="/admin/enrollments">
           <i className="fa fa-bell"></i>

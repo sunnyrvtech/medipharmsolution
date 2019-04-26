@@ -16,7 +16,7 @@ class Module extends Component {
     this.state = {
       alert_message: null
     };
-   route_name= props.match.path
+   route_name= props.match.url
   }
 
   onDelete(cell,index) {
@@ -40,8 +40,9 @@ class Module extends Component {
 }
   componentWillMount() {
       window.scrollTo(0, 0);
+      var courseId = this.props.match.params.courseId;
     //if(this.props.courses.length == undefined)
-      this.props.getModules()
+      this.props.getModules(courseId)
       .then(response => {
         this.setState({ courses_modules: response});
       });

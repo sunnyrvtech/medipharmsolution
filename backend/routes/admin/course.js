@@ -36,7 +36,7 @@ const upload = multer({
 
 
 router.get(
-  "/course",
+  "/",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Course.find()
@@ -58,7 +58,7 @@ router.get(
   }
 );
 router.post(
-  "/course",
+  "/create",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     upload(req, res, err => {
@@ -101,7 +101,7 @@ router.post(
 );
 
 router.put(
-  "/course",
+  "/update",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     upload(req, res, err => {
@@ -156,7 +156,7 @@ router.put(
 );
 
 router.delete(
-  "/course/:id",
+  "/delete/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Course.findOne({ _id: req.params.id }).then(course => {
@@ -170,7 +170,7 @@ router.delete(
   }
 );
 router.get(
-  "/course/:id",
+  "/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Course.findOne({ _id: req.params.id }).populate("category_id", "name")

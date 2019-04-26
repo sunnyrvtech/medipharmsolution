@@ -296,31 +296,29 @@ a.btn:hover {
 }
 section.hero-banner {
     background-image:url('/images/medi-default.jpg');
-    min-height: 480px;
+    min-height: initial !important;
+    padding: 12% 0;
+    position: relative;
 }
 .modal-wrap .modal-table {
-    min-height: 480px;
-    display: table;
-    height: 100%;
-    margin: 0 auto;
     text-align: center;
     width: 100%;
 }
-.modal-wrap .modal-table .modal-cell {
-    display: table-cell;
-    padding: 20px;
-    vertical-align: middle;
-}
  .homebanner-info {
-    text-align: left;
+    text-align: center;
 }
 .homebanner-info h2 {
     font-size: 46px;
-    line-height: 70px;
-    padding-bottom: 30px;
     font-weight: 700;
     text-transform: uppercase;
-    width: 600px;
+    margin-bottom: 0px;
+    color: #fff;
+    position: relative;
+z-index: 99;
+}
+.homebanner-info a {
+    position: relative;
+    z-index: 99;
 }
  .frontApp .btn {
     background-color: #004dda;
@@ -340,7 +338,7 @@ section.hero-banner {
  .homebanner-info a {
     margin-bottom: 10px;
     font-size: 14px;
-    margin: 0 10px 0 0;
+    margin: 30px 10px 0 0;
     display: inline-block;
 }
 .pad-70-tb {
@@ -857,6 +855,27 @@ user-select: none;
 .test_detail {
     font-size: 20px;
 }
+.learn-interest-inner-wpr .btn.btn-ghost:hover {
+    border-color: #004dda;
+    color: #fff;
+}
+section.hero-banner::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    background-color: rgba(0,0,0,.5);
+    transform: translate(-50%,-50%);
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+
+
+
+
+
 @media(max-width: 1366px){
 	.navbar-expand-lg .navbar-nav .nav-link{
 		font-size: 12px;
@@ -865,6 +884,9 @@ user-select: none;
 @media (min-width: 992px) and  (max-width: 1199px){
 .container {
     max-width: 100%;
+}
+.course-menu li {
+    padding: 0 8px;
 }
 }
 
@@ -974,14 +996,22 @@ user-select: none;
     padding:10px 15px;
 }
 .homebanner-info h2 {
-    font-size: 40px;
-    line-height: normal;
-    }
+    font-size: 25px;
+    line-height: 30px;
+    width: 100%;
+    padding: 30px 0px 15px 0px;
+    word-wrap: break-word;
+}
+.frontApp .btn{
+    min-width: 100px;
+padding: 8px 15px;
+}
+
     section.hero-banner{
         min-height: inherit;
     }
     .title h2 {
-    font-size: 35px;
+    font-size: 25px;
 }
 
 .foo_sec {
@@ -992,9 +1022,13 @@ user-select: none;
 }
 .homebanner-info {
     text-align: center;
+    margin-bottom: 30px;
 }
 .header-wrap .col-sm-6 {
     width: 50%;
+}
+.modal-wrap .modal-table .modal-cell {
+    width: 100%;
 }
 }
 
@@ -1004,9 +1038,6 @@ user-select: none;
     display: block;
     max-width: 200px;
 }
-.homebanner-info h2 {
-    font-size: 30px;
-    }
     .learn-interest-inner-box .learn-interest-info p {
     margin-bottom: 20px;
 }

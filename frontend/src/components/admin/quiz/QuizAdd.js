@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withRouter, Link } from "react-router-dom";
 import { createQuiz,emptyReducer } from "../../../actions/admin/quiz";
+import { getModuleById } from "../../../actions/admin/module";
 import classnames from "classnames";
 let route_name;
 class QuizAdd extends Component {
@@ -31,6 +32,14 @@ class QuizAdd extends Component {
   }
   componentDidMount() {
     this.props.emptyReducer();
+    const moduleId = this.props.match.params.moduleId;
+    this.props
+      .getModuleById(moduleId, this.props.history)
+      .then(response => {
+        if (response) {
+          this.setState({ module_name: response.name});
+        }
+      });
   }
   handleSubmit(e) {
     e.preventDefault();
@@ -52,7 +61,7 @@ class QuizAdd extends Component {
       <div className="container datatable">
         <div className="row form-group">
           <div className="col-lg-12">
-            <h3>Add New Quiz</h3>
+            <h3>Add New Quiz ({this.state.module_name})</h3>
             <hr />
           </div>
         </div>
@@ -203,5 +212,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { createQuiz,emptyReducer }
+  { createQuiz,getModuleById,emptyReducer }
 )(withRouter(QuizAdd));

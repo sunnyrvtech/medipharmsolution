@@ -12,9 +12,6 @@ module.exports = function validateCourseModuleInput(data) {
     if(Validator.isEmpty(data.name)) {
         errors.name = 'Name is required';
     }
-    if(Validator.isEmpty(data.course_id)) {
-        errors.course_id = 'Course is required';
-    }
     if(Validator.isEmpty(data.content)) {
         errors.content = 'Content field is required';
     }
