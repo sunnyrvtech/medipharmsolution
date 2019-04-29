@@ -18,6 +18,9 @@ class Header extends Component {
   toggleAccountDropDown = () => {
     document.getElementById("account_drop_down").classList.toggle("show");
   };
+  toggleHamBurgerMenu = () => {
+    document.getElementById("navbarText").classList.toggle("show");
+  };
   toggleMenuDropDown = () => {
     document.getElementById("navbarText").classList.toggle("show");
   };
@@ -48,14 +51,13 @@ class Header extends Component {
             <div
               className="dropdown-menu"
               id="account_drop_down"
-              aria-labelledby="dropdownMenuButton"
             >
               <Link
                 className="dropdown-item"
                 to="/account/profile"
                 onClick={this.toggleAccountDropDown}
               >
-                <i className="fa fa-cog" aria-hidden="true" />
+                <i className="fa fa-cog" />
                 <span>My Account</span>
               </Link>
               <a
@@ -63,7 +65,7 @@ class Header extends Component {
                 href="#"
                 onClick={this.onLogout.bind(this)}
               >
-                <i className="fa fa-sign-out" aria-hidden="true" />
+                <i className="fa fa-sign-out" />
                 <span>Logout</span>
               </a>
             </div>
@@ -75,12 +77,12 @@ class Header extends Component {
       <ul>
         <li>
           <Link to="/login">
-            <i className="fa fa-sign-in" aria-hidden="true" /> Login
+            <i className="fa fa-sign-in" /> Login
           </Link>
         </li>
         <li>
           <Link to="/register">
-            <i className="fa fa-sign-out" aria-hidden="true" /> Register
+            <i className="fa fa-sign-out" /> Register
           </Link>
         </li>
       </ul>
@@ -95,22 +97,22 @@ class Header extends Component {
                   <ul>
                     <li>
                       <a href="#">
-                        <i className="fa fa-facebook" aria-hidden="true" />
+                        <i className="fa fa-facebook" />
                       </a>
                     </li>
                     <li>
                       <a href="#">
-                        <i className="fa fa-twitter" aria-hidden="true" />
+                        <i className="fa fa-twitter" />
                       </a>
                     </li>
                     <li>
                       <a href="#">
-                        <i className="fa fa-instagram" aria-hidden="true" />
+                        <i className="fa fa-instagram" />
                       </a>
                     </li>
                     <li>
                       <a href="#">
-                        <i className="fa fa-youtube-play" aria-hidden="true" />
+                        <i className="fa fa-youtube-play" />
                       </a>
                     </li>
                   </ul>
@@ -151,7 +153,7 @@ class Header extends Component {
             <button
               className="navbar-toggler"
               type="button"
-              onClick={this.toggleMenuDropDown}
+              onClick={this.toggleHamBurgerMenu}
             >
               <span className="navbar-toggler-icon" />
             </button>
@@ -168,9 +170,9 @@ class Header extends Component {
                   </Link>
                 </li>
                 <li className="nav-item parent">
-                  <a className="nav-link" href="#">
+                  <a className="nav-link" href="javascript:void(0);" onClick={this.toggleMenuDropDown}>
                     Explore programs{" "}
-                    <i className="fa fa-chevron-down" aria-hidden="true" />
+                    <i className="fa fa-chevron-down" />
                   </a>
                   <ul className="submenu">
                     {categories &&
@@ -189,9 +191,9 @@ class Header extends Component {
                             <a className="nav-link" href="#">Testimonials </a>
                           </li>*/}
                 <li className="nav-item parent">
-                  <a className="nav-link" href="#">
+                  <a className="nav-link" href="javascript:void(0);" onClick={this.toggleMenuDropDown}>
                     E-learning{" "}
-                    <i className="fa fa-chevron-down" aria-hidden="true" />
+                    <i className="fa fa-chevron-down" />
                   </a>
                   <ul className="submenu">
                     <li>
@@ -210,9 +212,9 @@ class Header extends Component {
                   </ul>
                 </li>
                 <li className="nav-item parent">
-                  <a className="nav-link" href="#">
+                  <a className="nav-link" href="javascript:void(0);" onClick={this.toggleMenuDropDown}>
                     Careers{" "}
-                    <i className="fa fa-chevron-down" aria-hidden="true" />
+                    <i className="fa fa-chevron-down" />
                   </a>
                   <ul className="submenu">
                     <li>
@@ -262,7 +264,7 @@ class Header extends Component {
                             <a className="nav-link" href="#">Student log in </a>
                           </li>*/}
                 <li className="nav-item">
-                  <a className="nav-link" href="#">
+                  <a className="nav-link" href="javascript:void(0);">
                     Contact us{" "}
                   </a>
                 </li>
