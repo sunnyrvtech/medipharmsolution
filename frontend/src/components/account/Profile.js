@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import { withRouter, Link } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import { updateUserInfo } from "../../actions/user";
+import PhoneInput from 'react-phone-number-input';
 import classnames from "classnames";
 
 let route_name;
@@ -132,19 +133,19 @@ class Profile extends Component {
                   </div>
                   <div className="form-group row">
                     <div className="col-sm-6">
-                      <input
-                        type="text"
-                        placeholder="Phone Number"
-                        className={classnames(
-                          "form-control form-control-user",
-                          {
-                            "is-invalid": errors.phone_number
-                          }
-                        )}
-                        name="phone_number"
-                        onChange={this.handleInputChange}
-                        value={this.state.phone_number}
-                      />
+                    <PhoneInput
+                      placeholder="Phone number"
+                      className={classnames(
+                        "form-control form-control-user",
+                        {
+                          "is-invalid": errors.phone_number
+                        }
+                      )}
+                      value={ this.state.phone_number }
+                      onChange={ phone_number => this.setState({ phone_number }) } />
+                      {this.state.phone_number &&
+                      <label>Phone Number:-{ this.state.phone_number }</label>
+                      }
                       {errors.phone_number && (
                         <div className="invalid-feedback">
                           {errors.phone_number}

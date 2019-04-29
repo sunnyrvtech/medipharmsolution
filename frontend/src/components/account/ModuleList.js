@@ -55,11 +55,11 @@ class ModuleList extends Component {
             )}
           </div>
         </td>
-        <td colSpan={3}>
+        <td colSpan={3} style={{ textAlign: 'center' }}>
           {module_count == quiz_count &&
             <div>
           <p>
-            <b>Percentage</b>
+            <b>Overall Percentage</b>
           </p>
           <span>{percentage}%</span>
           </div>
@@ -116,7 +116,7 @@ class ModuleList extends Component {
           <div className="row">
             <Sidebar route_name={route_name} />
             <div className="col-md-8 col-lg-9">
-              <div className="p-5">
+              <div className="p-5 module-list">
                 <div className="text-center module_content">
                   <h1 className="h4 text-gray-900 mb-4">Module Listing</h1>
                   <div className="nxt_btn"><Link to={"/account/courses"} className="btn btn-primary">Back Course Listing</Link></div>

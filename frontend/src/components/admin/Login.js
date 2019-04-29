@@ -46,7 +46,8 @@ class Login extends Component {
     if (this.props.auth.isAuthenticated) {
       this.props.history.push("/");
     }else{
-      document.body.classList.add('bg-gradient-danger');
+      let classesToAdd = [ 'bg-gradient-danger', 'ad-login' ];
+      document.body.classList.add(...classesToAdd);
     }
   }
   render() {

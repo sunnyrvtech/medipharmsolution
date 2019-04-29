@@ -94,7 +94,7 @@ class Quiz extends Component {
         <h2 className="h4 text-gray-900 mb-4">Count Your score</h2>
         <p>
           You will get 1 point for each correct answer. At the end of the Quiz,
-          your total score will be displayed. Maximum score is 40 points.
+          your total score will be displayed.
         </p>
         <div className="w3-light-grey w3-padding w3-margin-top">
           <h2>Start the Quiz</h2>
@@ -213,6 +213,7 @@ class Quiz extends Component {
           </p>
           <p>4:38</p>
         </div>*/}
+      {/*<div><a href="javascript:void(0);" className="btn btn-primary">Back Module Listing</a></div>*/}
       </div>
     );
   }

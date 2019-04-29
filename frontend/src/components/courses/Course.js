@@ -81,7 +81,7 @@ class Course extends Component {
                             {course.name}
                           </Link>
                         </h3>
-                        <span dangerouslySetInnerHTML={{__html: course.description}} />
+                        <span dangerouslySetInnerHTML={{__html: course.description.length>200?course.description.substring(0,200)+" ....":course.description}} />
                       </div>
                     </div>
                   </div>

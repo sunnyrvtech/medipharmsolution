@@ -66,7 +66,7 @@ class Footer extends Component {
                 <div className="newsletter newsletter-widget">
                   <form>
                     <input id="signup" placeholder="Your email" className="newsletter-email form-control" type="email" />
-                    <input className="btn btn-solid btn-nomin newsletter-submit" type="submit" value="Subscribe" />
+                    <input className="btn btn-solid btn-nomin newsletter-submit" type="button" value="Subscribe" />
                   </form>
                 </div>
               </div>

@@ -65,7 +65,7 @@ class Blog extends Component {
                             {blog.name}
                           </Link>
                         </h3>
-                        <span dangerouslySetInnerHTML={{__html: blog.description}} />
+                        <span dangerouslySetInnerHTML={{__html: blog.description.length>200?blog.description.substring(0,200)+" ....":blog.description}} />
                       </div>
                     </div>
                   </div>

@@ -468,11 +468,21 @@
 #adminSetting span {cursor: pointer;}
 .upload_image_file { display: none; }
 .upload-img-galley { border: 1px solid #dee2e6; padding: 50px;position: relative;top: 100px;}
-.react-bs-table-container .table td { overflow: hidden !important; }
+/*.react-bs-table-container .table td { overflow: hidden !important; }*/
 .setting .card-header { cursor: pointer; }
+.react-bs-table a:hover i {
+    color: #fff;
+}
+.bg-gradient-danger.ad-login {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
 .setting .card-header { cursor: pointer; }
 .setting .card-body { display: none; }
 .setting .card-body.show { display: block; }
+#content-wrapper .react-bs-table table td:last-child,#content-wrapper .react-bs-container-body { overflow: visible; }
 @media (min-width: 576px) {
   .topbar .dropdown {
     position: relative;
@@ -1027,7 +1037,11 @@
     height: calc(20rem - 43px) !important;
   }
 }
-
+@media (max-width: 767px){
+  .ad-login .p-5 {
+    padding: 2rem 1rem !important;
+}
+}
 .bg-login-image {
   background: url("https://images.pexels.com/photos/872957/pexels-photo-872957.jpeg");
   background-position: center;

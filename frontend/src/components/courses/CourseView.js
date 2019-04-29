@@ -39,28 +39,29 @@ class CourseView extends Component {
       errors: {}
     };
     this.apply_now = this.apply_now.bind(this);
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    // this.handleInputChange = this.handleInputChange.bind(this);
+    // this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleInputChange(e) {
-    this.setState({
-      [e.target.name]: e.target.value
-    });
-  }
-  handleSubmit(e) {
+  // handleSubmit(e) {
+  //   e.preventDefault();
+  //   const enrollment = {
+  //     course_id: this.state.course._id,
+  //     course_name: this.state.course.name
+  //   };
+  //   this.props.courseEnrolled(enrollment, this.props.history);
+  // }
+
+  apply_now(e) {
+    // this.setState({
+    //   modal: !this.state.modal
+    // });
     e.preventDefault();
     const enrollment = {
       course_id: this.state.course._id,
       course_name: this.state.course.name
     };
     this.props.courseEnrolled(enrollment, this.props.history);
-  }
-
-  apply_now() {
-    this.setState({
-      modal: !this.state.modal
-    });
   }
 
   componentWillMount() {
@@ -192,7 +193,7 @@ class CourseView extends Component {
             </div>
           </div>
         </section>
-        <Modal isOpen={this.state.modal} className="">
+        {/*<Modal isOpen={this.state.modal} className="">
           <form onSubmit={this.handleSubmit}>
             <div className="modal-header">
               <div className="">
@@ -217,7 +218,7 @@ class CourseView extends Component {
               <button className="btn btn-primary" type="button" onClick={this.apply_now}>No</button>
             </ModalFooter>
           </form>
-        </Modal>
+        </Modal>*/}
       </main>
     );
   }
