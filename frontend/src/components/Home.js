@@ -10,7 +10,7 @@ function NextArrow(props) {
   const { onClick } = props;
   return (
     <a className="carousel-control-prev" href="#part" onClick={onClick}>
-      <i className="fa fa-chevron-left" aria-hidden="true" />
+      <i className="fa fa-chevron-left" />
     </a>
   );
 }
@@ -19,7 +19,7 @@ function PrevArrow(props) {
   const { onClick } = props;
   return (
     <a className="carousel-control-next" href="#part" onClick={onClick}>
-      <i className="fa fa-chevron-right" aria-hidden="true" />
+      <i className="fa fa-chevron-right" />
     </a>
   );
 }

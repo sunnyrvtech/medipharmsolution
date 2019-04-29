@@ -21,8 +21,9 @@ class Header extends Component {
   toggleHamBurgerMenu = () => {
     document.getElementById("navbarText").classList.toggle("show");
   };
-  toggleMenuDropDown = () => {
-    document.getElementById("navbarText").classList.toggle("show");
+  toggleMenuDropDown = (e) => {
+    let elment = e.target.closest(".parent").querySelector('.submenu');
+    elment.classList.toggle("show");
   };
   onLogout(e) {
     e.preventDefault();
