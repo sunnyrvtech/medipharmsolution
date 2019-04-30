@@ -14,14 +14,15 @@ class Blog extends Component {
     super();
     route_name = props.match.url;
     this.state = {
-      blogs: {}
+      blogs: {},
+      loader: true
     };
   }
 
   componentWillMount() {
     var blogSlug = this.props.match.params.blogSlug;
     this.props.getBlogs(blogSlug, this.props.history).then(response => {
-      this.setState({ BLOG_IMAGE_URL:response.BLOG_IMAGE_URL,blogs: response.blogs });
+      this.setState({ loader: false,BLOG_IMAGE_URL:response.BLOG_IMAGE_URL,blogs: response.blogs });
     });
   }
 
@@ -83,6 +84,9 @@ class Blog extends Component {
 
     return (
       <div>
+        {this.state.loader &&
+        <div className="loader"></div>
+        }
         {blogs.length > 0 &&
           this.renderContent(blogs)
         }

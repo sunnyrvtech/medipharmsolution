@@ -14,18 +14,17 @@ class Course extends Component {
     super();
     route_name = props.match.url;
     this.state = {
-      courses: {}
+      courses: {},
+      loader: true
     };
   }
 
   componentWillMount() {
     var categorySlug = this.props.match.params.categorySlug;
     this.props.getCourseByCategorySlug(categorySlug, this.props.history).then(response => {
-      this.setState({ IMAGE_CATEGORY_URL:response.IMAGE_CATEGORY_URL,IMAGE_COURSE_URL:response.IMAGE_COURSE_URL,category: response.category,courses: response.courses });
+      this.setState({ loader: false,IMAGE_CATEGORY_URL:response.IMAGE_CATEGORY_URL,IMAGE_COURSE_URL:response.IMAGE_COURSE_URL,category: response.category,courses: response.courses });
     });
   }
-
-
     componentWillReceiveProps(nextProps) {
       var categorySlug = nextProps.location.pathname.split("/").pop();
       this.props.getCourseByCategorySlug(categorySlug, this.props.history).then(response => {
@@ -98,6 +97,9 @@ class Course extends Component {
     const { courses } = this.state;
     return (
       <div>
+        {this.state.loader &&
+        <div className="loader"></div>
+        }
         {courses && courses.length != undefined &&
           this.renderContent(courses)
         }

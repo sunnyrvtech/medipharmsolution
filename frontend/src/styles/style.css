@@ -282,7 +282,8 @@ span.certificatename {
 .row.home-explore-info.pad-40-t {
     justify-content: center;
 }
-
+.navbar { z-index: 999; }
+.loader { position: fixed;left: 0px;top: 0px;width: 100%;height: 100%;z-index: 9999;background: url(/images/loader.gif) center no-repeat #fff; }
 @media (min-width: 1200px){
 .container {
     max-width: 1440px;
@@ -936,12 +937,6 @@ section.hero-banner::before {
     height: 100%;
     z-index: 0;
 }
-
-
-
-
-
-
 @media(max-width: 1366px){
 	.navbar-expand-lg .navbar-nav .nav-link{
 		font-size: 12px;

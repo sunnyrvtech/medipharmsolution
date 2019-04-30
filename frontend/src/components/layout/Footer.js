@@ -47,11 +47,11 @@ class Footer extends Component {
               <div className="col-lg-2 col-md-6 col-sm-12 foo_sec">
                 <h5>INFO</h5>
                 <ul>
-                  <li><a href="#">Home</a></li>
-                  <li><a href="#">Services</a></li>
-                  <li><a href="#">Tyres</a></li>
-                  <li><a href="#">About Us</a></li>
-                  <li><a href="#">Contact Us</a></li>
+                  <li><Link to="/">Home</Link></li>
+                  <li><Link to="/services">Services</Link></li>
+                  <li><Link to="/tyres">Tyres</Link></li>
+                  <li><Link to="/about-us">About Us</Link></li>
+                  <li><Link to="/contact-us">Contact Us</Link></li>
                 </ul>
               </div>
               <div className="col-lg-3 col-md-6 col-sm-12 foo_sec">

@@ -36,6 +36,7 @@ class CourseView extends Component {
       course: null,
       course_modules: null,
       page_not_found: false,
+      loader: true,
       errors: {}
     };
     this.apply_now = this.apply_now.bind(this);
@@ -72,12 +73,13 @@ class CourseView extends Component {
         if (response.course.length) {
           var course_modules = chunk(response.course[0].course_modules, 3);
           this.setState({
+            loader: false,
             IMAGE_COURSE_URL: response.IMAGE_COURSE_URL,
             course: response.course[0],
             course_modules: course_modules
           });
         }else{
-          this.setState({ page_not_found: true });
+          this.setState({ loader: false,page_not_found: true });
         }
       });
   }
@@ -227,6 +229,9 @@ class CourseView extends Component {
     const { course,page_not_found } = this.state;
     return (
       <div>
+        {this.state.loader &&
+        <div className="loader"></div>
+        }
         {course && this.renderContent(course)}
         {page_not_found &&
           <PageNotFound />

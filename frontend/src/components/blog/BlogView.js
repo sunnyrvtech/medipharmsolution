@@ -15,6 +15,7 @@ class BlogView extends Component {
     route_name = props.match.url;
     this.state = {
       blog: null,
+      loader: true,
       page_not_found: false
     };
   }
@@ -26,10 +27,12 @@ class BlogView extends Component {
       .then(response => {
         if(response){
           this.setState({
+            loader: false,
             blog: response
           });
         }else{
           this.setState({
+            loader: false,
             page_not_found: true
           });
         }
@@ -77,6 +80,9 @@ class BlogView extends Component {
     const { blog,page_not_found } = this.state;
     return (
       <div>
+        {this.state.loader &&
+        <div className="loader"></div>
+        }
         {blog &&
           this.renderContent(blog)
         }
