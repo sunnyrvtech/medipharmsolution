@@ -9,10 +9,11 @@ import { getCategories } from "../../actions/category";
 import { withRouter } from "react-router-dom";
 
 class Header extends Component {
-  constructor() {
+  constructor(props) {
     super();
     this.state = {
-      categories: null
+      categories: null,
+      route_name: props.route
     };
   }
   toggleAccountDropDown = () => {
@@ -34,6 +35,11 @@ class Header extends Component {
       this.setState({ categories: response });
     });
   }
+  componentWillReceiveProps(nextProps) {
+    document.querySelectorAll('.show').forEach(el => el.classList.remove('show'));
+    this.setState({ route_name: nextProps.route });
+  }
+
   render() {
     const { isAuthenticated, user } = this.props.auth;
     const { categories } = this.state;
@@ -160,12 +166,12 @@ class Header extends Component {
             </button>
             <div className="collapse navbar-collapse" id="navbarText">
               <ul className="navbar-nav ml-auto">
-                <li className="nav-item active">
+                <li className={this.state.route_name == "/" ? "nav-item active":"nav-item"}>
                   <Link className="nav-link" to="/">
                     Home <span className="sr-only">(current)</span>
                   </Link>
                 </li>
-                <li className="nav-item">
+                <li className={this.state.route_name == "/about-us" ? "nav-item active":"nav-item"}>
                   <Link className="nav-link" to="/about-us">
                     About Us
                   </Link>
@@ -180,7 +186,7 @@ class Header extends Component {
                       categories.map(value => {
                         return (
                           <li key={value._id}>
-                            <Link className="nav-link" to={"/"+value.slug}>
+                            <Link className={this.state.route_name == "/"+value.slug ? "nav-link active":"nav-link"} to={"/"+value.slug}>
                               {value.name}
                             </Link>
                           </li>
@@ -198,13 +204,13 @@ class Header extends Component {
                   </a>
                   <ul className="submenu">
                     <li>
-                      <Link className="nav-link" to="/blog">
+                      <Link className={this.state.route_name == "/blog"? "nav-link active":"nav-link"} to="/blog">
                         Blog
                       </Link>
                     </li>
                     <li>
                       <Link
-                        className="nav-link"
+                        className={this.state.route_name == "/free-website-resources-to-be-added"? "nav-link active":"nav-link"}
                         to="/free-website-resources-to-be-added"
                       >
                         Free website resources to be added{" "}
@@ -219,44 +225,48 @@ class Header extends Component {
                   </a>
                   <ul className="submenu">
                     <li>
-                      <Link className="nav-link" to="/resume-writing">
+                      <Link className={this.state.route_name == "/resume-writing"? "nav-link active":"nav-link"}
+                       to="/resume-writing">
                         Resume writing
                       </Link>
                     </li>
                     <li>
-                      <Link className="nav-link" to="/job-search">
+                      <Link className={this.state.route_name == "/job-search"? "nav-link active":"nav-link"}
+                       to="/job-search">
                         Job search{" "}
                       </Link>
                     </li>
                     <li>
-                      <Link className="nav-link" to="/interview-preparation">
+                      <Link className={this.state.route_name == "/interview-preparation"? "nav-link active":"nav-link"}
+                       to="/interview-preparation">
                         Interview preparation{" "}
                       </Link>
                     </li>
                     <li>
                       <Link
-                        className="nav-link"
-                        to="/phone-interview-preparation"
+                      className={this.state.route_name == "/phone-interview-preparation"? "nav-link active":"nav-link"}
+                      to="/phone-interview-preparation"
                       >
                         Phone interview preparation{" "}
                       </Link>
                     </li>
                     <li>
                       <Link
-                        className="nav-link"
+                      className={this.state.route_name == "/in-person-interview-preparation"? "nav-link active":"nav-link"}
                         to="/in-person-interview-preparation"
                       >
                         In-person interview preparation{" "}
                       </Link>
                     </li>
                     <li>
-                      <Link className="nav-link" to="/after-interview">
+                      <Link className={this.state.route_name == "/after-interview"? "nav-link active":"nav-link"}
+                       to="/after-interview">
                         After interview{" "}
                       </Link>
                     </li>
                   </ul>
                 </li>
-                <li className="nav-item">
+                <li className={this.state.route_name == "/collaborations" ? "nav-item active":"nav-item"}>
                   <Link className="nav-link" to="/collaborations">
                     Collaborations{" "}
                   </Link>
@@ -264,7 +274,7 @@ class Header extends Component {
                 {/*<li className="nav-item">
                             <a className="nav-link" href="#">Student log in </a>
                           </li>*/}
-                <li className="nav-item">
+                <li className={this.state.route_name == "/contact-us" ? "nav-item active":"nav-item"}>
                   <a className="nav-link" href="javascript:void(0);">
                     Contact us{" "}
                   </a>

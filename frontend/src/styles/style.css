@@ -1065,9 +1065,12 @@ section.hero-banner::before {
         border-top: 1px solid #eee;
         margin: 0px -15px;
     }
-    li.nav-item.parent:hover ul.submenu {
-    display: none;
-}
+    li.nav-item.parent ul.submenu.show {
+      display: block !important;
+    }
+    li.nav-item.parent ul.submenu {
+      display: none !important;
+    }
 }
 
 @media(max-width: 767px){
