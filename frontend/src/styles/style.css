@@ -1076,9 +1076,23 @@ section.hero-banner::before {
 	width: 100%;
 	max-width: 100%;
 }
-
-    .header-wrap {
-    display: none;
+.header-wrap .row > div {
+    width: 100%;
+    flex: 0 0 100% !important;
+    max-width: 100%;
+    text-align: center !important;
+}
+.social_icon {
+    justify-content: center !important;
+}
+ul#course-menu {
+    margin: 0px;
+}
+.social_icon {
+    padding-bottom: 0px;
+}
+.login_icon {
+    padding-top: 0px;
 }
     .home-explore-box {
     width: 100%;
@@ -1129,6 +1143,9 @@ padding: 8px 15px;
     margin: 0 auto 10px;
     display: block;
     max-width: 200px;
+}
+.header-wrap > div {
+    padding: 0px 5px !important;
 }
 .nxt_btn {
     flex-direction: column;
