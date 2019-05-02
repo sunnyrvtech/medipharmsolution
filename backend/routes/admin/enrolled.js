@@ -169,7 +169,6 @@ router.get(
       }
     ]).then(quiz_detail => {
       if (quiz_detail.length && module_count == quiz_detail[0].count) {
-      if (quiz_detail.length) {
         var score =
           (quiz_detail[0].totalAnswer * 100) / quiz_detail[0].totalQuestion;
           const certificate = {
