@@ -7,12 +7,13 @@ const mongoose = require("mongoose");
 const passport = require("passport");
 
 const Enrollment = require("../../models/Enrollment");
+const moment = require('moment');
 
 router.get(
   "/",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    Enrollment.find().populate("user_id course_id", "email first_name last_name phone_number name")
+    Enrollment.find().sort({_id:-1}).populate("user_id course_id", "email first_name last_name phone_number name")
       .exec(function(err, enrollment) {
       var result = [];
       enrollment.forEach(function(element, i) {
@@ -23,7 +24,8 @@ router.get(
           first_name: element.user_id.first_name,
           last_name: element.user_id.last_name,
           phone_number: element.user_id.phone_number,
-          email: element.user_id.email
+          email: element.user_id.email,
+          created_at: moment(element.created_at).format('YYYY-MM-DD hh:mm A')
         });
       });
       res.json(result);

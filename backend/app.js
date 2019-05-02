@@ -42,7 +42,7 @@ app.use(passport.initialize());
 require('./passport')(passport);
 
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '20mb'}));
 app.use('/api/users', auth);
 app.use('/api/admin/users', users);
 app.use('/api/admin/courses', courses);

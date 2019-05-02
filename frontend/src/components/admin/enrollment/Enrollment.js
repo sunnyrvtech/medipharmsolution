@@ -126,17 +126,14 @@ class Enrollment extends Component {
           <TableHeaderColumn dataSort dataField="course_name">
             Course Name
           </TableHeaderColumn>
-          <TableHeaderColumn dataSort dataField="first_name">
-            First Name
-          </TableHeaderColumn>
-          <TableHeaderColumn dataSort dataField="last_name">
-            Last Name
-          </TableHeaderColumn>
           <TableHeaderColumn dataSort dataField="email">
             Email
           </TableHeaderColumn>
           <TableHeaderColumn dataSort dataField="phone_number">
             Phone Number
+          </TableHeaderColumn>
+          <TableHeaderColumn dataSort dataField="created_at">
+            Created At
           </TableHeaderColumn>
           <TableHeaderColumn
             width="150"

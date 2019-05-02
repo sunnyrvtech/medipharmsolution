@@ -67,7 +67,7 @@ class Register extends Component {
         <div className="card o-hidden border-0 shadow-lg my-5">
           <div className="card-body p-0">
             <div className="row">
-              <div className="col-lg-5 d-none d-lg-block bg-register-image" />
+              <div className="col-lg-5 d-none d-lg-block bg-auth-image" />
               <div className="col-lg-7 auth-a">
                 <div className="p-5">
                   <div className="text-center">

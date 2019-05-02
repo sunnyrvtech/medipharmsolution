@@ -103,7 +103,7 @@ router.get(
       }
     });
 
-    console.log(module_count + "   " + quiz_module_count);
+    // console.log(module_count + "   " + quiz_module_count);
   }
 );
 

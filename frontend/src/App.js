@@ -29,6 +29,7 @@ import CourseView from "./components/courses/CourseView";
 import Blog from "./components/blog/Blog";
 import BlogView from "./components/blog/BlogView";
 import StaticPage from "./components/StaticPage";
+import ContactUs from "./components/ContactUs";
 import PageNotFound from "./components/PageNotFound";
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -66,6 +67,7 @@ class App extends Component {
             <RouteLayout exact path="/account/activate/:code" component={Verification} />
             <Route path="/admin" component={AdminRoute} />
             <RouteLayout exact path="/about-us" component={StaticPage} />
+            <RouteLayout exact path="/contact-us" component={ContactUs} />
             <RouteLayout exact path="/free-website-resources-to-be-added" component={StaticPage} />
             <RouteLayout exact path="/resume-writing" component={StaticPage} />
             <RouteLayout exact path="/job-search" component={StaticPage} />

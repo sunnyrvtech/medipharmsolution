@@ -27,7 +27,7 @@ class Certificate extends Component {
       scale: quality
     }).then(canvas => {
       let pdf = new jsPDF("p", "mm", "a4");
-      pdf.addImage(canvas.toDataURL("image/png"), "PNG", 0, 0, 210, 297);
+      pdf.addImage(canvas.toDataURL("image/png"), "PNG", 10, 10, 180, 150);
       pdf.save(filename);
     });
   }
@@ -48,8 +48,8 @@ class Certificate extends Component {
     return (
       <div>
         <div className="nxt_btn print">
-          <a to="#" className="btn btn-primary" onClick={() => this.print()}>
-            Print
+          <a href="javascript:void(0);" className="btn btn-primary" onClick={() => this.print()}>
+            Download
           </a>
         </div>
         <div id="certificate">
@@ -106,7 +106,7 @@ class Certificate extends Component {
                 {certificate ? (
                   this.renderContent()
                 ) : (
-                        <div class="alert alert-info">
+                        <div className="alert alert-info">
                           <strong>Warning!</strong> No certificate available !
                         </div>
                 )}

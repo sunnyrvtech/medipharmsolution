@@ -150,6 +150,16 @@ section.list_sec {
     right: 0;
 }
 
+.bg-auth-image {
+  background: url("/images/auth-bg.jpg");
+  background-position: center;
+  background-size: cover;
+}
+.bg-contact-image {
+  background: url("/images/contact-bg.jpg");
+  background-position: center;
+  background-size: cover;
+}
 .btn.btn-ghost {
     background-color: transparent;
     border: solid 2px #fff;

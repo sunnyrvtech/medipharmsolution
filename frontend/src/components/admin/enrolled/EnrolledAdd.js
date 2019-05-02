@@ -90,10 +90,15 @@ class EnrolledAdd extends Component {
                 <input
                   type="text"
                   readOnly="readOnly"
-                  className="form-control"
+                  className={classnames("form-control", {
+                    "is-invalid": errors.course_name
+                  })}
                   placeholder="Course"
                   value={this.state.course_name}
                 />
+                {errors.course_name && (
+                  <div className="invalid-feedback">{errors.course_name}</div>
+                )}
               </div>
               <div className="form-group">
                 <label htmlFor="name">Price:</label>

@@ -126,6 +126,16 @@ router.delete(
 );
 
 router.get(
+  "/courses/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    User.findOne({ _id: req.params.id }).then(user => {
+      res.json(user);
+    });
+  }
+);
+
+router.get(
   "/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {

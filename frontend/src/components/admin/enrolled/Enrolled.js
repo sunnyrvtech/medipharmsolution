@@ -93,6 +93,13 @@ class Enrolled extends Component {
         >
           <i className="fa fa-pencil-square-o" />
         </Link>{" "}
+        <Link
+          to={`${route_name + "/certificate/" + cell}`}
+          className="btn btn-info btn-circle"
+          tooltip="Send certificate"
+        >
+          <i className="fa fa-send" />
+        </Link>{" "}
         <a
           onClick={() => this.onDelete(cell, row.id - 1)}
           className="btn btn-danger btn-circle"
@@ -136,7 +143,7 @@ class Enrolled extends Component {
             Expired At
           </TableHeaderColumn>
           <TableHeaderColumn
-            width="150"
+            width="200"
             dataField="_id"
             dataFormat={this.ActionButton.bind(this)}
           >

@@ -91,3 +91,22 @@ export const getEnrolledUserById = (enrolledId, history) => dispatch =>
         payload: err.response.data
       });
     });
+
+export const getUserCertificate = (enrolledId, history) => dispatch =>
+  client()
+    .get("/admin/enrolled/certificate/" + enrolledId)
+    .then(res => {
+      return res.data;
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
+export const sendCertificate = (certificate, route_name, history) => dispatch =>
+  client()
+    .post("/admin/enrolled/certificate", certificate)
+    .then(res => history.push({ pathname: route_name.split("/certificate")[0],state: { alert_message:{class:'success',message: 'Successfully sent!'}}}))
+    .catch(err => history.push({ pathname: route_name.split("/certificate")[0],state: { alert_message:{class:'danger',message: 'Something went wrong,please try again later!'}}}));

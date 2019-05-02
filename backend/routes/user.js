@@ -10,6 +10,9 @@ const jwt = require("jsonwebtoken");
 const config = require("../config");
 const fs = require("fs");
 const Validation = require("../validation/user");
+const validateContactUsInput = require("../validation/contact_us");
+const contactUsNotification = require("../notification/contact_us");
+const nodemailer = require("../mailer")
 const User = require("../models/User");
 
 var storage = multer.diskStorage({
@@ -150,6 +153,39 @@ router.post(
         });
       }
     });
+  }
+);
+router.post(
+  "/contact-us",
+  function (req, res){
+    const { errors, isValid } = validateContactUsInput(
+      req.body
+    );
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+    var noti_data = {
+      first_name: req.body.first_name,
+      last_name: req.body.last_name,
+      email: req.body.email,
+      phone_number: req.body.phone_number,
+      message: req.body.message
+    }
+    var { html } = contactUsNotification(noti_data);
+    nodemailer.mailOptions.to = process.env.MAIL_FROM_ADDRESS;
+    nodemailer.mailOptions.subject = "Medipharm Solutions-Contact Us Email!";
+    nodemailer.mailOptions.html = html;
+    nodemailer.transporter.sendMail(
+    nodemailer.mailOptions,
+    function(error, info) {
+      if (!error) {
+        console.log(error);
+      } else {
+        console.log("Email sent: " + info.response);
+      }
+    }
+  );
+  res.json(noti_data);
   }
 );
 module.exports = router;

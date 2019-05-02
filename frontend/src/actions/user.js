@@ -2,8 +2,8 @@
 
 import { GET_ERRORS, SET_CURRENT_USER } from "./types";
 import client from "../client";
-import setAuthToken from '../setAuthToken';
-import jwt_decode from 'jwt-decode';
+import setAuthToken from "../setAuthToken";
+import jwt_decode from "jwt-decode";
 
 export const emptyReducer = () => dispatch => {
   dispatch({
@@ -16,7 +16,7 @@ export const updateUserInfo = (user, history) => dispatch =>
     .put("/account/users/update", user)
     .then(res => {
       const { token } = res.data;
-      localStorage.setItem('jwtToken', token);
+      localStorage.setItem("jwtToken", token);
       setAuthToken(token);
       const decoded = jwt_decode(token);
       dispatch(setCurrentUser(decoded));
@@ -29,19 +29,30 @@ export const updateUserInfo = (user, history) => dispatch =>
         payload: err.response.data
       });
     });
-    export const passwordChange = (user, history) => dispatch =>
-      client()
-        .post("/account/users/password/change", user)
-        .then(res => {
-          return res.data;
-        })
-        .catch(err => {
-          console.log(err);
-          dispatch({
-            type: GET_ERRORS,
-            payload: err.response.data
-          });
-        });
+export const passwordChange = (user, history) => dispatch =>
+  client()
+    .post("/account/users/password/change", user)
+    .then(res => {
+      return res.data;
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
+export const sendMessageByContactUs = (message, history) => dispatch =>
+  client()
+    .post("/account/users/contact-us", message)
+    .then(res => history.push({ pathname: '/',state: { alert_message:{class:'success',message: 'Your message has been sent successfully. Admin will contact you soon!'}}}))
+    .catch(err => {
+      console.log(err);
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
 export const setCurrentUser = decoded => {
   return {
     type: SET_CURRENT_USER,

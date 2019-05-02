@@ -213,7 +213,7 @@ class Quiz extends Component {
           </p>
           <p>4:38</p>
         </div>*/}
-      {/*<div><a href="javascript:void(0);" className="btn btn-primary">Back Module Listing</a></div>*/}
+      <div><a href="javascript:void(0);" onClick={this.props.history.goBack} className="btn btn-primary">Back Module Listing</a></div>
       </div>
     );
   }

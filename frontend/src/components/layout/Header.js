@@ -275,9 +275,9 @@ class Header extends Component {
                             <a className="nav-link" href="#">Student log in </a>
                           </li>*/}
                 <li className={this.state.route_name == "/contact-us" ? "nav-item active":"nav-item"}>
-                  <a className="nav-link" href="javascript:void(0);">
+                  <Link className="nav-link" to="/contact-us">
                     Contact us{" "}
-                  </a>
+                  </Link>
                 </li>
               </ul>
               {/*<span className="desktop-cta">

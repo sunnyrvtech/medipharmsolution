@@ -1042,23 +1042,6 @@
     padding: 2rem 1rem !important;
 }
 }
-.bg-login-image {
-  background: url("https://images.pexels.com/photos/872957/pexels-photo-872957.jpeg");
-  background-position: center;
-  background-size: cover;
-}
-
-.bg-register-image {
-  background: url("https://images.pexels.com/photos/872957/pexels-photo-872957.jpeg");
-  background-position: center;
-  background-size: cover;
-}
-
-.bg-password-image {
-  background: url("https://source.unsplash.com/oWTW-jNGl9I/600x800");
-  background-position: center;
-  background-size: cover;
-}
 
 form.user .custom-checkbox.small label {
   line-height: 1.5rem;
