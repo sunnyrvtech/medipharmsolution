@@ -148,9 +148,7 @@ router.get(
       },
       { user_id: 1, course_id: 1 }
     ).populate("user_id course_id", "first_name last_name email name");
-    var module_count = await CourseModule.find({
-      course_id: enrolled.course_id._id
-    }).countDocuments({});
+
     QuizDetail.aggregate([
       {
         $match: {
@@ -167,21 +165,21 @@ router.get(
         }
       }
     ]).then(quiz_detail => {
-      if (quiz_detail.length && module_count == quiz_detail[0].count) {
       if (quiz_detail.length) {
         var score =
           (quiz_detail[0].totalAnswer * 100) / quiz_detail[0].totalQuestion;
-          const certificate = {
-            first_name: enrolled.user_id.first_name,
-            last_name: enrolled.user_id.last_name,
-            email: enrolled.user_id.email,
-            course_name: enrolled.course_id.name,
-            score: score.toFixed(2)
-          };
-          res.json(certificate);
       } else {
-        res.json(null);
+        var score = 0;
       }
+      //res.json(null);
+      const certificate = {
+        first_name: enrolled.user_id.first_name,
+        last_name: enrolled.user_id.last_name,
+        email: enrolled.user_id.email,
+        course_name: enrolled.course_id.name,
+        score: score.toFixed(2)
+      };
+      res.json(certificate);
     });
   }
 );
