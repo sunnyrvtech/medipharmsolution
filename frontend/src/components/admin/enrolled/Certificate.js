@@ -131,7 +131,7 @@ class Certificate extends Component {
                   this.renderContent()
                 ) : (
                         <div className="alert alert-info">
-                          <strong>Warning!</strong> No certificate available !
+                          <strong>Note!</strong> No certificate available !
                         </div>
                 )}
               </div>

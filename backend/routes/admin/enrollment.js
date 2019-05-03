@@ -16,11 +16,12 @@ router.get(
     Enrollment.find().sort({_id:-1}).populate("user_id course_id", "email first_name last_name phone_number name")
       .exec(function(err, enrollment) {
       var result = [];
+      console.log(enrollment);
       enrollment.forEach(function(element, i) {
         result.push({
           _id: element._id,
           id: i + 1,
-          course_name: element.course_id.name,
+          course_name: element.course_id !=null ?element.course_id:null,
           first_name: element.user_id.first_name,
           last_name: element.user_id.last_name,
           phone_number: element.user_id.phone_number,

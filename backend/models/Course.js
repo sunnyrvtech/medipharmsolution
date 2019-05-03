@@ -5,6 +5,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const URLSlugs = require('mongoose-url-slugs');
 const CourseModule = require('./CourseModule');
+const Enrolled = require('./Enrolled');
+const Enrollment = require('./Enrollment');
+const Quiz = require('./Quiz');
+const QuizDetail = require('./QuizDetail');
 
 const CourseSchema = new Schema({
     name: {
@@ -33,9 +37,15 @@ const CourseSchema = new Schema({
     }
 });
 
-CourseSchema.pre('remove', function(next){
+CourseSchema.pre('remove', async function(next){
      // CourseModule.update({ course_id: this._id },{ $set: { course_id: null }},{multi:true}).exec();
+    let course_modules = await CourseModule.find({course_id: this._id},{_id:1}).exec();
+    let module_ids = course_modules.map(ele => ele._id);
+    Quiz.deleteMany({module_id: { $in: module_ids}}).exec();
     CourseModule.deleteMany({course_id: this._id}).exec();
+    Enrolled.deleteMany({course_id: this._id}).exec();
+    Enrollment.deleteMany({course_id: this._id}).exec();
+    QuizDetail.deleteMany({course_id: this._id}).exec();
     next();
 });
 CourseSchema.plugin(URLSlugs('name', {update: 'slug'}));
