@@ -21,7 +21,7 @@ router.get(
         result.push({
           _id: element._id,
           id: i + 1,
-          course_name: element.course_id !=null ?element.course_id:null,
+          course_name: element.course_id !=null ?element.course_id.name:null,
           first_name: element.user_id.first_name,
           last_name: element.user_id.last_name,
           phone_number: element.user_id.phone_number,
