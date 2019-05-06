@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withRouter, Link } from "react-router-dom";
 import { getModules,deleteModule } from "../../../actions/admin/module";
+import ConfirmModal from "../ConfirmModal";
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 
 let route_name;
@@ -14,15 +15,28 @@ class Module extends Component {
   constructor(props) {
     super();
     this.state = {
+      modal: false,
       alert_message: null
     };
-   route_name= props.match.url
+   route_name= props.match.url;
+   this.onDelete = this.onDelete.bind(this);
+   this.openModal = this.openModal.bind(this);
   }
 
-  onDelete(cell,index) {
-    this.props.deleteModule(cell, this.props.history)
+  openModal(cell,index) {
+    this.setState({
+      delId:  cell,
+      delIndex:  index,
+      modal: !this.state.modal
+    });
+  }
+
+  onDelete() {
+    var index = this.state.delIndex;
+    this.props.deleteModule(this.state.delId, this.props.history)
     .then(response => {
       if (response) {
+        window.scrollTo(0, 0);
         var courses_modules = this.state.courses_modules;
         delete courses_modules[index]; // this is used to remove item from the list after delete
         courses_modules = courses_modules.filter(function(obj) {
@@ -31,7 +45,7 @@ class Module extends Component {
           }
           return true;
         });
-        this.setState({ courses_modules: courses_modules,alert_message: {class:'success',message: 'Deleted successfully!'}});
+        this.setState({ modal: false,courses_modules: courses_modules,alert_message: {class:'success',message: 'Deleted successfully!'}});
         setTimeout(function(){
             this.setState({alert_message:false});
         }.bind(this),5000);
@@ -63,7 +77,7 @@ ActionButton(cell, row) {
       <div>
       <Link to={`${route_name+'/'+cell+'/'+'quiz'}`} className="btn btn-info btn-circle" tooltip="view quiz"><i className="fa fa-low-vision"></i></Link>{' '}
       <a href={`${route_name+'/'+cell}`} className="btn btn-info btn-circle" tooltip="update"><i className="fa fa-pencil-square-o"></i></a>{' '}
-      <a onClick={() => this.onDelete(cell,row.id-1)} className="btn btn-danger btn-circle" tooltip="delete"><i className="fa fa-trash"></i></a>
+      <a onClick={() => this.openModal(cell,row.id-1)} className="btn btn-danger btn-circle" tooltip="delete"><i className="fa fa-trash"></i></a>
       </div>
     );
   }
@@ -103,6 +117,9 @@ ActionButton(cell, row) {
     const { courses_modules }= this.state;
     return (
       <div className="container datatable">
+      {this.state.modal &&
+      <ConfirmModal parentConfirmMethod={this.onDelete} parentCloseMethod={this.openModal} />
+      }
       {this.state.alert_message  && (
         <div className={'text-center alert alert-'+this.state.alert_message.class}>
            {this.state.alert_message.message}

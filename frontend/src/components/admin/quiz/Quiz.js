@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withRouter, Link } from "react-router-dom";
 import { getQuizes, deleteQuiz } from "../../../actions/admin/quiz";
+import ConfirmModal from "../ConfirmModal";
 import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
 
 let route_name;
@@ -13,14 +14,27 @@ class Quiz extends Component {
   constructor(props) {
     super();
     this.state = {
+      modal: false,
       alert_message: null
     };
     route_name = props.match.url;
+    this.onDelete = this.onDelete.bind(this);
+    this.openModal = this.openModal.bind(this);
   }
 
-  onDelete(cell, index) {
-    this.props.deleteQuiz(cell, this.props.history).then(response => {
+  openModal(cell,index) {
+    this.setState({
+      delId:  cell,
+      delIndex:  index,
+      modal: !this.state.modal
+    });
+  }
+
+  onDelete() {
+    var index = this.state.delIndex;
+    this.props.deleteQuiz(this.state.delId, this.props.history).then(response => {
       if (response) {
+        window.scrollTo(0, 0);
         var quizes = this.state.quizes;
         delete quizes[index]; // this is used to remove item from the list after delete
         quizes = quizes.filter(function(obj) {
@@ -30,6 +44,7 @@ class Quiz extends Component {
           return true;
         });
         this.setState({
+          modal: false,
           quizes: quizes,
           alert_message: { class: "success", message: "Deleted successfully!" }
         });
@@ -73,7 +88,7 @@ class Quiz extends Component {
           <i className="fa fa-pencil-square-o" />
         </Link>{" "}
         <a
-          onClick={() => this.onDelete(cell, row.id - 1)}
+          onClick={() => this.openModal(cell, row.id - 1)}
           className="btn btn-danger btn-circle"
           tooltip="delete"
         >
@@ -135,6 +150,9 @@ class Quiz extends Component {
     const { quizes } = this.state;
     return (
       <div className="container datatable">
+        {this.state.modal &&
+        <ConfirmModal parentConfirmMethod={this.onDelete} parentCloseMethod={this.openModal} />
+        }
         {this.state.alert_message && (
           <div className={"text-center alert alert-" + this.state.alert_message.class}>
             {this.state.alert_message.message}

@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import { withRouter, Link } from "react-router-dom";
 import { getEnrolledUsers,deleteEnrolledUser } from "../../../actions/admin/enrolled";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import ConfirmModal from "../ConfirmModal";
 import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
 const moment = require('moment');
 
@@ -16,11 +17,14 @@ class Enrolled extends Component {
     super();
     this.state = {
       modal: false,
+      confirmModal: false,
       modal_value: null,
       alert_message: null
     };
     route_name = props.match.url;
     this.open_model = this.open_model.bind(this);
+    this.openModal = this.openModal.bind(this);
+    this.onDelete = this.onDelete.bind(this);
   }
 
   open_model(row) {
@@ -29,10 +33,19 @@ class Enrolled extends Component {
       modal: !this.state.modal
     });
   }
+  openModal(cell,index) {
+    this.setState({
+      delId:  cell,
+      delIndex:  index,
+      confirmModal: !this.state.confirmModal
+    });
+  }
 
-  onDelete(cell, index) {
-    this.props.deleteEnrolledUser(cell, this.props.history).then(response => {
+  onDelete() {
+    var index = this.state.delIndex;
+    this.props.deleteEnrolledUser(this.state.delId, this.props.history).then(response => {
       if (response) {
+        window.scrollTo(0, 0);
         var enrolled_users = this.state.enrolled_users;
         delete enrolled_users[index]; // this is used to remove item from the list after delete
         enrolled_users = enrolled_users.filter(function(obj) {
@@ -42,6 +55,7 @@ class Enrolled extends Component {
           return true;
         });
         this.setState({
+          confirmModal: false,
           enrolled_users: enrolled_users,
           alert_message: { class: "success", message: "Deleted successfully!" }
         });
@@ -101,7 +115,7 @@ class Enrolled extends Component {
           <i className="fa fa-send" />
         </Link>{" "}
         <a
-          onClick={() => this.onDelete(cell, row.id - 1)}
+          onClick={() => this.openModal(cell, row.id - 1)}
           className="btn btn-danger btn-circle"
           tooltip="delete"
         >
@@ -247,6 +261,9 @@ class Enrolled extends Component {
     const { enrolled_users } = this.state;
     return (
       <div className="container datatable">
+        {this.state.confirmModal &&
+        <ConfirmModal parentConfirmMethod={this.onDelete} parentCloseMethod={this.openModal} />
+        }
         {this.state.alert_message && (
           <div className={"text-center alert alert-" + this.state.alert_message.class}>
             {this.state.alert_message.message}

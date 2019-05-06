@@ -16,7 +16,6 @@ router.get(
     Enrollment.find().sort({_id:-1}).populate("user_id course_id", "email first_name last_name phone_number name")
       .exec(function(err, enrollment) {
       var result = [];
-      console.log(enrollment);
       enrollment.forEach(function(element, i) {
         result.push({
           _id: element._id,
