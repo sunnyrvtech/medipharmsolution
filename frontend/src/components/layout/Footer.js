@@ -10,7 +10,7 @@ class Footer extends Component {
   constructor(props) {
     super();
     this.state = {
-      footer_about_us_text: "",
+      footer_social_links: [{ name: "", link: "" }],
       footer_contact_us_address: "",
       footer_contact_us_phone: "",
       footer_contact_us_email: "",
@@ -24,7 +24,7 @@ class Footer extends Component {
     this.props.getSettingBySlug('footer', this.props.history).then(response => {
       if (response) {
         this.setState({
-          footer_about_us_text: response.content.footer_about_us.text,
+          footer_social_links: response.content.footer_social_links,
           footer_contact_us_address: response.content.footer_contact_us.address,
           footer_contact_us_phone: response.content.footer_contact_us.phone,
           footer_contact_us_email: response.content.footer_contact_us.email,
@@ -41,8 +41,12 @@ class Footer extends Component {
           <div className="container">
             <div className="row">
               <div className="col-lg-3 col-md-6 col-sm-12 foo_sec">
-                <h5>About us</h5>
-                <p>{this.state.footer_about_us_text}</p>
+                <h5>Social Links</h5>
+                <ul>
+                  {this.state.footer_social_links.map((socialLink, idx) => (
+                    <li><a target="_blank" href={socialLink.link}>{socialLink.name}</a></li>
+                  ))}
+                </ul>
               </div>
               <div className="col-lg-2 col-md-6 col-sm-12 foo_sec">
                 <h5>INFO</h5>

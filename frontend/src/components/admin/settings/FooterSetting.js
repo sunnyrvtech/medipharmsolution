@@ -16,7 +16,7 @@ class FooterSetting extends Component {
   constructor(props) {
     super();
     this.state = {
-      footer_about_us_text: "",
+      footer_social_links: [{ name: "", link: "" }],
       footer_contact_us_address: "",
       footer_contact_us_phone: "",
       footer_contact_us_email: "",
@@ -39,12 +39,28 @@ class FooterSetting extends Component {
     let nextElment = e.target.closest(".card-header").nextSibling;
     nextElment.classList.toggle("show");
   }
+  handleAddMoreHolderChange = idx => evt => {
+    const new_social_links = this.state.footer_social_links.map((socialLink, sidx) => {
+      if (idx !== sidx) return socialLink;
+      return { ...socialLink, [evt.target.name]: evt.target.value };
+    });
+    this.setState({ footer_social_links: new_social_links });
+  };
+  handleAddMoreHolder = () => {
+    this.setState({
+      footer_social_links: this.state.footer_social_links.concat([{ name: "", link: "" }])
+    });
+  };
+
+  handleRemoveAddMoreHolder = idx => () => {
+    this.setState({
+      footer_social_links: this.state.footer_social_links.filter((s, sidx) => idx !== sidx)
+    });
+  };
   handleSubmit(e) {
     e.preventDefault();
     const content = {
-      footer_about_us: {
-        text: this.state.footer_about_us_text
-      },
+      footer_social_links: this.state.footer_social_links,
       footer_contact_us: {
         address: this.state.footer_contact_us_address,
         phone: this.state.footer_contact_us_phone,
@@ -69,7 +85,7 @@ class FooterSetting extends Component {
     this.props.getSettingBySlug(slug, this.props.history).then(response => {
       if (response) {
         this.setState({
-          footer_about_us_text: response.content.footer_about_us.text,
+          footer_social_links: response.content.footer_social_links,
           footer_contact_us_address: response.content.footer_contact_us.address,
           footer_contact_us_phone: response.content.footer_contact_us.phone,
           footer_contact_us_email: response.content.footer_contact_us.email,
@@ -97,19 +113,50 @@ class FooterSetting extends Component {
                 <div className="col-md-6">
                   <div className="card">
                     <div className="card-header" onClick={this.handleCard}>
-                      <h2 className="btn">About Us</h2>
+                      <h2 className="btn">Social Links</h2>
                       <b className="close fa fa-caret-down" />
                     </div>
                     <div className="card-body">
-                      <div className="form-group">
-                        <label htmlFor="text">Text:</label>
-                        <textarea
-                          className="form-control"
-                          name="footer_about_us_text"
-                          onChange={this.handleInputChange}
-                          value={this.state.footer_about_us_text}
-                        />
-                      </div>
+                      {this.state.footer_social_links.map((socialLink, idx) => (
+                        <div className="" key={idx}>
+                          <div className="input-group mb-2">
+                          <div className="col-md-4">
+                              <input
+                                type="text"
+                                name="name"
+                                placeholder="Name"
+                                className="form-control"
+                                onChange={this.handleAddMoreHolderChange(idx)}
+                                value={socialLink.name}
+                              />
+                              </div>
+                            <div className="input-group-append">
+                              <input
+                                type="text"
+                                name="link"
+                                placeholder="Link"
+                                className="form-control"
+                                onChange={this.handleAddMoreHolderChange(idx)}
+                                value={socialLink.link}
+                              />
+                                <button
+                                  className="btn btn-danger"
+                                  type="button"
+                                  onClick={this.handleRemoveAddMoreHolder(idx)}
+                                >
+                                  -
+                                </button>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                      <button
+                        type="button"
+                        onClick={this.handleAddMoreHolder}
+                        className="btn btn-info"
+                      >
+                        +
+                      </button>
                     </div>
                   </div>
                 </div>
