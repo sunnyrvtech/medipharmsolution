@@ -87,6 +87,7 @@ class Home extends Component {
     }
   }
   render() {
+    console.log(this.state.banner_image);
     var settings = {
       autoplay: true,
       autoplaySpeed: 10000,
@@ -250,7 +251,7 @@ class Home extends Component {
                     <div className="carousel-inner">
                       <Slider {...settingss}>
                       {this.state.testisliders.map((testislider, idx) => (
-                        <div className="carousel-item" dangerouslySetInnerHTML={{__html: testislider.slide}} />
+                        <div className="carousel-item" key={idx} dangerouslySetInnerHTML={{__html: testislider.slide}} />
                       ))}
                       </Slider>
                     </div>

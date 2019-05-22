@@ -44,7 +44,7 @@ class Footer extends Component {
                 <h5>Social Links</h5>
                 <ul>
                   {this.state.footer_social_links.map((socialLink, idx) => (
-                    <li><a target="_blank" href={socialLink.link}>{socialLink.name}</a></li>
+                    <li key={idx}><a target="_blank" href={socialLink.link}>{socialLink.name}</a></li>
                   ))}
                 </ul>
               </div>
