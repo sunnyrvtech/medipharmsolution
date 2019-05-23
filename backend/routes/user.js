@@ -20,7 +20,9 @@ var storage = multer.diskStorage({
     cb(null, "public/user");
   },
   filename: (req, file, cb) => {
-    cb(null, Date.now() + "-" + file.originalname);
+    let fileExtension = file.originalname.substring(file.originalname.lastIndexOf('.'), file.originalname.length);
+    let random_string = Math.random().toString(36).substring(7);
+    cb(null, Date.now()+random_string+fileExtension);
   }
 });
 
