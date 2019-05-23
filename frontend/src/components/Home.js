@@ -87,7 +87,6 @@ class Home extends Component {
     }
   }
   render() {
-    console.log(this.state.banner_image);
     var settings = {
       autoplay: true,
       autoplaySpeed: 10000,
