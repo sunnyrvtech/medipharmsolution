@@ -23,6 +23,7 @@ class FooterSetting extends Component {
       footer_newsletter_text: "",
       footer_copyright_title: "",
       footer_copyright_text: "",
+      header_menu: [{ name: "", slug: "",sub_menu: null }],
       page_not_found: false
     };
     route_name = props.match.url;
@@ -46,6 +47,12 @@ class FooterSetting extends Component {
     });
     this.setState({ footer_social_links: new_social_links });
   };
+  handleAddMenuHolder = () => {
+    var header_menu = this.state.header_menu;
+    this.setState({
+      header_menu: this.state.header_menu.concat([{ name: "", slug: "",sub_menu: null }])
+    });
+  }
   handleAddMoreHolder = () => {
     this.setState({
       footer_social_links: this.state.footer_social_links.concat([{ name: "", link: "" }])
@@ -252,6 +259,15 @@ class FooterSetting extends Component {
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+          <div className="card">
+            <div className="card-header" onClick={this.handleCard}>
+              <h2 className="btn">Header Menu</h2>
+              <b className="close fa fa-caret-down" />
+            </div>
+            <div className="card-body">
+              <button type="button" onClick={this.handleAddMenuHolder} className="btn btn-info">Add Menu</button>
             </div>
           </div>
           <button type="submit" className="btn btn-info">
