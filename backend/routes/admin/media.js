@@ -13,7 +13,9 @@ var storage = multer.diskStorage({
     cb(null, "public/gallery");
   },
   filename: (req, file, cb) => {
-    cb(null, Date.now() + "-" + file.originalname.split(' ').join('_'));
+    let fileExtension = file.originalname.split('.')[1];
+    let random_string = Math.random().toString(36).substring(7);
+    cb(null, Date.now()+random_string+'.'+fileExtension);
   }
 });
 
