@@ -21,6 +21,7 @@ var storage = multer.diskStorage({
 
 const upload = multer({
   storage: storage,
+  limits: { fileSize: 2 * 1024 * 1024 },
   fileFilter: function(req, file, cb) {
     var filetypes = /jpeg|jpg|png/;
     var mimetype = filetypes.test(file.mimetype);
@@ -56,7 +57,7 @@ router.post(
     upload(req, res, err => {
       if (err)
         return res.status(400).json({
-          message: err
+          message: err.message
         });
       else
         res.json({

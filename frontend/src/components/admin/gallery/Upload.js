@@ -33,9 +33,10 @@ class Upload extends Component {
           type="file"
           onChange={this.onChange.bind(this)}
         />
-        <div onClick={this.triggerInputFile} className="upload-img-galley text-center">
+        <div onClick={this.triggerInputFile} className="upload-img-galley text-center mb">
           <h3> Click Here to Upload Image </h3>
         </div>
+        <span>Note:- File size should be less than 2 Mb.</span>
       </div>
     );
   }

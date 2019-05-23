@@ -151,6 +151,7 @@ class CourseAdd extends Component {
                   <div className="invalid-feedback">{errors.banner}</div>
                 )}
               </div>
+              <div className="form-group"><span>Note:- File size should be less than 2 Mb and banner image dimention should be 1920*300.</span></div>
               <div className="form-group">
                 <img id="output" />
               </div>

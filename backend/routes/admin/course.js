@@ -24,6 +24,7 @@ var storage = multer.diskStorage({
 
 const upload = multer({
   storage: storage,
+  limits: { fileSize: 2 * 1024 * 1024 },
   fileFilter: function(req, file, cb) {
     var filetypes = /jpeg|jpg|png/;
     var mimetype = filetypes.test(file.mimetype);
@@ -73,7 +74,7 @@ router.post(
     }
     if (err) {
       return res.status(400).json({
-        banner: err //////  this will handle image validation error
+        banner: err.message //////  this will handle image validation error
       });
     } else {
     Course.findOne({
@@ -118,7 +119,7 @@ router.put(
 
       if (err) {
         return res.status(400).json({
-          banner: err //////  this will handle image validation error
+          banner: err.message //////  this will handle image validation error
         });
       }
 

@@ -467,7 +467,7 @@
 .text-gray-600 b.fa-caret-down:before { font-size: 18px;top: 1px;position: relative;left: 3px; }
 #adminSetting span {cursor: pointer;}
 .upload_image_file { display: none; }
-.upload-img-galley { border: 1px solid #dee2e6; padding: 50px;position: relative;top: 100px;}
+.upload-img-galley { border: 1px solid #dee2e6; padding: 50px;position: relative;}
 /*.react-bs-table-container .table td { overflow: hidden !important; }*/
 .setting .card-header { cursor: pointer; }
 .react-bs-table a:hover i {

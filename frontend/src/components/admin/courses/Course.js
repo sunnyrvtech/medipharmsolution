@@ -15,6 +15,7 @@ class Course extends Component {
     super();
     this.state = {
       modal: false,
+      courses: {},
       alert_message: null
     };
     route_name = props.match.path;
@@ -170,7 +171,7 @@ class Course extends Component {
              {this.state.alert_message.message}
           </div>
         )}
-        {courses != undefined && this.rendertable(courses)}
+        {courses.length != undefined && this.rendertable(courses)}
       </div>
     );
   }
