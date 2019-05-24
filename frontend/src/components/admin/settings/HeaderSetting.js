@@ -9,7 +9,6 @@ import {
   getSettingBySlug
 } from "../../../actions/admin/setting";
 import { getstaticPages } from "../../../actions/admin/StaticPage";
-import PageNotFound from "../../PageNotFound";
 import { Modal, ModalBody, ModalFooter } from "reactstrap";
 
 let route_name;
@@ -21,8 +20,7 @@ class HeaderSetting extends Component {
       modal: false,
       header_menu: [],
       menu: "",
-      sub_menu: "",
-      page_not_found: false
+      sub_menu: ""
     };
     route_name = props.match.url;
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -46,12 +44,10 @@ class HeaderSetting extends Component {
     var menu_index = this.state.menu_index;
 
     header_menu[menu_index].sub_menu.push({name:this.state.menu,slug:this.state.sub_menu});
-        console.log(header_menu);
-    // header_menu.push({name: this.state.menu});
-    // this.setState({
-    //     header_menu: header_menu,
-    //     modal: !this.state.modal
-    // });
+    this.setState({
+        header_menu: header_menu,
+        modal: !this.state.modal
+    });
   }
   handleCard(e) {
     //console.log(e.target.closest(".card-header").nextSibling);
@@ -77,21 +73,6 @@ class HeaderSetting extends Component {
       modal: !this.state.modal
     });
   };
-  handleAddMoreHolder = () => {
-    this.setState({
-      footer_social_links: this.state.footer_social_links.concat([
-        { name: "", link: "" }
-      ])
-    });
-  };
-
-  handleRemoveAddMoreHolder = idx => () => {
-    this.setState({
-      footer_social_links: this.state.footer_social_links.filter(
-        (s, sidx) => idx !== sidx
-      )
-    });
-  };
   handleSubmit(e) {
     e.preventDefault();
     const content = {
@@ -107,11 +88,9 @@ class HeaderSetting extends Component {
     const slug = this.props.match.params.slug;
     this.props.getSettingBySlug(slug, this.props.history).then(response => {
       if (response) {
-        // this.setState({
-        //   header_menu: response.content.header_menu
-        // });
-      } else {
-        this.setState({ page_not_found: true });
+        this.setState({
+          header_menu: response.content.header_menu
+        });
       }
     });
     this.props.getstaticPages().then(response => {
@@ -133,7 +112,13 @@ class HeaderSetting extends Component {
                             <ul className="tree">
               {header_menu.length!= undefined && header_menu.map((menu, index) => (
                 <li className="branch" key={index}><a href="javascript:void(0);" key={index} onClick={this.handleAddSubMenuHolder.bind(this,index)}><i className="indicator fa fa-plus-circle"></i></a>{menu.name}
-
+                  {menu.sub_menu.length != undefined &&
+                  <ul>
+                    {menu.sub_menu.map((sub_menu, k) => (
+                      <li key={k}>{sub_menu.name}</li>
+                    ))}
+                  </ul>
+                }
                 </li>
               ))}
               </ul>
@@ -209,8 +194,7 @@ class HeaderSetting extends Component {
   }
 
   render() {
-    const { page_not_found } = this.state;
-    return <div>{page_not_found ? <PageNotFound /> : this.render_html()}</div>;
+    return <div>{this.render_html()}</div>;
   }
 }
 
