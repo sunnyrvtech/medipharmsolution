@@ -44,12 +44,22 @@ ActionButton(cell, row) {
       </div>
     );
   }
+  createCustomInsertButton = onClick => {
+    return (
+      <div>
+        <Link to={`${route_name}/add`} className="btn btn-info">
+          Add New
+        </Link>
+      </div>
+    );
+  };
   rendertable(pages)
   {
     const options = {
       clearSearch: true,
       defaultSortName: 'id',
       defaultSortOrder: 'asc',
+      insertBtn: this.createCustomInsertButton,
       sizePerPage: 10,
       paginationSize: 6
     };

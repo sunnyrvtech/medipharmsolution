@@ -2,6 +2,7 @@
 
 import React, { Component } from "react";
 import HomeSetting from "./HomeSetting";
+import HeaderSetting from "./HeaderSetting";
 import FooterSetting from "./FooterSetting";
 
 export default class Setting extends Component {
@@ -17,6 +18,7 @@ export default class Setting extends Component {
     return <div>
     {slug == "home" && <HomeSetting />}
     {slug == "footer" && <FooterSetting />}
+    {slug == "header" && <HeaderSetting />}
     </div>;
   }
 }

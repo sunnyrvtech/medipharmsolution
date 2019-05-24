@@ -1,7 +1,7 @@
 // ConfirmModal.js
 
 import React, { Component } from "react";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { Modal, ModalFooter } from "reactstrap";
 
 let route_name;
 
