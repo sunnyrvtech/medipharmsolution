@@ -19,8 +19,8 @@ class HeaderSetting extends Component {
     this.state = {
       modal: false,
       header_menu: [],
-      menu: "",
-      sub_menu: ""
+      name: "",
+      slug: ""
     };
     route_name = props.match.url;
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -31,26 +31,35 @@ class HeaderSetting extends Component {
       [e.target.name]: e.target.value
     });
   }
-  handleMenuSubmit() {
-    var header_menu = this.state.header_menu;
-    header_menu.push({name: this.state.menu,sub_menu:[]});
+  handleInputSelectChange(e) {
+    var name = e.target.options[e.target.selectedIndex].text;
     this.setState({
-        header_menu: header_menu,
-        modal: !this.state.modal
+      name: name,
+      slug: e.target.value
     });
   }
-  handleSubMenuSubmit(e) {
+  handleMenuSubmit() {
     var header_menu = this.state.header_menu;
-    var menu_index = this.state.menu_index;
-
-    header_menu[menu_index].sub_menu.push({name:this.state.menu,slug:this.state.sub_menu});
+    if(this.state.name == ""){
+      this.setState({
+          alert_message: {message: "Name is required"}
+      });
+      return false;
+    }
+    if(this.state.menu_type == "menu_with_sub"){
+    header_menu.push({name: this.state.name,sub_menu:[]});
+  }else if(this.state.menu_type == "sub_menu"){
+      var menu_index = this.state.menu_index;
+      header_menu[menu_index].sub_menu.push({name:this.state.name,slug:this.state.slug});
+  }else{
+    header_menu.push({name: this.state.name,slug: this.state.slug,sub_menu:null});
+  }
     this.setState({
         header_menu: header_menu,
         modal: !this.state.modal
     });
   }
   handleCard(e) {
-    //console.log(e.target.closest(".card-header").nextSibling);
     let nextElment = e.target.closest(".card-header").nextSibling;
     nextElment.classList.toggle("show");
   }
@@ -60,19 +69,30 @@ class HeaderSetting extends Component {
     });
   };
 
-  handleAddMenuHolder = () => {
+  handleAddMenuHolder = (menu_type,idx) => {
     this.setState({
-      menu_type: false,
-      modal: !this.state.modal
-    });
-  };
-  handleAddSubMenuHolder = (idx) => {
-    this.setState({
-      menu_type: true,
+      menu_type: menu_type,
       menu_index: idx,
+      name: "",
+      slug: "",
+      alert_message: null,
       modal: !this.state.modal
     });
   };
+  handleRemoveMenuHolder = (index) => {
+    var header_menu = this.state.header_menu;
+    header_menu.splice(index,1);
+    this.setState({
+        header_menu: header_menu
+    });
+  }
+  handleRemoveSubMenuHolder = (menu_index,sub_menu_index) => {
+    var header_menu = this.state.header_menu;
+    header_menu[menu_index].sub_menu.splice(sub_menu_index,1);
+    this.setState({
+        header_menu: header_menu
+    });
+  }
   handleSubmit(e) {
     e.preventDefault();
     const content = {
@@ -103,6 +123,12 @@ class HeaderSetting extends Component {
     return (
       <div className="container setting">
         <form onSubmit={this.handleSubmit}>
+        <div className="card mb-2">
+          <div className="card-header" onClick={this.handleCard}>
+            <h2 className="btn">Header Section</h2>
+            <b className="close fa fa-caret-down" />
+          </div>
+          <div className="card-body">
           <div className="card">
             <div className="card-header" onClick={this.handleCard}>
               <h2 className="btn">Header Menu</h2>
@@ -111,25 +137,47 @@ class HeaderSetting extends Component {
             <div className="card-body">
                             <ul className="tree">
               {header_menu.length!= undefined && header_menu.map((menu, index) => (
-                <li className="branch" key={index}><a href="javascript:void(0);" key={index} onClick={this.handleAddSubMenuHolder.bind(this,index)}><i className="indicator fa fa-plus-circle"></i></a>{menu.name}
+                <li className="branch" key={index}>
+
+                                  {menu.sub_menu != undefined ?
+                                      <div>
+                <span className="indicator fa fa-plus-circle" onClick={this.handleAddMenuHolder.bind(this,'sub_menu',index)}></span>
+                {menu.name}
+                <span className="indicator fa fa-times-circle" onClick={this.handleRemoveMenuHolder.bind(this,index)}></span>
                   {menu.sub_menu.length != undefined &&
                   <ul>
                     {menu.sub_menu.map((sub_menu, k) => (
-                      <li key={k}>{sub_menu.name}</li>
+                      <li key={k}>{sub_menu.name}<span className="indicator fa fa-times-circle" onClick={this.handleRemoveSubMenuHolder.bind(this,index,k)}></span></li>
                     ))}
                   </ul>
                 }
+                </div>
+                :
+                <div><span className="indicator fa fa-pagelines"></span>{menu.name}<span className="indicator fa fa-times-circle" onClick={this.handleRemoveMenuHolder.bind(this,index)}></span></div>
+              }
+
                 </li>
               ))}
               </ul>
+              <div className="mt-5">
               <button
                 type="button"
-                onClick={this.handleAddMenuHolder}
+                onClick={this.handleAddMenuHolder.bind(this,'menu_with_sub')}
                 className="btn btn-info mr-2"
+              >
+                Add Menu with sub menu
+              </button>
+              <button
+                type="button"
+                onClick={this.handleAddMenuHolder.bind(this,'menu')}
+                className="btn btn-info"
               >
                 Add Menu
               </button>
+              </div>
             </div>
+          </div>
+          </div>
           </div>
           <button type="submit" className="btn btn-info">
             Save
@@ -138,7 +186,7 @@ class HeaderSetting extends Component {
         <Modal isOpen={this.state.modal} className="">
           <div className="modal-header">
             <div className="text-center">
-            {this.state.menu_type ?
+            {this.state.menu_type == "sub_menu" ?
               <p className="modal-title">Add Sub Menu</p>
               :
               <p className="modal-title">Add Menu</p>
@@ -149,14 +197,19 @@ class HeaderSetting extends Component {
             </button>
           </div>
           <ModalBody>
+          {this.state.alert_message  && (
+            <div className='text-center alert alert-danger'>
+               {this.state.alert_message.message}
+            </div>
+          )}
           <div className="row">
-            {this.state.menu_type ?
+            {this.state.menu_type != "menu_with_sub" ?
               <div className="col-md-12">
-                <div className="form-group">
+              <div className="form-group">
                 <label htmlFor="page">Page:</label>
-                <select name="sub_menu" className="form-control" onChange={this.handleInputChange}>
+                <select name="slug" className="form-control" onChange={this.handleInputSelectChange.bind(this)}>
                   <option value="">Select Page</option>
-                  {pages.map((page, i) => (
+                  {pages != undefined && pages.map((page, i) => (
                     <option value={page.slug}>{page.name}</option>
                   ))}
                 </select>
@@ -168,7 +221,7 @@ class HeaderSetting extends Component {
                   <label htmlFor="name">Name:</label>
                   <input
                     type="text"
-                    name="menu"
+                    name="name"
                     className="form-control"
                     onChange={this.handleInputChange}
                   />
@@ -178,15 +231,9 @@ class HeaderSetting extends Component {
               </div>
           </ModalBody>
           <ModalFooter>
-            {this.state.menu_type ?
-            <button type="button" onClick={this.handleSubMenuSubmit.bind(this)} className="btn btn-info">
-              Submit
-            </button>
-            :
             <button type="button" onClick={this.handleMenuSubmit.bind(this)} className="btn btn-info">
               Submit
             </button>
-            }
           </ModalFooter>
         </Modal>
       </div>

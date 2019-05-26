@@ -6,7 +6,6 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authentication";
 import { getCategories } from "../../actions/category";
-import { getSettingBySlug } from "../../actions/setting";
 import { withRouter } from "react-router-dom";
 
 class Header extends Component {
@@ -14,7 +13,6 @@ class Header extends Component {
     super();
     this.state = {
       categories: null,
-      header_menu: [],
       route_name: props.route
     };
   }
@@ -35,13 +33,6 @@ class Header extends Component {
   componentDidMount() {
     this.props.getCategories().then(response => {
       this.setState({ categories: response });
-    });
-    this.props.getSettingBySlug('header', this.props.history).then(response => {
-      if (response) {
-        this.setState({
-          header_menu: response.content.header_menu
-        });
-      }
     });
   }
   componentWillReceiveProps(nextProps) {
@@ -181,6 +172,11 @@ class Header extends Component {
                     Home <span className="sr-only">(current)</span>
                   </Link>
                 </li>
+                <li className={this.state.route_name == "/about-us" ? "nav-item active":"nav-item"}>
+                  <Link className="nav-link" to="/about-us">
+                    About Us
+                  </Link>
+                </li>
                 <li className="nav-item parent">
                   <a className="nav-link" href="javascript:void(0);" onClick={this.toggleMenuDropDown}>
                     Explore programs{" "}
@@ -199,34 +195,86 @@ class Header extends Component {
                       })}
                   </ul>
                 </li>
-                {this.state.header_menu != undefined && this.state.header_menu.map((menu, index) => (
-
-                      <li className={this.state.route_name == "/"+menu.slug? "nav-item parent active":"nav-item parent"}>
-                        {menu.sub_menu == undefined ?
-                          <Link className="nav-link" to={menu.slug}>
-                            {menu.name}
-                          </Link>
-                        :
-                        <div>
-                        <a className="nav-link" href="javascript:void(0);" onClick={this.toggleMenuDropDown}>
-                          {menu.name+" "}
-                          <i className="fa fa-chevron-down" />
-                        </a>
-                        <ul className="submenu">
-                        {menu.sub_menu.map((sub_menu, k) => (
-                          <li>
-                            <Link className={this.state.route_name == "/"+sub_menu.slug? "nav-link active":"nav-link"} to={sub_menu.slug}>
-                              {sub_menu.name}
-                            </Link>
-                          </li>
-                        ))}
-                        </ul>
-                        </div>
-                      }
-                      </li>
-
-
-              ))}
+                {/*<li className="nav-item">
+                            <a className="nav-link" href="#">Testimonials </a>
+                          </li>*/}
+                <li className="nav-item parent">
+                  <a className="nav-link" href="javascript:void(0);" onClick={this.toggleMenuDropDown}>
+                    E-learning{" "}
+                    <i className="fa fa-chevron-down" />
+                  </a>
+                  <ul className="submenu">
+                    <li>
+                      <Link className={this.state.route_name == "/blog"? "nav-link active":"nav-link"} to="/blog">
+                        Blog
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        className={this.state.route_name == "/free-website-resources-to-be-added"? "nav-link active":"nav-link"}
+                        to="/free-website-resources-to-be-added"
+                      >
+                        Free website resources to be added{" "}
+                      </Link>
+                    </li>
+                  </ul>
+                </li>
+                <li className="nav-item parent">
+                  <a className="nav-link" href="javascript:void(0);" onClick={this.toggleMenuDropDown}>
+                    Careers{" "}
+                    <i className="fa fa-chevron-down" />
+                  </a>
+                  <ul className="submenu">
+                    <li>
+                      <Link className={this.state.route_name == "/resume-writing"? "nav-link active":"nav-link"}
+                       to="/resume-writing">
+                        Resume writing
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className={this.state.route_name == "/job-search"? "nav-link active":"nav-link"}
+                       to="/job-search">
+                        Job search{" "}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className={this.state.route_name == "/interview-preparation"? "nav-link active":"nav-link"}
+                       to="/interview-preparation">
+                        Interview preparation{" "}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                      className={this.state.route_name == "/phone-interview-preparation"? "nav-link active":"nav-link"}
+                      to="/phone-interview-preparation"
+                      >
+                        Phone interview preparation{" "}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                      className={this.state.route_name == "/in-person-interview-preparation"? "nav-link active":"nav-link"}
+                        to="/in-person-interview-preparation"
+                      >
+                        In-person interview preparation{" "}
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className={this.state.route_name == "/after-interview"? "nav-link active":"nav-link"}
+                       to="/after-interview">
+                        After interview{" "}
+                      </Link>
+                    </li>
+                  </ul>
+                </li>
+                <li className={this.state.route_name == "/collaborations" ? "nav-item active":"nav-item"}>
+                  <Link className="nav-link" to="/collaborations">
+                    Collaborations{" "}
+                  </Link>
+                </li>
+                {/*<li className="nav-item">
+                            <a className="nav-link" href="#">Student log in </a>
+                          </li>*/}
                 <li className={this.state.route_name == "/contact-us" ? "nav-item active":"nav-item"}>
                   <Link className="nav-link" to="/contact-us">
                     Contact us{" "}
@@ -256,5 +304,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { logoutUser, getCategories,getSettingBySlug }
+  { logoutUser, getCategories }
 )(withRouter(Header));
