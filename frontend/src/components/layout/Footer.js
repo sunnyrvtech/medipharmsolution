@@ -4,12 +4,14 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { withRouter,Link } from "react-router-dom";
 import { getSettingBySlug } from "../../actions/setting";
+import { emailSubscribed } from "../../actions/user";
 import PropTypes from 'prop-types';
 
 class Footer extends Component {
   constructor(props) {
     super();
     this.state = {
+      email: "",
       footer_social_links: [{ name: "", link: "" }],
       footer_contact_us_address: "",
       footer_contact_us_phone: "",
@@ -18,6 +20,30 @@ class Footer extends Component {
       footer_copyright_title: "",
       footer_copyright_text: ""
     };
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  handleInputChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    const subscribe = {
+      email: this.state.email
+    };
+    this.props
+      .emailSubscribed(subscribe, this.props.history).then(response => {
+        //console.log(response.message);
+          this.setState({ email:"",news_alert: {class:'success',message: response.message}});
+        }).catch(error=>{
+          this.setState({ news_alert: {class:'danger',message: error.message}});
+        });
+        setTimeout(function(){
+            this.setState({news_alert:false});
+        }.bind(this),5000);
   }
   componentDidMount() {
     window.scrollTo(0, 0);
@@ -67,10 +93,15 @@ class Footer extends Component {
               <div className="col-lg-4 col-md-6 col-sm-12 foo_sec">
                 <h5>SUBSCRIBE TO OUR NEWSLETTER</h5>
                 <p>{this.state.footer_newsletter_text}</p>
+                {this.state.news_alert  && (
+                  <div className={'text-center alert alert-'+this.state.news_alert.class}>
+                     {this.state.news_alert.message}
+                  </div>
+                )}
                 <div className="newsletter newsletter-widget">
-                  <form>
-                    <input id="signup" placeholder="Your email" className="newsletter-email form-control" type="email" />
-                    <input className="btn btn-solid btn-nomin newsletter-submit" type="button" value="Subscribe" />
+                  <form onSubmit={this.handleSubmit}>
+                    <input id="signup" placeholder="Your email" className="newsletter-email form-control" onChange={this.handleInputChange} name="email" type="email" value={this.state.email} />
+                    <input className="btn btn-solid btn-nomin newsletter-submit" type="submit" value="Subscribe" />
                   </form>
                 </div>
               </div>
@@ -91,5 +122,5 @@ class Footer extends Component {
 
 export default connect(
   null,
-  { getSettingBySlug }
+  { getSettingBySlug,emailSubscribed }
 )(withRouter(Footer));

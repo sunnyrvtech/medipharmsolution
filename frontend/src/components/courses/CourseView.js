@@ -142,7 +142,7 @@ class CourseView extends Component {
           </div>
         </section>
         <section className="list_sec pad-70-tb">
-          <div className="container">
+          <div className="container text-center">
             <div className="row">
               <div className="col-sm-12">
                 <div className="title">

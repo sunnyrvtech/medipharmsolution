@@ -12,17 +12,23 @@ const fs = require("fs");
 const Validation = require("../validation/user");
 const validateContactUsInput = require("../validation/contact_us");
 const contactUsNotification = require("../notification/contact_us");
-const nodemailer = require("../mailer")
+const nodemailer = require("../mailer");
 const User = require("../models/User");
+var request = require('superagent');
 
 var storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "public/user");
   },
   filename: (req, file, cb) => {
-    let fileExtension = file.originalname.substring(file.originalname.lastIndexOf('.'), file.originalname.length);
-    let random_string = Math.random().toString(36).substring(7);
-    cb(null, Date.now()+random_string+fileExtension);
+    let fileExtension = file.originalname.substring(
+      file.originalname.lastIndexOf("."),
+      file.originalname.length
+    );
+    let random_string = Math.random()
+      .toString(36)
+      .substring(7);
+    cb(null, Date.now() + random_string + fileExtension);
   }
 });
 
@@ -158,37 +164,69 @@ router.post(
     });
   }
 );
-router.post(
-  "/contact-us",
-  function (req, res){
-    const { errors, isValid } = validateContactUsInput(
-      req.body
-    );
-    if (!isValid) {
-      return res.status(400).json(errors);
-    }
-    var noti_data = {
-      first_name: req.body.first_name,
-      last_name: req.body.last_name,
-      email: req.body.email,
-      phone_number: req.body.phone_number,
-      message: req.body.message
-    }
-    var { html } = contactUsNotification(noti_data);
-    nodemailer.mailOptions.to = process.env.MAIL_FROM_ADDRESS;
-    nodemailer.mailOptions.subject = "Medipharm Solutions-Contact Us Email!";
-    nodemailer.mailOptions.html = html;
-    nodemailer.transporter.sendMail(
-    nodemailer.mailOptions,
-    function(error, info) {
-      if (!error) {
-        console.log(error);
-      } else {
-        console.log("Email sent: " + info.response);
-      }
-    }
-  );
-  res.json(noti_data);
+router.post("/contact-us", function(req, res) {
+  const { errors, isValid } = validateContactUsInput(req.body);
+  if (!isValid) {
+    return res.status(400).json(errors);
   }
-);
+  var noti_data = {
+    first_name: req.body.first_name,
+    last_name: req.body.last_name,
+    email: req.body.email,
+    phone_number: req.body.phone_number,
+    message: req.body.message
+  };
+  var { html } = contactUsNotification(noti_data);
+  nodemailer.mailOptions.to = process.env.MAIL_FROM_ADDRESS;
+  nodemailer.mailOptions.subject = "Medipharm Solutions-Contact Us Email!";
+  nodemailer.mailOptions.html = html;
+  nodemailer.transporter.sendMail(nodemailer.mailOptions, function(
+    error,
+    info
+  ) {
+    if (!error) {
+      console.log(error);
+    } else {
+      console.log("Email sent: " + info.response);
+    }
+  });
+  res.json(noti_data);
+});
+router.post("/subscribe", function(req, res) {
+  if(req.body.email == ''){
+    return res.status(400).json({
+      message: "email is required!"
+    });
+  }
+  request
+    .post(
+      "https://" +
+        process.env.MAIL_CHIMP_INSTANCE +
+        ".api.mailchimp.com/3.0/lists/" +
+        process.env.MAIL_CHIMP_LIST_UNIQUE_ID +
+        "/members/"
+    )
+    .set("Content-Type", "application/json;charset=utf-8")
+    .set(
+      "Authorization",
+      "Basic " +
+        new Buffer("any:" + process.env.MAIL_CHIMP_API_KEY).toString("base64")
+    )
+    .send({
+      email_address: req.body.email,
+      status: "subscribed"
+    })
+    .end(function(err, response) {
+      if (
+        response.status < 300 ||
+        (response.status === 400 && response.body.title === "Member Exists")
+      ) {
+        res.send({ message: "Successfully subscribed!" });
+      } else {
+        return res.status(400).json({
+          message: response.body.detail
+        });
+      }
+    });
+});
 module.exports = router;

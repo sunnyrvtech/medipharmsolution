@@ -45,13 +45,34 @@ export const passwordChange = (user, history) => dispatch =>
 export const sendMessageByContactUs = (message, history) => dispatch =>
   client()
     .post("/account/users/contact-us", message)
-    .then(res => history.push({ pathname: '/',state: { alert_message:{class:'success',message: 'Your message has been sent successfully. Admin will contact you soon!'}}}))
+    .then(res =>
+      history.push({
+        pathname: "/",
+        state: {
+          alert_message: {
+            class: "success",
+            message:
+              "Your message has been sent successfully. Admin will contact you soon!"
+          }
+        }
+      })
+    )
     .catch(err => {
       console.log(err);
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
       });
+    });
+export const emailSubscribed = (subscribe, history) => dispatch =>
+  client()
+    .post("/account/users/subscribe", subscribe)
+    .then(res => {
+      return res.data;
+    })
+    .catch(err => {
+      console.log(err);
+      throw err.response.data;
     });
 export const setCurrentUser = decoded => {
   return {
