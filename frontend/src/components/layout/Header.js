@@ -201,7 +201,7 @@ class Header extends Component {
                 </li>
                 {this.state.header_menu != undefined && this.state.header_menu.map((menu, index) => (
 
-                      <li className={this.state.route_name == "/"+menu.slug? "nav-item parent active":"nav-item parent"}>
+                      <li key={index} className={this.state.route_name == "/"+menu.slug? "nav-item parent active":"nav-item parent"}>
                         {menu.sub_menu == undefined ?
                           <Link className="nav-link" to={'/'+menu.slug}>
                             {menu.name}
@@ -214,7 +214,7 @@ class Header extends Component {
                         </a>
                         <ul className="submenu">
                         {menu.sub_menu.map((sub_menu, k) => (
-                          <li>
+                          <li key={k}>
                             <Link className={this.state.route_name == "/"+sub_menu.slug? "nav-link active":"nav-link"} to={'/'+sub_menu.slug}>
                               {sub_menu.name}
                             </Link>
