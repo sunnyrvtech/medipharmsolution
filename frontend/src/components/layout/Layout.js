@@ -9,7 +9,7 @@ import Footer from "./Footer";
 const Layout = ({ children, ...rest }) => {
     return (
       <div className="frontApp">
-        <Header route={children.props.match.path}/>
+        <Header route={children.props.match.url}/>
         {children}
         <Footer />
       </div>

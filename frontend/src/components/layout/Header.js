@@ -139,17 +139,17 @@ class Header extends Component {
                 <ul id="course-menu" className="course-menu">
                   <li>
                     <h3>
-                      <Link to="/clinical-research">Clinical Research</Link>
+                      <Link to="/course/clinical-research">Clinical Research</Link>
                     </h3>
                   </li>
                   <li>
                     <h3>
-                      <Link to="/drug-safety">Drug Safety</Link>
+                      <Link to="/course/drug-safety">Drug Safety</Link>
                     </h3>
                   </li>
                   <li>
                     <h3>
-                      <Link to="/data-management">Data Management</Link>
+                      <Link to="/course/data-management">Data Management</Link>
                     </h3>
                   </li>
                 </ul>
@@ -191,7 +191,7 @@ class Header extends Component {
                       categories.map(value => {
                         return (
                           <li key={value._id}>
-                            <Link className={this.state.route_name == "/"+value.slug ? "nav-link active":"nav-link"} to={"/"+value.slug}>
+                            <Link className={this.state.route_name == "/"+value.slug ? "nav-link active":"nav-link"} to={"/course/"+value.slug}>
                               {value.name}
                             </Link>
                           </li>
@@ -203,7 +203,7 @@ class Header extends Component {
 
                       <li className={this.state.route_name == "/"+menu.slug? "nav-item parent active":"nav-item parent"}>
                         {menu.sub_menu == undefined ?
-                          <Link className="nav-link" to={menu.slug}>
+                          <Link className="nav-link" to={'/'+menu.slug}>
                             {menu.name}
                           </Link>
                         :
@@ -215,7 +215,7 @@ class Header extends Component {
                         <ul className="submenu">
                         {menu.sub_menu.map((sub_menu, k) => (
                           <li>
-                            <Link className={this.state.route_name == "/"+sub_menu.slug? "nav-link active":"nav-link"} to={sub_menu.slug}>
+                            <Link className={this.state.route_name == "/"+sub_menu.slug? "nav-link active":"nav-link"} to={'/'+sub_menu.slug}>
                               {sub_menu.name}
                             </Link>
                           </li>
@@ -224,8 +224,6 @@ class Header extends Component {
                         </div>
                       }
                       </li>
-
-
               ))}
                 <li className={this.state.route_name == "/contact-us" ? "nav-item active":"nav-item"}>
                   <Link className="nav-link" to="/contact-us">

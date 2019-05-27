@@ -66,18 +66,10 @@ class App extends Component {
             <RouteLayout exact path="/password/reset/:code" component={ResetPassword} />
             <RouteLayout exact path="/account/activate/:code" component={Verification} />
             <Route path="/admin" component={AdminRoute} />
-            <RouteLayout exact path="/about-us" component={StaticPage} />
-            <RouteLayout exact path="/contact-us" component={ContactUs} />
-            <RouteLayout exact path="/free-website-resources-to-be-added" component={StaticPage} />
-            <RouteLayout exact path="/resume-writing" component={StaticPage} />
-            <RouteLayout exact path="/job-search" component={StaticPage} />
-            <RouteLayout exact path="/interview-preparation" component={StaticPage} />
-            <RouteLayout exact path="/phone-interview-preparation" component={StaticPage} />
-            <RouteLayout exact path="/in-person-interview-preparation" component={StaticPage} />
-            <RouteLayout exact path="/after-interview" component={StaticPage} />
-            <RouteLayout exact path="/collaborations" component={StaticPage} />
             <RouteLayout exact path="/blog" component={Blog} />
             <RouteLayout exact path="/blog/:blogSlug" component={BlogView} />
+            <RouteLayout exact path="/:slug" component={StaticPage} />
+            <RouteLayout exact path="/contact-us" component={ContactUs} />
             { isAuthenticated == true &&
             <Switch>
             <RouteLayout exact path="/account/profile" component={Profile} />
@@ -88,13 +80,13 @@ class App extends Component {
             <RouteLayout exact path="/account/cert/:courseId" component={Certificate} />
             <RouteLayout exact path="/account/quiz/:moduleId" component={Quiz} />
           {/* <RouteLayout exact path="/account/payment/history" component={PaymentHistory} /> */}
-            <RouteLayout exact path="/:categorySlug" component={Course} />
-            <RouteLayout exact path="/:categorySlug/:courseSlug" component={CourseView} />
+            <RouteLayout exact path="/course/:categorySlug" component={Course} />
+            <RouteLayout exact path="/course/:categorySlug/:courseSlug" component={CourseView} />
             <RouteLayout component={PageNotFound} />
             </Switch>
             }
-            <RouteLayout exact path="/:categorySlug" component={Course} />
-            <RouteLayout exact path="/:categorySlug/:courseSlug" component={CourseView} />
+            <RouteLayout exact path="/course/:categorySlug" component={Course} />
+            <RouteLayout exact path="/course/:categorySlug/:courseSlug" component={CourseView} />
             <RouteLayout component={PageNotFound} />
             </Switch>
         </Router>
