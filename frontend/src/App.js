@@ -68,8 +68,8 @@ class App extends Component {
             <Route path="/admin" component={AdminRoute} />
             <RouteLayout exact path="/blog" component={Blog} />
             <RouteLayout exact path="/blog/:blogSlug" component={BlogView} />
-            <RouteLayout exact path="/:slug" component={StaticPage} />
             <RouteLayout exact path="/contact-us" component={ContactUs} />
+            <RouteLayout exact path="/:slug" component={StaticPage} />
             { isAuthenticated == true &&
             <Switch>
             <RouteLayout exact path="/account/profile" component={Profile} />
