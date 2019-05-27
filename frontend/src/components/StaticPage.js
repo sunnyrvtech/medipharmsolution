@@ -62,9 +62,13 @@ class StaticPage extends Component {
 
   render() {
     const { static_page } = this.state;
+    console.log(static_page);
     return (
       <div>
-        {this.renderContent(static_page)}
+        {static_page && this.renderContent(static_page)}
+        {!static_page &&
+                <PageNotFound />
+        }
       </div>
     );
   }

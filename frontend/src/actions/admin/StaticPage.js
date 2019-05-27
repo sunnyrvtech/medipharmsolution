@@ -33,6 +33,19 @@ export const updateStaticPage = (page,route_name, history) => dispatch => {
       });
     });
 };
+export const deletePage = (pageId, history) => dispatch =>
+  client()
+    .delete("/admin/pages/delete/" + pageId)
+    .then(res => {
+      return res.data;
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
 
 export const getstaticPages = () => async dispatch =>
   client()

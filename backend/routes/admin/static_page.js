@@ -65,6 +65,18 @@ router.put(
   }
 );
 
+router.delete(
+  "/delete/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    StaticPage.deleteOne({ _id: mongoose.Types.ObjectId(req.params.id) }).then(
+      result => {
+        res.json(result);
+      }
+    );
+  }
+);
+
 router.get(
   "/:id",
   passport.authenticate("jwt", { session: false }),

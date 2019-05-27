@@ -4,7 +4,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withRouter, Link } from "react-router-dom";
-import { getstaticPages } from "../../../actions/admin/StaticPage";
+import { getstaticPages,deletePage } from "../../../actions/admin/StaticPage";
+import ConfirmModal from "../ConfirmModal";
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 
 let route_name;
@@ -17,6 +18,44 @@ class Page extends Component {
       alert_message: null
     };
   route_name= props.match.url
+  this.onDelete = this.onDelete.bind(this);
+  this.openModal = this.openModal.bind(this);
+  }
+
+  openModal(cell,index) {
+    this.setState({
+      delId:  cell,
+      delIndex:  index,
+      modal: !this.state.modal
+    });
+  }
+
+  onDelete() {
+    var index = this.state.delIndex;
+    this.props.deletePage(this.state.delId, this.props.history).then(response => {
+      if (response) {
+        window.scrollTo(0, 0);
+        var pages = this.state.pages;
+        delete pages[index]; // this is used to remove item from the list after delete
+        pages = pages.filter(function(obj) {
+          if (obj.id > index) {
+            return (obj.id = obj.id - 1);
+          }
+          return true;
+        });
+        this.setState({
+          modal: false,
+          pages: pages,
+          alert_message: { class: "success", message: "Deleted successfully!" }
+        });
+        setTimeout(
+          function() {
+            this.setState({ alert_message: false });
+          }.bind(this),
+          5000
+        );
+      }
+    });
   }
 
   componentWillMount() {
@@ -40,7 +79,14 @@ class Page extends Component {
 ActionButton(cell, row) {
     return (
       <div>
-      <Link to={`${route_name+'/'+cell}`} className="btn btn-info btn-circle" tooltip="update"><i className="fa fa-pencil-square-o"></i></Link>
+      <Link to={`${route_name+'/'+cell}`} className="btn btn-info btn-circle" tooltip="update"><i className="fa fa-pencil-square-o"></i></Link>{" "}
+      <a
+        onClick={() => this.openModal(cell, row.id - 1)}
+        className="btn btn-danger btn-circle"
+        tooltip="delete"
+      >
+        <i className="fa fa-trash" />
+      </a>
       </div>
     );
   }
@@ -79,6 +125,9 @@ ActionButton(cell, row) {
     const { pages }= this.state;
     return (
       <div className="container datatable">
+      {this.state.modal &&
+      <ConfirmModal parentConfirmMethod={this.onDelete} parentCloseMethod={this.openModal} />
+      }
       {this.state.alert_message  && (
         <div className={'text-center alert alert-'+this.state.alert_message.class}>
            {this.state.alert_message.message}
@@ -95,5 +144,5 @@ ActionButton(cell, row) {
 
 export default connect(
   null,
-  { getstaticPages }
+  { getstaticPages,deletePage }
 )(withRouter(Page));
