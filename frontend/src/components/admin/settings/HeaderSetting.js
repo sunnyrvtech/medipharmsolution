@@ -18,7 +18,7 @@ class HeaderSetting extends Component {
     super();
     this.state = {
       modal: false,
-      header_social_links: [],
+      header_social_links: [{ class: "", link: "" }],
       header_menu: [],
       name: "",
       slug: ""
