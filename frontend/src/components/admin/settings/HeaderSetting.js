@@ -18,7 +18,7 @@ class HeaderSetting extends Component {
     super();
     this.state = {
       modal: false,
-      header_social_links: [{ class: "", link: "" }],
+      header_social_links: [],
       header_menu: [],
       name: "",
       slug: ""
@@ -210,7 +210,7 @@ class HeaderSetting extends Component {
               <div className="fontawe text-center mb-2">
                 <a href="https://fontawesome.com/v4.7.0/icons/" target="_blank">Get social Icon class here</a>
               </div>
-              {this.state.header_social_links.map((socialLink, idx) => (
+              {this.state.header_social_links != undefined && this.state.header_social_links.map((socialLink, idx) => (
                 <div className="" key={idx}>
                   <div className="input-group mb-2">
                   <div className="col-md-4">

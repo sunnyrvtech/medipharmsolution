@@ -14,7 +14,7 @@ class Header extends Component {
     super();
     this.state = {
       categories: null,
-      header_social_links: [{ class: "", link: "" }],
+      header_social_links: [],
       header_menu: [],
       route_name: props.route
     };
