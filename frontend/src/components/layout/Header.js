@@ -14,6 +14,7 @@ class Header extends Component {
     super();
     this.state = {
       categories: null,
+      header_social_links: [{ class: "", link: "" }],
       header_menu: [],
       route_name: props.route
     };
@@ -39,6 +40,7 @@ class Header extends Component {
     this.props.getSettingBySlug('header', this.props.history).then(response => {
       if (response) {
         this.setState({
+          header_social_links: response.content.header_social_links,
           header_menu: response.content.header_menu
         });
       }
@@ -112,26 +114,13 @@ class Header extends Component {
               <div className="col-sm-3">
                 <div className="social_icon">
                   <ul>
+                  {this.state.header_social_links != undefined && this.state.header_social_links.map((socialLink, index) => (
                     <li>
-                      <a href="#">
-                        <i className="fa fa-facebook" />
+                      <a href={socialLink.link} target="_blank">
+                        <i className={"fa fa-"+socialLink.class} />
                       </a>
                     </li>
-                    <li>
-                      <a href="#">
-                        <i className="fa fa-twitter" />
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <i className="fa fa-instagram" />
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <i className="fa fa-youtube-play" />
-                      </a>
-                    </li>
+                  ))}
                   </ul>
                 </div>
               </div>

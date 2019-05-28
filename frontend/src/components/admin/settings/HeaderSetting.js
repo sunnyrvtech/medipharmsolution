@@ -18,6 +18,7 @@ class HeaderSetting extends Component {
     super();
     this.state = {
       modal: false,
+      header_social_links: [{ class: "", link: "" }],
       header_menu: [],
       name: "",
       slug: ""
@@ -93,10 +94,28 @@ class HeaderSetting extends Component {
         header_menu: header_menu
     });
   }
+  handleSocialHolderChange = idx => evt => {
+    const new_social_links = this.state.header_social_links.map((socialLink, sidx) => {
+      if (idx !== sidx) return socialLink;
+      return { ...socialLink, [evt.target.name]: evt.target.value };
+    });
+    this.setState({ header_social_links: new_social_links });
+  };
+  handleAddMoreSocialHolder = () => {
+    this.setState({
+      header_social_links: this.state.header_social_links.concat([{ class: "", link: "" }])
+    });
+  };
+  handleRemoveSocialHolder = idx => () => {
+    this.setState({
+      header_social_links: this.state.header_social_links.filter((s, sidx) => idx !== sidx)
+    });
+  };
   handleSubmit(e) {
     e.preventDefault();
     const content = {
-      header_menu: this.state.header_menu
+      header_menu: this.state.header_menu,
+      header_social_links: this.state.header_social_links
     };
     const setting = {
       slug: "header",
@@ -109,7 +128,8 @@ class HeaderSetting extends Component {
     this.props.getSettingBySlug(slug, this.props.history).then(response => {
       if (response) {
         this.setState({
-          header_menu: response.content.header_menu
+          header_menu: response.content.header_menu,
+          header_social_links: response.content.header_social_links
         });
       }
     });
@@ -129,6 +149,8 @@ class HeaderSetting extends Component {
             <b className="close fa fa-caret-down" />
           </div>
           <div className="card-body">
+          <div className="row">
+          <div className="col-md-6">
           <div className="card">
             <div className="card-header" onClick={this.handleCard}>
               <h2 className="btn">Header Menu</h2>
@@ -178,6 +200,61 @@ class HeaderSetting extends Component {
             </div>
           </div>
           </div>
+          <div className="col-md-6">
+          <div className="card">
+            <div className="card-header" onClick={this.handleCard}>
+              <h2 className="btn">Social Links</h2>
+              <b className="close fa fa-caret-down" />
+            </div>
+            <div className="card-body">
+              <div className="fontawe text-center mb-2">
+                <a href="https://fontawesome.com/v4.7.0/icons/" target="_blank">Get social Icon class here</a>
+              </div>
+              {this.state.header_social_links.map((socialLink, idx) => (
+                <div className="" key={idx}>
+                  <div className="input-group mb-2">
+                  <div className="col-md-4">
+                      <input
+                        type="text"
+                        name="class"
+                        placeholder="Class"
+                        className="form-control"
+                        onChange={this.handleSocialHolderChange(idx)}
+                        value={socialLink.class}
+                      />
+                      </div>
+                    <div className="input-group-append">
+                      <input
+                        type="text"
+                        name="link"
+                        placeholder="Link"
+                        className="form-control"
+                        onChange={this.handleSocialHolderChange(idx)}
+                        value={socialLink.link}
+                      />
+                        <button
+                          className="btn btn-danger"
+                          type="button"
+                          onClick={this.handleRemoveSocialHolder(idx)}
+                        >
+                          -
+                        </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+              <button
+                type="button"
+                onClick={this.handleAddMoreSocialHolder}
+                className="btn btn-info"
+              >
+                +
+              </button>
+            </div>
+          </div>
+          </div>
+          </div>
+          </div>
           </div>
           <button type="submit" className="btn btn-info">
             Save
@@ -210,7 +287,7 @@ class HeaderSetting extends Component {
                 <select name="slug" className="form-control" onChange={this.handleInputSelectChange.bind(this)}>
                   <option value="">Select Page</option>
                   {pages != undefined && pages.map((page, i) => (
-                    <option value={page.slug}>{page.name}</option>
+                    <option value={page.slug} key={i}>{page.name}</option>
                   ))}
                 </select>
                 </div>

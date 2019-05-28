@@ -546,6 +546,7 @@
     margin-right:5px;
     font-size: 20px;
 }
+.fontawe.text-center.mb-2 a { text-decoration: underline!important;width: 500px;}
 @media (min-width: 576px) {
   .topbar .dropdown {
     position: relative;
