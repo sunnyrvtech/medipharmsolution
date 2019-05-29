@@ -330,7 +330,7 @@ section.learn-interest-wpr,section.future-wpr{
     justify-content: flex-start;
 }
 a.navbar-brand img {
-    max-width: 150px;
+    /* max-width: 150px; */
 }
 span.desktop-cta a{
     background-color: #004dda;
@@ -973,7 +973,7 @@ section.hero-banner::before {
     line-height: normal;
 }
    a.navbar-brand img {
-    max-width: 100px;
+    max-width: 180px;
 }
 .navbar-expand-lg .navbar-nav .nav-link {
         text-transform: capitalize;

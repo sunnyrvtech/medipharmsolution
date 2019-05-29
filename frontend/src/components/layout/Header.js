@@ -115,7 +115,7 @@ class Header extends Component {
                 <div className="social_icon">
                   <ul>
                   {this.state.header_social_links != undefined && this.state.header_social_links.map((socialLink, index) => (
-                    <li>
+                    <li key={index}>
                       <a href={socialLink.link} target="_blank">
                         <i className={"fa fa-"+socialLink.class} />
                       </a>
