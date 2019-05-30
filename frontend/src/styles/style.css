@@ -1155,8 +1155,19 @@ padding: 8px 15px;
     display: block;
     max-width: 200px;
 }
+.header-wrap {
+    width: 100% !important;
+    overflow: hidden !important;
+}
 .header-wrap > div {
     padding: 0px 5px !important;
+}
+.content-gray-wpr {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.content-gray-wpr a {
+    word-break: break-word;
 }
 .nxt_btn {
     flex-direction: column;

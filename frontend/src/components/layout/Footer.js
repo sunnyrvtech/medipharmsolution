@@ -66,7 +66,7 @@ class Footer extends Component {
             <footer>
           <div className="container">
             <div className="row">
-              <div className="col-lg-3 col-md-6 col-sm-12 foo_sec">
+              <div className="col-lg-4 col-md-6 col-sm-12 foo_sec">
                 <h5>Social Links</h5>
                 <ul>
                   {this.state.footer_social_links.map((socialLink, idx) => (
@@ -74,17 +74,7 @@ class Footer extends Component {
                   ))}
                 </ul>
               </div>
-              <div className="col-lg-2 col-md-6 col-sm-12 foo_sec">
-                <h5>INFO</h5>
-                <ul>
-                  <li><Link to="/">Home</Link></li>
-                  <li><Link to="/services">Services</Link></li>
-                  <li><Link to="/tyres">Tyres</Link></li>
-                  <li><Link to="/about-us">About Us</Link></li>
-                  <li><Link to="/contact-us">Contact Us</Link></li>
-                </ul>
-              </div>
-              <div className="col-lg-3 col-md-6 col-sm-12 foo_sec">
+              <div className="col-lg-4 col-md-6 col-sm-12 foo_sec">
                 <h5>Contact</h5>
                 <p>{this.state.footer_contact_us_address}</p>
                 <p><a href={"tel:"+this.state.footer_contact_us_phone}>{this.state.footer_contact_us_phone}</a></p>
