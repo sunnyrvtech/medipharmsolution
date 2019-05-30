@@ -145,7 +145,7 @@ router.post(
       }
     );
       ///  notification sent to user
-      noti_data.title = "We have received your enrollement request  and we will contact you soon.If you have not heard from us within this time, please contact us at admin@medipharmsolutions.com.Please check following enrollment details below:-"
+      noti_data.title = "We have received your enrollment request  and we will contact you soon.If you have not heard from us within this time, please contact us at admin@medipharmsolutions.com.Please check following enrollment details below:-"
       var { html } = enrollmentNotification.adminEnrollmentNotification(noti_data);
       nodemailer.mailOptions.to = req.user.email;
       nodemailer.mailOptions.subject = "Enrollment Request Received-Medipharm Solutions";

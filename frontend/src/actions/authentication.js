@@ -111,7 +111,7 @@ export const resetPassword = (user, history) => dispatch => {
           alert_message: {
             class: "success",
             message:
-              "Your password has been changed successfully.You may sign in with your new password!"
+              "Your password has been changed successfully. You may sign in with your new password!"
           }
         }
       })

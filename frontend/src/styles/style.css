@@ -36,7 +36,9 @@ li {
     -ms-transition: all 0.3s ease-in-out 0s;
     -o-transition: all 0.3s ease-in-out 0s;
 }
-
+.content-gray-wpr {
+    min-height: calc(100vh - 320px);
+}
 ul li {
     list-style: none;
 }

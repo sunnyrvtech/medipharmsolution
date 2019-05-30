@@ -93,11 +93,11 @@ router.post("/login", (req, res) => {
       return res.status(404).json(errors);
     } else if (!user.status && user.verify_token != null) {
       errors.email =
-        "Your account is not activated yet,please check activation email in your inbox and activate your account!";
+        "Your account is not activated yet, Please check activation email in your inbox and activate your account!";
       return res.status(404).json(errors);
     } else if (!user.status && user.verify_token == null) {
       errors.email =
-        "Your account is deactivated by admin,please contact with administrator!";
+        "Your account is deactivated by admin, Please contact with administrator!";
       return res.status(404).json(errors);
     }
     bcrypt.compare(password, user.password).then(isMatch => {
@@ -175,7 +175,7 @@ router.post("/password/forgot", function(req, res) {
           }
         });
         res.json({
-          message: "A password link has been sent to your email address!"
+          message: "A password reset link has been sent to your email address!"
         });
       });
     } else {

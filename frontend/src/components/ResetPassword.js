@@ -82,7 +82,7 @@ class ForgotPassword extends Component {
                               }
                             )}
                             name="password"
-                            placeholder="Password"
+                            placeholder="New Password"
                             onChange={this.handleInputChange}
                             value={this.state.password}
                           />
