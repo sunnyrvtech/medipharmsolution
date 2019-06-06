@@ -25,7 +25,10 @@ class Course extends Component {
   componentWillMount() {
     var categorySlug = this.props.match.params.categorySlug;
     this.props.getCourseByCategorySlug(categorySlug, this.props.history).then(response => {
-      this.setState({ loader: false,IMAGE_COURSE_URL:response.IMAGE_COURSE_URL,category: response.category,bannerSliders: response.category.banner_slides,video: response.category.video,courses: response.courses });
+      if(response.category)
+         this.setState({ loader: false,IMAGE_COURSE_URL:response.IMAGE_COURSE_URL,category: response.category,bannerSliders: response.category.banner_slides!=undefined?response.category.banner_slides:'',video: response.category.video,courses: response.courses });
+      else
+        this.setState({ loader: false,courses: response.courses });
     });
   }
     componentWillReceiveProps(nextProps) {

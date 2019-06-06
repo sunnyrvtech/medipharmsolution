@@ -81,7 +81,7 @@ class Footer extends Component {
                 <h5>Explore Programs</h5>
                 <ul>
                   {footer_programs!=undefined && footer_programs.map((program, idx) => (
-                    <li key={idx}><a target="_blank" href={program.slug}>{program.name}</a></li>
+                    <li key={idx}><a target="_blank" href={'/course/'+program.slug}>{program.name}</a></li>
                   ))}
                 </ul>
               </div>

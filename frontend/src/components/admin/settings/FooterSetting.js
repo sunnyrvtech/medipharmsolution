@@ -8,7 +8,7 @@ import {
   updateSetting,
   getSettingBySlug
 } from "../../../actions/admin/setting";
-import { getstaticPages } from "../../../actions/admin/StaticPage";
+import { getCategories } from "../../../actions/admin/category";
 import PageNotFound from "../../PageNotFound";
 
 let route_name;
@@ -104,8 +104,8 @@ class FooterSetting extends Component {
   }
   componentDidMount() {
     const slug = this.props.match.params.slug;
-    this.props.getstaticPages().then(response => {
-      this.setState({ pages: response });
+    this.props.getCategories().then(response => {
+      this.setState({ categories: response});
     });
     this.props.getSettingBySlug(slug, this.props.history).then(response => {
       if (response) {
@@ -126,7 +126,7 @@ class FooterSetting extends Component {
   }
 
   render_html() {
-    const { pages,footer_programs } = this.state;
+    const { categories,footer_programs } = this.state;
     return (
       <div className="container setting">
         <form onSubmit={this.handleSubmit}>
@@ -292,8 +292,8 @@ class FooterSetting extends Component {
                           <div className="input-group-append mb-2">
                           <select name="slug" className="form-control" value={program.slug} onChange={this.handleProgramHolderChange(idx)}>
                             <option value="">Select Page</option>
-                            {pages != undefined && pages.map((page, i) => (
-                              <option value={page.slug} key={i}>{page.name}</option>
+                            {categories != undefined && categories.map((category, i) => (
+                              <option value={category.slug} key={i}>{category.name}</option>
                             ))}
                           </select>
                               <button
@@ -336,5 +336,5 @@ class FooterSetting extends Component {
 
 export default connect(
   null,
-  { updateSetting, getSettingBySlug,getstaticPages }
+  { updateSetting, getSettingBySlug,getCategories }
 )(withRouter(FooterSetting));
