@@ -16,22 +16,9 @@ class HomeSetting extends Component {
   constructor(props) {
     super();
     this.state = {
-      banner_title: "",
-      banner_image: "",
-      learn_more_title: "",
-      learn_more_text: "",
-      admission_title: "",
-      admission_text: "",
-      about_us_title: "",
-      about_us_text: "",
-      talk_us_title: "",
-      talk_us_text: "",
-      experience_title: "",
-      experience_text: "",
-      graduates_title: "",
-      graduates_text: "",
-      video: "",
-      testisliders: [{ slide: "" }],
+      bannerSliders: [{ link: "",text: "" }],
+      content: "",
+      video: [{content: ""}],
       page_not_found: false
     };
     route_name = props.match.url;
@@ -48,57 +35,51 @@ class HomeSetting extends Component {
     let nextElment = e.target.closest(".card-header").nextSibling;
     nextElment.classList.toggle("show");
   }
-  handleTestisliderNameChange = idx => evt => {
-    const newTestisliders = this.state.testisliders.map((testislider, sidx) => {
-      if (idx !== sidx) return testislider;
-      return { ...testislider, slide: evt.editor.getData() };
-    });
-    this.setState({ testisliders: newTestisliders });
+  onChangeEditor = column => evt => {
+    this.setState({ [column]:  evt.editor.getData() });
   };
-  handleAddTestislider = () => {
+  handleBannerSliderNameChange = idx => evt => {
+    const newbannerSliders = this.state.bannerSliders.map((bannerSlider, sidx) => {
+      if (idx !== sidx) return bannerSlider;
+      return { ...bannerSlider, [evt.target.name]: evt.target.value };
+    });
+    this.setState({ bannerSliders: newbannerSliders });
+  };
+  handleAddBannerSlider = () => {
     this.setState({
-      testisliders: this.state.testisliders.concat([{ slide: "" }])
+      bannerSliders: this.state.bannerSliders.concat([{ link: "",text: "" }])
     });
   };
 
-  handleRemoveTestislider = idx => () => {
+  handleRemoveBannerSlider = idx => () => {
     this.setState({
-      testisliders: this.state.testisliders.filter((s, sidx) => idx !== sidx)
+      bannerSliders: this.state.bannerSliders.filter((s, sidx) => idx !== sidx)
+    });
+  };
+  handleVideoNameChange = idx => evt => {
+    const newVideo = this.state.video.map((video, sidx) => {
+      if (idx !== sidx) return video;
+      return { ...video, content: evt.target.value };
+    });
+    this.setState({ video: newVideo });
+  };
+  handleVideo = () => {
+    this.setState({
+      video: this.state.video.concat([{ content: "" }])
+    });
+  };
+
+  handleRemoveVideo = idx => () => {
+    this.setState({
+      video: this.state.video.filter((s, sidx) => idx !== sidx)
     });
   };
   handleSubmit(e) {
     e.preventDefault();
     const content = {
-      banner: {
-        title: this.state.banner_title,
-        image: this.state.banner_image
-      },
-      learn_more: {
-        title: this.state.learn_more_title,
-        text: this.state.learn_more_text
-      },
-      admission: {
-        title: this.state.admission_title,
-        text: this.state.admission_text
-      },
-      about_us: {
-        title: this.state.about_us_title,
-        text: this.state.about_us_text
-      },
-      talk_us: {
-        title: this.state.talk_us_title,
-        text: this.state.talk_us_text
-      },
-      experience: {
-        title: this.state.experience_title,
-        text: this.state.experience_text
-      },
-      graduates: {
-        title: this.state.graduates_title,
-        text: this.state.graduates_text
-      },
+      content: this.state.content,
       video: this.state.video,
-      testisliders: this.state.testisliders
+      bannerSliders: this.state.bannerSliders
     };
     const setting = {
       slug: "home",
@@ -111,22 +92,9 @@ class HomeSetting extends Component {
     this.props.getSettingBySlug(slug, this.props.history).then(response => {
       if (response) {
         this.setState({
-          banner_title: response.content.banner.title,
-          banner_image: response.content.banner.image,
-          learn_more_title: response.content.learn_more.title,
-          learn_more_text: response.content.learn_more.text,
-          admission_title: response.content.admission.title,
-          admission_text: response.content.admission.text,
-          about_us_title: response.content.about_us.title,
-          about_us_text: response.content.about_us.text,
-          talk_us_title: response.content.talk_us.title,
-          talk_us_text: response.content.talk_us.text,
-          experience_title: response.content.experience.title,
-          experience_text: response.content.experience.text,
-          graduates_title: response.content.graduates.title,
-          graduates_text: response.content.graduates.text,
+          content: response.content.content,
           video: response.content.video,
-          testisliders: response.content.testisliders
+          bannerSliders: response.content.bannerSliders
         });
       } else {
         this.setState({ page_not_found: true });
@@ -140,210 +108,54 @@ class HomeSetting extends Component {
         <form onSubmit={this.handleSubmit}>
           <div className="card mb-2">
             <div className="card-header" onClick={this.handleCard}>
-              <h2 className="btn">Home Banner</h2>
+              <h2 className="btn">Banner Slider</h2>
               <b className="close fa fa-caret-down" />
             </div>
             <div className="card-body">
-              <div className="form-group">
-                <label htmlFor="title">Title:</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="learn_more_title"
-                  onChange={this.handleInputChange}
-                  value={this.state.learn_more_title}
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="text">Image url:</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="banner_image"
-                  onChange={this.handleInputChange}
-                  value={this.state.banner_image}
-                />
-              </div>
+              {this.state.bannerSliders.map((bannerSlider, idx) => (
+                <div className="input-group mb-2" key={idx}>
+                    <div className="col-md-6">
+                      <input
+                        type="text"
+                        placeholder="Image Url"
+                        className="form-control"
+                        name="link"
+                        onChange={this.handleBannerSliderNameChange(idx)}
+                        value={bannerSlider.link}
+                      />
+                      </div>
+                  <div className="input-group-append">
+                  <input
+                    className="form-control"
+                    placeholder="text"
+                    name="text"
+                    onChange={this.handleBannerSliderNameChange(idx)}
+                    value={bannerSlider.text}
+                  />
+                  <button className="btn btn-danger" type="button" onClick={this.handleRemoveBannerSlider(idx)}>-</button>
+                  </div>
+                </div>
+              ))}
+              <button type="button" onClick={this.handleAddBannerSlider} className="btn btn-info">+</button>
             </div>
           </div>
           <div className="card mb-2">
             <div className="card-header" onClick={this.handleCard}>
-              <h2 className="btn">Exploring Today Section</h2>
-              <b className="close fa fa-caret-down" />
-            </div>
-            <div className="card-body">
-              <div className="row mb-3">
-                <div className="col-md-6">
-                  <div className="card">
-                    <div className="card-header" onClick={this.handleCard}>
-                      <h2 className="btn">Learn More</h2>
-                      <b className="close fa fa-caret-down" />
-                    </div>
-                    <div className="card-body">
-                      <div className="form-group">
-                        <label htmlFor="title">Title:</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          name="learn_more_title"
-                          onChange={this.handleInputChange}
-                          value={this.state.learn_more_title}
-                        />
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor="text">Text:</label>
-                        <textarea
-                          className="form-control"
-                          name="learn_more_text"
-                          onChange={this.handleInputChange}
-                          value={this.state.learn_more_text}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-6">
-                  <div className="card">
-                    <div className="card-header" onClick={this.handleCard}>
-                      <h2 className="btn">Admission</h2>
-                      <b className="close fa fa-caret-down" />
-                    </div>
-                    <div className="card-body">
-                      <div className="form-group">
-                        <label htmlFor="title">Title:</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          name="admission_title"
-                          onChange={this.handleInputChange}
-                          value={this.state.admission_title}
-                        />
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor="text">Text:</label>
-                        <textarea
-                          className="form-control"
-                          name="admission_text"
-                          onChange={this.handleInputChange}
-                          value={this.state.admission_text}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="row mb-3">
-                <div className="col-md-6">
-                  <div className="card">
-                    <div className="card-header" onClick={this.handleCard}>
-                      <h2 className="btn">About Us</h2>
-                      <b className="close fa fa-caret-down" />
-                    </div>
-                    <div className="card-body">
-                      <div className="form-group">
-                        <label htmlFor="title">Title:</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          name="about_us_title"
-                          onChange={this.handleInputChange}
-                          value={this.state.about_us_title}
-                        />
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor="text">Text:</label>
-                        <textarea
-                          className="form-control"
-                          name="about_us_text"
-                          onChange={this.handleInputChange}
-                          value={this.state.about_us_text}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-md-6">
-                  <div className="card">
-                    <div className="card-header" onClick={this.handleCard}>
-                      <h2 className="btn">Talk to Us</h2>
-                      <b className="close fa fa-caret-down" />
-                    </div>
-                    <div className="card-body">
-                      <div className="form-group">
-                        <label htmlFor="title">Title:</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          name="talk_us_title"
-                          onChange={this.handleInputChange}
-                          value={this.state.talk_us_title}
-                        />
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor="text">Text:</label>
-                        <textarea
-                          className="form-control"
-                          name="talk_us_text"
-                          onChange={this.handleInputChange}
-                          value={this.state.talk_us_text}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="card mb-2">
-            <div className="card-header" onClick={this.handleCard}>
-              <h2 className="btn">Experience Section</h2>
+              <h2 className="btn">Content Section</h2>
               <b className="close fa fa-caret-down" />
             </div>
             <div className="card-body">
               <div className="form-group">
-                <label htmlFor="title">Title:</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="experience_title"
-                  onChange={this.handleInputChange}
-                  value={this.state.experience_title}
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="text">Text:</label>
-                <textarea
-                  className="form-control"
-                  name="experience_text"
-                  onChange={this.handleInputChange}
-                  value={this.state.experience_text}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="card mb-2">
-            <div className="card-header" onClick={this.handleCard}>
-              <h2 className="btn">Our Graduates Section</h2>
-              <b className="close fa fa-caret-down" />
-            </div>
-            <div className="card-body">
-              <div className="form-group">
-                <label htmlFor="title">Title:</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="graduates_title"
-                  onChange={this.handleInputChange}
-                  value={this.state.graduates_title}
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="text">Text:</label>
-                <textarea
-                  className="form-control"
-                  name="graduates_text"
-                  onChange={this.handleInputChange}
-                  value={this.state.graduates_text}
+                <label htmlFor="title">Content:</label>
+                <CKEditor
+                  activeClass="p10"
+                  config={{
+                      allowedContent: true
+                  }}
+                  content={this.state.content}
+                  events={{
+                    change: this.onChangeEditor('content')
+                  }}
                 />
               </div>
             </div>
@@ -356,44 +168,27 @@ class HomeSetting extends Component {
             <div className="card-body">
               <div className="form-group">
                 <label htmlFor="title">Content with Iframe:</label>
-                <textarea
-                  className="form-control"
-                  name="video"
-                  onChange={this.handleInputChange}
-                  value={this.state.video}
-                />
+                {this.state.video.map((video, idx) => (
+                  <div className="input-group-append mb-2" key={idx}>
+                    <textarea
+                      className="form-control"
+                      placeholder="Iframe content"
+                      name="video"
+                      onChange={this.handleVideoNameChange(idx)}
+                      value={video.content}
+                    />
+                    <button className="btn btn-danger" type="button" onClick={this.handleRemoveVideo(idx)}>-</button>
+                </div>
+              ))}
+              <button type="button" onClick={this.handleVideo} className="btn btn-info">+</button>
+
               </div>
             </div>
           </div>
-          <div className="card mb-2">
-            <div className="card-header" onClick={this.handleCard}>
-              <h2 className="btn">Testimonial Slider</h2>
-              <b className="close fa fa-caret-down" />
-            </div>
-            <div className="card-body">
-              {this.state.testisliders.map((testislider, idx) => (
-                <div className="mb-2" key={idx}>
-                  <CKEditor
-                    activeClass="p10"
-                    config={{
-                        allowedContent: true
-                    }}
-                    content={testislider.slide}
-                    events={{
-                      change: this.handleTestisliderNameChange(idx)
-                    }}
-                  />
-                  <div className="input-group-append">
-                    <button className="btn btn-danger btn-block" type="button" onClick={this.handleRemoveTestislider(idx)}>-</button>
-                  </div>
-                </div>
-              ))}
-              <button type="button" onClick={this.handleAddTestislider} className="btn btn-info">+</button>
-            </div>
-          </div>
-          <button type="submit" className="btn btn-info">
+          <button type="submit" className="btn btn-info mr-2">
             Save
           </button>
+          <a className="btn btn-info" onClick={this.props.history.goBack}>Back</a>
         </form>
       </div>
     );

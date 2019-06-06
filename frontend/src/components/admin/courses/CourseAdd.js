@@ -119,7 +119,7 @@ class CourseAdd extends Component {
                 options={categories}
               />
               {errors.category && (
-                <div className="invalid-feedback">{errors.category}</div>
+                <div className="invalid-feedback out_side">{errors.category}</div>
               )}
             </div>
               <div className={classnames("form-group", {
@@ -128,6 +128,9 @@ class CourseAdd extends Component {
                 <label htmlFor="content">Content:</label>
                 <CKEditor
                   activeClass="p10"
+                  config={{
+                      allowedContent: true
+                  }}
                   content={this.state.description}
                   events={{
                     change: this.onChangeEditor.bind(this)

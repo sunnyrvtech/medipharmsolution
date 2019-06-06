@@ -40,7 +40,13 @@ class SettingList extends Component {
 ActionButton(cell, row) {
     return (
       <div>
-      <Link to={`${route_name+'/'+cell}`} className="btn btn-info btn-circle" tooltip="update"><i className="fa fa-pencil-square-o"></i></Link>
+      <a
+        href={`${route_name + "/" + cell}`}
+        className="btn btn-info btn-circle"
+        tooltip="update"
+      >
+        <i className="fa fa-pencil-square-o" />
+      </a>{" "}
       </div>
     );
   }

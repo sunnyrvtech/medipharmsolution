@@ -254,9 +254,10 @@ class FooterSetting extends Component {
               </div>
             </div>
           </div>
-          <button type="submit" className="btn btn-info">
+          <button type="submit" className="btn btn-info mr-2">
             Save
           </button>
+          <a className="btn btn-info" onClick={this.props.history.goBack}>Back</a>
         </form>
       </div>
     );

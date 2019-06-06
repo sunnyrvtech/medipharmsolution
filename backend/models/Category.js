@@ -13,8 +13,11 @@ const CategorySchema = new Schema({
     unique: true,
     required: true
   },
-  banner: {
+  description: {
     type: String
+  },
+  banner_slides: {
+    type: Schema.Types.Mixed
   },
   created_at: {
     type: Date,

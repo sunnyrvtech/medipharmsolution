@@ -61,36 +61,25 @@ router.post(
   "/create",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    upload(req, res, err => {
-      const { errors, isValid } = validateCategoryInput(req.body);
-      if (!isValid) {
-        if (req.file != undefined)
-          fs.unlinkSync("public/category/" + req.file.filename);
-        return res.status(400).json(errors);
-      }
-      if (err) {
+    const { errors, isValid } = validateCategoryInput(req.body);
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+    Category.findOne({
+      name: req.body.name
+    }).then(category => {
+      if (category) {
         return res.status(400).json({
-          banner: err.message //////  this will handle image validation error
+          name: "This category already exists"
         });
       } else {
-        Category.findOne({
-          name: req.body.name
-        }).then(category => {
-          if (category) {
-            if (req.file != undefined)
-              fs.unlinkSync("public/category/" + req.file.filename);
-            return res.status(400).json({
-              name: "This category already exists"
-            });
-          } else {
-            const newCategory = new Category();
-            newCategory.name = req.body.name;
-            if (req.file != undefined) newCategory.banner = req.file.filename;
-            else newCategory.banner = null;
-            newCategory.save().then(category => {
-              res.json(category);
-            });
-          }
+        const newCategory = new Category();
+        newCategory.name = req.body.name;
+        newCategory.description = req.body.description;
+        newCategory.banner_slides = req.body.banner_slides;
+
+        newCategory.save().then(category => {
+          res.json(category);
         });
       }
     });
@@ -101,49 +90,33 @@ router.put(
   "/update",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    upload(req, res, err => {
-      const { errors, isValid } = validateCategoryInput(req.body);
-      if (!isValid) {
-        if (req.file != undefined)
-          fs.unlinkSync("public/category/" + req.file.filename);
-        return res.status(400).json(errors);
-      }
-      if (err) {
+    console.log(req.body);
+    const { errors, isValid } = validateCategoryInput(req.body);
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+    Category.findOne({ _id: req.body.categoryId }).then(category => {
+      if (category) {
+        category.name = req.body.name;
+        category.description = req.body.description;
+        category.banner_slides = req.body.banner_slides;
+        category
+          .save()
+          .then(category => {
+            res.json(category);
+          })
+          .catch(error => {
+            if ((error.code = 11000)) {
+              return res.status(400).json({
+                name: "This category already exists"
+              });
+            }
+          });
+      } else {
         return res.status(400).json({
-          banner: err.message //////  this will handle image validation error
+          name: "Category not found!"
         });
       }
-      Category.findOne({ _id: req.body.categoryId }).then(category => {
-        if (category) {
-          var old_banner = category.banner;
-          category.name = req.body.name;
-          if (req.file != undefined) {
-            category.banner = req.file.filename;
-          }
-          category
-            .save()
-            .then(category => {
-              if (old_banner && old_banner != category.banner)
-                fs.unlinkSync("public/category/" + old_banner);
-              res.json(category);
-            })
-            .catch(error => {
-              if ((error.code = 11000)) {
-                if (req.file != undefined)
-                  fs.unlinkSync("public/category/" + req.file.filename);
-                return res.status(400).json({
-                  name: "This category already exists"
-                });
-              }
-            });
-        } else {
-          if (req.file != undefined)
-            fs.unlinkSync("public/category/" + req.file.filename);
-          return res.status(400).json({
-            name: "Category not found!"
-          });
-        }
-      });
     });
   }
 );
@@ -154,8 +127,6 @@ router.delete(
   (req, res) => {
     Category.findOne({ _id: req.params.id }).then(category => {
       if (category) {
-        if (category.banner)
-          fs.unlinkSync("public/category/" + category.banner);
         category.remove();
         res.json({ success: true });
       }
@@ -168,8 +139,6 @@ router.get(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Category.findOne({ _id: req.params.id }).then(category => {
-      if (category.banner)
-        category.banner = config.IMAGE_CATEGORY_URL+ category.banner;
       res.json(category);
     });
   }

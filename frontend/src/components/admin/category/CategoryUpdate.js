@@ -6,13 +6,15 @@ import PropTypes from "prop-types";
 import { withRouter, Link } from "react-router-dom";
 import { updateCategory,getCategoryById,emptyReducer } from "../../../actions/admin/category";
 import classnames from "classnames";
+import CKEditor from "react-ckeditor-component";
 let route_name;
 class CategoryUpdate extends Component {
   constructor(props) {
     super();
     this.state = {
       name: "",
-      banner: "",
+      description: "",
+      bannerSliders: [{ link: "",text: "" }],
       errors: { }
     };
     route_name = props.match.url;
@@ -25,7 +27,27 @@ class CategoryUpdate extends Component {
       [e.target.name]: e.target.value
     });
   }
+  onChangeEditor = column => evt => {
+    this.setState({ [column]:  evt.editor.getData() });
+  };
+  handleBannerSliderNameChange = idx => evt => {
+    const newbannerSliders = this.state.bannerSliders.map((bannerSlider, sidx) => {
+      if (idx !== sidx) return bannerSlider;
+      return { ...bannerSlider, [evt.target.name]: evt.target.value };
+    });
+    this.setState({ bannerSliders: newbannerSliders });
+  };
+  handleAddBannerSlider = () => {
+    this.setState({
+      bannerSliders: this.state.bannerSliders.concat([{ link: "",text: "" }])
+    });
+  };
 
+  handleRemoveBannerSlider = idx => () => {
+    this.setState({
+      bannerSliders: this.state.bannerSliders.filter((s, sidx) => idx !== sidx)
+    });
+  };
   onChange(e) {
     e.preventDefault();
     var file = e.target.files[0];
@@ -42,10 +64,12 @@ class CategoryUpdate extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    const category = new FormData();
-    category.append("name", this.state.name);
-    category.append("banner", this.state.banner);
-    category.append("categoryId", this.props.match.params.categoryId);
+    const category = {
+      name: this.state.name,
+      description: this.state.description,
+      banner_slides: this.state.bannerSliders,
+      categoryId: this.props.match.params.categoryId
+    };
     var routeName = route_name.split('/'+this.props.match.params.categoryId)[0];
     this.props.updateCategory(category,routeName, this.props.history);
   }
@@ -57,7 +81,7 @@ class CategoryUpdate extends Component {
       .getCategoryById(categoryId, this.props.history)
       .then(response => {
         if (response) {
-          this.setState({ name: response.name,banner: response.banner});
+          this.setState({ name: response.name,description: response.description,bannerSliders: response.banner_slides!=undefined?response.banner_slides:[]});
         }
       });
   }
@@ -75,7 +99,7 @@ class CategoryUpdate extends Component {
           </div>
         </div>
         <div className="row">
-          <div className="col-md-6">
+          <div className="col-md-12">
             <form onSubmit={this.handleSubmit}>
               <div className="form-group">
                 <label htmlFor="name">Name:</label>
@@ -93,23 +117,51 @@ class CategoryUpdate extends Component {
                 )}
               </div>
               <div className="form-group">
-                <label htmlFor="banner">Banner:</label>
-                <input
-                  type="file"
-                  className={classnames("form-control", {
-                    "is-invalid": errors.banner
-                  })}
-                  name="banner"
-                  onChange={this.onChange.bind(this)}
+                <label htmlFor="description">Description:</label>
+                <CKEditor
+                  activeClass="p10"
+                  content={this.state.description}
+                  events={{
+                    change: this.onChangeEditor('description')
+                  }}
                 />
-                {errors.banner && (
-                  <div className="invalid-feedback">{errors.banner}</div>
+                {errors.description && (
+                  <div className="invalid-feedback">{errors.description}</div>
                 )}
               </div>
-              <div className="form-group"><span>Note:- File size should be less than 2 Mb and banner image dimention should be 1920*300.</span></div>
-              <div className="form-group">
-                <img src={this.state.banner} id="output" />
-              </div>
+              <div className="card mb-2">
+                <div className="card-header" onClick={this.handleCard}>
+                  <h2 className="btn">Banner Slider:</h2>
+                  <b className="close fa fa-caret-down" />
+                </div>
+                  <div className="card-body">
+                {this.state.bannerSliders.map((bannerSlider, idx) => (
+                  <div className="input-group mb-2" key={idx}>
+                      <div className="col-md-6">
+                        <input
+                          type="text"
+                          placeholder="Image Url"
+                          className="form-control"
+                          name="link"
+                          onChange={this.handleBannerSliderNameChange(idx)}
+                          value={bannerSlider.link}
+                        />
+                        </div>
+                    <div className="input-group-append">
+                    <input
+                      className="form-control"
+                      placeholder="text"
+                      name="text"
+                      onChange={this.handleBannerSliderNameChange(idx)}
+                      value={bannerSlider.text}
+                    />
+                    <button className="btn btn-danger" type="button" onClick={this.handleRemoveBannerSlider(idx)}>-</button>
+                    </div>
+                  </div>
+                ))}
+                <button type="button" onClick={this.handleAddBannerSlider} className="btn btn-info">+</button>
+                </div>
+                </div>
               <button type="submit" className="btn btn-info mr-2">
                 Update
               </button>

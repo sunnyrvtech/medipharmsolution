@@ -26,11 +26,11 @@ router.get("/category/:categorySlug", function(req, res) {
     if (category) {
       var category_array = {};
       category_array.name = category.name;
-      category_array.banner = category.banner;
+      category_array.description = category.description;
+      category_array.banner_slides = category.banner_slides;
 
       Course.find({ category_id: category.id }).then(courses => {
         res.json({
-          IMAGE_CATEGORY_URL: config.IMAGE_CATEGORY_URL,
           IMAGE_COURSE_URL: config.IMAGE_COURSE_URL,
           category: category_array,
           courses: courses
