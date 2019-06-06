@@ -77,6 +77,7 @@ router.post(
         newCategory.name = req.body.name;
         newCategory.description = req.body.description;
         newCategory.banner_slides = req.body.banner_slides;
+        newCategory.video = req.body.video;
 
         newCategory.save().then(category => {
           res.json(category);
@@ -100,6 +101,7 @@ router.put(
         category.name = req.body.name;
         category.description = req.body.description;
         category.banner_slides = req.body.banner_slides;
+        category.video = req.body.video;
         category
           .save()
           .then(category => {

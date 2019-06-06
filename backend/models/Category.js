@@ -19,6 +19,9 @@ const CategorySchema = new Schema({
   banner_slides: {
     type: Schema.Types.Mixed
   },
+  video: {
+    type: String
+  },
   created_at: {
     type: Date,
     default: Date.now

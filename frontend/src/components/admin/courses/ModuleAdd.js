@@ -94,9 +94,6 @@ class ModuleAdd extends Component {
                 <label htmlFor="content">Content:</label>
                 <CKEditor
                   activeClass="p10"
-                  config={{
-                      allowedContent: true
-                  }}
                   content={this.state.content}
                   events={{
                     change: this.onChangeEditor.bind(this)

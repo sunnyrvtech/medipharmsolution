@@ -91,6 +91,7 @@ router.post(
         newCourse.name = req.body.name;
         newCourse.category_id = req.body.category;
         newCourse.description = req.body.description;
+        newCourse.video = req.body.video;
         if (req.file != undefined) newCourse.banner = req.file.filename;
         else newCourse.banner = null;
         newCourse.save().then(course => {
@@ -128,6 +129,7 @@ router.put(
         course.name = req.body.name;
         course.category_id = req.body.category;
         course.description = req.body.description;
+        course.video = req.body.video;
         if (req.file != undefined) {
           course.banner = req.file.filename;
         }

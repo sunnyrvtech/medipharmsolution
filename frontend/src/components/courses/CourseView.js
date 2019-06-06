@@ -195,6 +195,13 @@ class CourseView extends Component {
             </div>
           </div>
         </section>
+        {course.video &&
+          <section className="home-page-Video">
+          <div className="container">
+            <div dangerouslySetInnerHTML={{__html: course.video}} />
+          </div>
+          </section>
+        }
         {/*<Modal isOpen={this.state.modal} className="">
           <form onSubmit={this.handleSubmit}>
             <div className="modal-header">

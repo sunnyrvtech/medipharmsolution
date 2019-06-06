@@ -18,6 +18,7 @@ class CourseAdd extends Component {
       category: "",
       description: "",
       banner: "",
+      video: "",
       errors: {}
     };
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -73,6 +74,7 @@ class CourseAdd extends Component {
     course.append("category", this.state.category);
     course.append("description", this.state.description);
     course.append("banner", this.state.banner);
+    course.append("video", this.state.video);
     this.props.courseAdd(course,this.props.history);
   }
   render() {
@@ -128,9 +130,6 @@ class CourseAdd extends Component {
                 <label htmlFor="content">Content:</label>
                 <CKEditor
                   activeClass="p10"
-                  config={{
-                      allowedContent: true
-                  }}
                   content={this.state.description}
                   events={{
                     change: this.onChangeEditor.bind(this)
@@ -157,6 +156,16 @@ class CourseAdd extends Component {
               <div className="form-group"><span>Note:- File size should be less than 2 Mb and banner image dimention should be 1920*300.</span></div>
               <div className="form-group">
                 <img id="output" />
+              </div>
+              <div className="form-group">
+                <label htmlFor="video">Video:</label>
+                <textarea
+                  className="form-control"
+                  placeholder="Iframe content"
+                  name="video"
+                  onChange={this.handleInputChange}
+                  value={this.state.video}
+                />
               </div>
               <button type="submit" className="btn btn-info mr-2">
                 Add

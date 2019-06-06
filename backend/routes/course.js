@@ -28,6 +28,7 @@ router.get("/category/:categorySlug", function(req, res) {
       category_array.name = category.name;
       category_array.description = category.description;
       category_array.banner_slides = category.banner_slides;
+      category_array.video = category.video;
 
       Course.find({ category_id: category.id }).then(courses => {
         res.json({

@@ -27,6 +27,9 @@ const CourseSchema = new Schema({
     banner: {
       type: String
     },
+    video: {
+      type: String
+    },
     created_at: {
         type: Date,
         default: Date.now

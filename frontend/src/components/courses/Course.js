@@ -17,6 +17,7 @@ class Course extends Component {
     this.state = {
       courses: {},
       bannerSliders: [{ link: "",text: "" }],
+      video: "",
       loader: true
     };
   }
@@ -24,13 +25,13 @@ class Course extends Component {
   componentWillMount() {
     var categorySlug = this.props.match.params.categorySlug;
     this.props.getCourseByCategorySlug(categorySlug, this.props.history).then(response => {
-      this.setState({ loader: false,IMAGE_COURSE_URL:response.IMAGE_COURSE_URL,category: response.category,bannerSliders: response.category.banner_slides,courses: response.courses });
+      this.setState({ loader: false,IMAGE_COURSE_URL:response.IMAGE_COURSE_URL,category: response.category,bannerSliders: response.category.banner_slides,video: response.category.video,courses: response.courses });
     });
   }
     componentWillReceiveProps(nextProps) {
       var categorySlug = nextProps.location.pathname.split("/").pop();
       this.props.getCourseByCategorySlug(categorySlug, this.props.history).then(response => {
-        this.setState({ IMAGE_COURSE_URL:response.IMAGE_COURSE_URL,category: response.category,bannerSliders: response.category.banner_slides,courses: response.courses });
+        this.setState({ IMAGE_COURSE_URL:response.IMAGE_COURSE_URL,category: response.category,bannerSliders: response.category.banner_slides,video: response.category.video,courses: response.courses });
       });
     }
 
@@ -104,6 +105,13 @@ class Course extends Component {
             </div>
           </div>
         </section>
+        {this.state.video &&
+          <section className="home-page-Video">
+          <div className="container">
+            <div dangerouslySetInnerHTML={{__html: this.state.video}} />
+          </div>
+          </section>
+        }
       </main>
     );
   }

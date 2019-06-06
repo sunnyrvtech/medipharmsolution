@@ -15,6 +15,7 @@ class CategoryUpdate extends Component {
       name: "",
       description: "",
       bannerSliders: [{ link: "",text: "" }],
+      video: "",
       errors: { }
     };
     route_name = props.match.url;
@@ -68,6 +69,7 @@ class CategoryUpdate extends Component {
       name: this.state.name,
       description: this.state.description,
       banner_slides: this.state.bannerSliders,
+      video: this.state.video,
       categoryId: this.props.match.params.categoryId
     };
     var routeName = route_name.split('/'+this.props.match.params.categoryId)[0];
@@ -81,7 +83,7 @@ class CategoryUpdate extends Component {
       .getCategoryById(categoryId, this.props.history)
       .then(response => {
         if (response) {
-          this.setState({ name: response.name,description: response.description,bannerSliders: response.banner_slides!=undefined?response.banner_slides:[]});
+          this.setState({ name: response.name,description: response.description,bannerSliders: response.banner_slides!=undefined?response.banner_slides:[],video: response.video});
         }
       });
   }
@@ -120,9 +122,6 @@ class CategoryUpdate extends Component {
                 <label htmlFor="description">Description:</label>
                 <CKEditor
                   activeClass="p10"
-                  config={{
-                      allowedContent: true
-                  }}
                   content={this.state.description}
                   events={{
                     change: this.onChangeEditor('description')
@@ -135,7 +134,6 @@ class CategoryUpdate extends Component {
               <div className="card mb-2">
                 <div className="card-header" onClick={this.handleCard}>
                   <h2 className="btn">Banner Slider:</h2>
-                  <b className="close fa fa-caret-down" />
                 </div>
                   <div className="card-body">
                 {this.state.bannerSliders.map((bannerSlider, idx) => (
@@ -164,6 +162,16 @@ class CategoryUpdate extends Component {
                 ))}
                 <button type="button" onClick={this.handleAddBannerSlider} className="btn btn-info">+</button>
                 </div>
+                </div>
+                <div className="form-group">
+                  <label htmlFor="video">Video:</label>
+                  <textarea
+                    className="form-control"
+                    placeholder="Iframe content"
+                    name="video"
+                    onChange={this.handleInputChange}
+                    value={this.state.video}
+                  />
                 </div>
               <button type="submit" className="btn btn-info mr-2">
                 Update

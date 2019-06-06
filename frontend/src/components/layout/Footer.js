@@ -13,6 +13,7 @@ class Footer extends Component {
     this.state = {
       email: "",
       footer_social_links: [{ name: "", link: "" }],
+      footer_programs: [],
       footer_contact_us_address: "",
       footer_contact_us_phone: "",
       footer_contact_us_email: "",
@@ -51,6 +52,7 @@ class Footer extends Component {
       if (response) {
         this.setState({
           footer_social_links: response.content.footer_social_links,
+          footer_programs: response.content.footer_programs != undefined ?response.content.footer_programs:[],
           footer_contact_us_address: response.content.footer_contact_us.address,
           footer_contact_us_phone: response.content.footer_contact_us.phone,
           footer_contact_us_email: response.content.footer_contact_us.email,
@@ -62,11 +64,12 @@ class Footer extends Component {
     });
   }
     render() {
+      const {footer_programs} = this.state;
         return(
             <footer>
           <div className="container">
             <div className="row">
-              <div className="col-lg-4 col-md-6 col-sm-12 foo_sec">
+              <div className="col-lg-3 col-md-6 col-sm-12 foo_sec">
                 <h5>Social Links</h5>
                 <ul>
                   {this.state.footer_social_links.map((socialLink, idx) => (
@@ -74,13 +77,21 @@ class Footer extends Component {
                   ))}
                 </ul>
               </div>
-              <div className="col-lg-4 col-md-6 col-sm-12 foo_sec">
+              <div className="col-lg-3 col-md-6 col-sm-12 foo_sec">
+                <h5>Explore Programs</h5>
+                <ul>
+                  {footer_programs!=undefined && footer_programs.map((program, idx) => (
+                    <li key={idx}><a target="_blank" href={program.slug}>{program.name}</a></li>
+                  ))}
+                </ul>
+              </div>
+              <div className="col-lg-3 col-md-6 col-sm-12 foo_sec">
                 <h5>Contact</h5>
                 <p>{this.state.footer_contact_us_address}</p>
                 <p><a href={"tel:"+this.state.footer_contact_us_phone}>{this.state.footer_contact_us_phone}</a></p>
                 <p><a href={"emailto:"+this.state.footer_contact_us_email}>{this.state.footer_contact_us_email}</a></p>
               </div>
-              <div className="col-lg-4 col-md-6 col-sm-12 foo_sec">
+              <div className="col-lg-3 col-md-6 col-sm-12 foo_sec">
                 <h5>SUBSCRIBE TO OUR NEWSLETTER</h5>
                 <p>{this.state.footer_newsletter_text}</p>
                 {this.state.news_alert  && (
@@ -103,7 +114,6 @@ class Footer extends Component {
               </div>
             </div>
           </div>
-
         </footer>
         )
     }

@@ -8,6 +8,7 @@ import {
   updateSetting,
   getSettingBySlug
 } from "../../../actions/admin/setting";
+import { getstaticPages } from "../../../actions/admin/StaticPage";
 import PageNotFound from "../../PageNotFound";
 
 let route_name;
@@ -17,6 +18,7 @@ class FooterSetting extends Component {
     super();
     this.state = {
       footer_social_links: [{ name: "", link: "" }],
+      footer_programs: [],
       footer_contact_us_address: "",
       footer_contact_us_phone: "",
       footer_contact_us_email: "",
@@ -39,28 +41,48 @@ class FooterSetting extends Component {
     let nextElment = e.target.closest(".card-header").nextSibling;
     nextElment.classList.toggle("show");
   }
-  handleAddMoreHolderChange = idx => evt => {
+  handleSocialHolderChange = idx => evt => {
     const new_social_links = this.state.footer_social_links.map((socialLink, sidx) => {
       if (idx !== sidx) return socialLink;
       return { ...socialLink, [evt.target.name]: evt.target.value };
     });
     this.setState({ footer_social_links: new_social_links });
   };
-  handleAddMoreHolder = () => {
+  handleSocialHolder = () => {
     this.setState({
       footer_social_links: this.state.footer_social_links.concat([{ name: "", link: "" }])
     });
   };
 
-  handleRemoveAddMoreHolder = idx => () => {
+  handleRemoveSocialHolder = idx => () => {
     this.setState({
       footer_social_links: this.state.footer_social_links.filter((s, sidx) => idx !== sidx)
+    });
+  };
+  handleProgramHolderChange = idx => evt => {
+    var name = evt.target.options[evt.target.selectedIndex].text;
+    const new_footer_programs = this.state.footer_programs.map((program, sidx) => {
+      if (idx !== sidx) return program;
+      return { ...program,name:name, slug: evt.target.value};
+    });
+    this.setState({ footer_programs: new_footer_programs });
+  };
+  handleProgramHolder = () => {
+    this.setState({
+      footer_programs: this.state.footer_programs.concat([{ slug: "" }])
+    });
+  };
+
+  handleRemoveProgramHolder = idx => () => {
+    this.setState({
+      footer_programs: this.state.footer_programs.filter((s, sidx) => idx !== sidx)
     });
   };
   handleSubmit(e) {
     e.preventDefault();
     const content = {
       footer_social_links: this.state.footer_social_links,
+      footer_programs: this.state.footer_programs,
       footer_contact_us: {
         address: this.state.footer_contact_us_address,
         phone: this.state.footer_contact_us_phone,
@@ -82,10 +104,14 @@ class FooterSetting extends Component {
   }
   componentDidMount() {
     const slug = this.props.match.params.slug;
+    this.props.getstaticPages().then(response => {
+      this.setState({ pages: response });
+    });
     this.props.getSettingBySlug(slug, this.props.history).then(response => {
       if (response) {
         this.setState({
           footer_social_links: response.content.footer_social_links,
+          footer_programs: response.content.footer_programs != undefined ?response.content.footer_programs:[],
           footer_contact_us_address: response.content.footer_contact_us.address,
           footer_contact_us_phone: response.content.footer_contact_us.phone,
           footer_contact_us_email: response.content.footer_contact_us.email,
@@ -100,6 +126,7 @@ class FooterSetting extends Component {
   }
 
   render_html() {
+    const { pages,footer_programs } = this.state;
     return (
       <div className="container setting">
         <form onSubmit={this.handleSubmit}>
@@ -126,7 +153,7 @@ class FooterSetting extends Component {
                                 name="name"
                                 placeholder="Name"
                                 className="form-control"
-                                onChange={this.handleAddMoreHolderChange(idx)}
+                                onChange={this.handleSocialHolderChange(idx)}
                                 value={socialLink.name}
                               />
                               </div>
@@ -136,13 +163,13 @@ class FooterSetting extends Component {
                                 name="link"
                                 placeholder="Link"
                                 className="form-control"
-                                onChange={this.handleAddMoreHolderChange(idx)}
+                                onChange={this.handleSocialHolderChange(idx)}
                                 value={socialLink.link}
                               />
                                 <button
                                   className="btn btn-danger"
                                   type="button"
-                                  onClick={this.handleRemoveAddMoreHolder(idx)}
+                                  onClick={this.handleRemoveSocialHolder(idx)}
                                 >
                                   -
                                 </button>
@@ -152,7 +179,7 @@ class FooterSetting extends Component {
                       ))}
                       <button
                         type="button"
-                        onClick={this.handleAddMoreHolder}
+                        onClick={this.handleSocialHolder}
                         className="btn btn-info"
                       >
                         +
@@ -252,6 +279,44 @@ class FooterSetting extends Component {
                   </div>
                 </div>
               </div>
+              <div className="row mb-3">
+              <div className="col-md-6">
+                <div className="card">
+                  <div className="card-header" onClick={this.handleCard}>
+                    <h2 className="btn">Explore Programs</h2>
+                    <b className="close fa fa-caret-down" />
+                  </div>
+                  <div className="card-body">
+                    {footer_programs!=undefined && footer_programs.map((program, idx) => (
+                      <div className="" key={idx}>
+                          <div className="input-group-append mb-2">
+                          <select name="slug" className="form-control" value={program.slug} onChange={this.handleProgramHolderChange(idx)}>
+                            <option value="">Select Page</option>
+                            {pages != undefined && pages.map((page, i) => (
+                              <option value={page.slug} key={i}>{page.name}</option>
+                            ))}
+                          </select>
+                              <button
+                                className="btn btn-danger"
+                                type="button"
+                                onClick={this.handleRemoveProgramHolder(idx)}
+                              >
+                                -
+                              </button>
+                          </div>
+                      </div>
+                    ))}
+                    <button
+                      type="button"
+                      onClick={this.handleProgramHolder}
+                      className="btn btn-info"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+              </div>
+              </div>
             </div>
           </div>
           <button type="submit" className="btn btn-info mr-2">
@@ -271,5 +336,5 @@ class FooterSetting extends Component {
 
 export default connect(
   null,
-  { updateSetting, getSettingBySlug }
+  { updateSetting, getSettingBySlug,getstaticPages }
 )(withRouter(FooterSetting));

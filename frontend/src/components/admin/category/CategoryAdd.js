@@ -15,6 +15,7 @@ class CategoryAdd extends Component {
       name: "",
       description: "",
       bannerSliders: [{ link: "",text: "" }],
+      video: "",
       errors: {}
     };
     route_name = props.match.url;
@@ -69,7 +70,8 @@ class CategoryAdd extends Component {
     const category = {
       name: this.state.name,
       description: this.state.description,
-      banner_slides: this.state.bannerSliders
+      banner_slides: this.state.bannerSliders,
+      video: this.state.video
     };
     var routeName = route_name.split('/add')[0];
     this.props.createCategory(category, routeName, this.props.history);
@@ -107,9 +109,6 @@ class CategoryAdd extends Component {
                 <label htmlFor="description">Description:</label>
                 <CKEditor
                   activeClass="p10"
-                  config={{
-                      allowedContent: true
-                  }}
                   content={this.state.description}
                   events={{
                     change: this.onChangeEditor('description')
@@ -122,7 +121,6 @@ class CategoryAdd extends Component {
               <div className="card mb-2">
                 <div className="card-header" onClick={this.handleCard}>
                   <h2 className="btn">Banner Slider:</h2>
-                  <b className="close fa fa-caret-down" />
                 </div>
                   <div className="card-body">
                 {this.state.bannerSliders.map((bannerSlider, idx) => (
@@ -151,6 +149,16 @@ class CategoryAdd extends Component {
                 ))}
                 <button type="button" onClick={this.handleAddBannerSlider} className="btn btn-info">+</button>
                 </div>
+                </div>
+                <div className="form-group">
+                  <label htmlFor="video">Video:</label>
+                  <textarea
+                    className="form-control"
+                    placeholder="Iframe content"
+                    name="video"
+                    onChange={this.handleInputChange}
+                    value={this.state.video}
+                  />
                 </div>
               <button type="submit" className="btn btn-info mr-2">
                 Add

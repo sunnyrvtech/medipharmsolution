@@ -18,6 +18,7 @@ class CourseUpdate extends Component {
       category: "",
       description: "",
       banner: "",
+      video: "",
       errors: { }
     };
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -57,7 +58,7 @@ class CourseUpdate extends Component {
       .getCourseById(courseId, this.props.history)
       .then(response => {
         if (response) {
-          this.setState({ name: response.name,category: { value:response.category_id._id,label: response.category_id.name},description: response.description,banner: response.banner });
+          this.setState({ name: response.name,category: { value:response.category_id._id,label: response.category_id.name},description: response.description,banner: response.banner,video: response.video });
         }
       });
       this.props.getCategories()
@@ -74,6 +75,7 @@ class CourseUpdate extends Component {
     course.append("category", this.state.category.value);
     course.append("description", this.state.description);
     course.append("banner", this.state.banner);
+    course.append("video", this.state.video);
     this.props.courseUpdate(course,this.props.history);
   }
 
@@ -134,9 +136,6 @@ class CourseUpdate extends Component {
                 <label htmlFor="content">Content:</label>
                 <CKEditor
                   activeClass="p10"
-                  config={{
-                      allowedContent: true
-                  }}
                   content={this.state.description}
                   events={{
                     change: this.onChangeEditor.bind(this)
@@ -163,6 +162,16 @@ class CourseUpdate extends Component {
               <div className="form-group"><span>Note:- File size should be less than 2 Mb and banner image dimention should be 1920*300.</span></div>
               <div className="form-group">
                 <img src={this.state.banner} id="output" />
+              </div>
+              <div className="form-group">
+                <label htmlFor="video">Video:</label>
+                <textarea
+                  className="form-control"
+                  placeholder="Iframe content"
+                  name="video"
+                  onChange={this.handleInputChange}
+                  value={this.state.video}
+                />
               </div>
               <button type="submit" className="btn btn-info mr-2">
                 Update
