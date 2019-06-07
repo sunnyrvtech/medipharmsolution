@@ -5,17 +5,20 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withRouter, Link } from "react-router-dom";
 import { registerUser,emptyReducer } from "../actions/authentication";
+import { getCourses } from "../actions/course";
 import PhoneInput from 'react-phone-number-input';
 import classnames from "classnames";
 
 class Register extends Component {
-  constructor() {
+  constructor(props) {
     super();
     this.state = {
       first_name: "",
       last_name: "",
       email: "",
+      course: "",
       phone_number: "",
+      register_course: props.location.state != undefined?props.location.state.register_course:undefined,
       password: "",
       password_confirm: "",
       errors: {}
@@ -40,6 +43,9 @@ class Register extends Component {
       password: this.state.password,
       password_confirm: this.state.password_confirm
     };
+    if (this.state.register_course != undefined){
+      user.course = this.state.course;
+    }
     this.props.registerUser(user, this.props.history);
   }
   componentWillReceiveProps(nextProps) {
@@ -51,12 +57,26 @@ class Register extends Component {
         errors: nextProps.errors
       });
     }
+    if (nextProps.location.state != undefined && nextProps.location.state.register_course){
+      this.props
+        .getCourses()
+        .then(response => {
+          this.setState({ register_course:true,courses: response });
+        });
+    }
   }
 
   componentDidMount() {
     this.props.emptyReducer();
     if (this.props.auth.isAuthenticated) {
       this.props.history.push("/");
+    }
+    if (this.state.register_course != undefined){
+      this.props
+        .getCourses()
+        .then(response => {
+          this.setState({ courses: response });
+        });
     }
   }
 
@@ -137,6 +157,24 @@ class Register extends Component {
                         <div className="invalid-feedback">{errors.email}</div>
                       )}
                     </div>
+                    {this.state.register_course != undefined &&
+                      <div className="form-group">
+                        <select name="course" className={classnames(
+                          "form-control form-control-user",
+                          {
+                            "is-invalid": errors.course
+                          }
+                        )} onChange={this.handleInputChange}>
+                          <option value="">Select Course</option>
+                          {this.state.courses != undefined && this.state.courses.map((course, i) => (
+                            <option value={course._id} key={i}>{course.name}</option>
+                          ))}
+                        </select>
+                        {errors.course && (
+                          <div className="invalid-feedback">{errors.course}</div>
+                        )}
+                      </div>
+                    }
                     <div className="form-group">
                       <PhoneInput
                         placeholder="Phone number"
@@ -235,5 +273,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { registerUser,emptyReducer }
+  { registerUser,getCourses,emptyReducer }
 )(withRouter(Register));

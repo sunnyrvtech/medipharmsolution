@@ -7,6 +7,8 @@ module.exports = function validateRegisterInput(data) {
     let errors = {};
     data.first_name = !isEmpty(data.first_name) ? data.first_name : '';
     data.last_name = !isEmpty(data.last_name) ? data.last_name : '';
+    if(data.course != undefined)
+      data.course = !isEmpty(data.course) ? data.course : '';
     data.email = !isEmpty(data.email) ? data.email : '';
     data.phone_number = !isEmpty(data.phone_number) ? data.phone_number : '';
     data.password = !isEmpty(data.password) ? data.password : '';
@@ -26,6 +28,9 @@ module.exports = function validateRegisterInput(data) {
         errors.email = 'Email is required';
     }else if(!Validator.isEmail(data.email)) {
         errors.email = 'Email is invalid';
+    }
+    if(data.course !=undefined && Validator.isEmpty(data.course)) {
+        errors.course = 'Course is required';
     }
     if(Validator.isEmpty(data.phone_number)) {
         errors.phone_number = 'Phone number is required';

@@ -42,6 +42,15 @@ router.get("/category/:categorySlug", function(req, res) {
     }
   });
 });
+router.get("/user",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Enrolled.find({ user_id: req.user.id,expired_at: {"$gte": moment().toISOString()}}).populate("course_id", "name")
+    .exec(function(err, response) {
+      res.json(response);
+    });
+  }
+);
 router.get("/:courseSlug", function(req, res) {
   Course.aggregate([
     {
@@ -57,16 +66,12 @@ router.get("/:courseSlug", function(req, res) {
     res.json({ IMAGE_COURSE_URL: config.IMAGE_COURSE_URL, course: course });
   });
 });
-router.get("/",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    Enrolled.find({ user_id: req.user.id,expired_at: {"$gte": moment().toISOString()}}).populate("course_id", "name")
-    .exec(function(err, response) {
-      res.json(response);
-    });
-  }
-);
 
+router.get("/",function(req, res){
+    Course.find().then(courses => {
+      res.json(courses);
+    });
+  });
 router.get(
   "/certificate/:courseId",
   passport.authenticate("jwt", { session: false }),
@@ -146,7 +151,7 @@ router.post(
       }
     );
       ///  notification sent to user
-      noti_data.title = "We have received your enrollment request  and we will contact you soon.If you have not heard from us within this time, please contact us at admin@medipharmsolutions.com.Please check following enrollment details below:-"
+      noti_data.title = "We have received your enrollment request and we will contact you soon.If you have not heard from us within this time, please contact us at admin@medipharmsolutions.com.Please check following enrollment details below:-"
       var { html } = enrollmentNotification.adminEnrollmentNotification(noti_data);
       nodemailer.mailOptions.to = req.user.email;
       nodemailer.mailOptions.subject = "Enrollment Request Received-Medipharm Solutions";

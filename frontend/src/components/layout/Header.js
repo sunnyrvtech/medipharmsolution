@@ -15,6 +15,7 @@ class Header extends Component {
     this.state = {
       categories: null,
       header_social_links: [],
+      header_programs: [],
       header_menu: [],
       route_name: props.route
     };
@@ -41,6 +42,7 @@ class Header extends Component {
       if (response) {
         this.setState({
           header_social_links: response.content.header_social_links,
+          header_programs: response.content.header_programs != undefined ?response.content.header_programs:[],
           header_menu: response.content.header_menu
         });
       }
@@ -54,7 +56,7 @@ class Header extends Component {
 
   render() {
     const { isAuthenticated, user } = this.props.auth;
-    const { categories } = this.state;
+    const { categories,header_programs } = this.state;
     const authLinks = (
       <ul>
         <li>
@@ -126,19 +128,16 @@ class Header extends Component {
               </div>
               <div className="col-sm-6 text-center">
                 <ul id="course-menu" className="course-menu">
-                  <li>
+                  {header_programs!=undefined && header_programs.map((program, idx) => (
+                    <li key={idx}>
                     <h3>
-                      <Link to="/course/clinical-research">Clinical Research</Link>
+                      <Link to={'/course/'+program.slug}>{program.name}</Link>
                     </h3>
-                  </li>
+                    </li>
+                  ))}
                   <li>
                     <h3>
-                      <Link to="/course/drug-safety">Drug Safety</Link>
-                    </h3>
-                  </li>
-                  <li>
-                    <h3>
-                      <Link to="/course/data-management">Data Management</Link>
+                      <Link to ={{pathname: "/register", state: {register_course:true}}}>Apply Now</Link>
                     </h3>
                   </li>
                 </ul>

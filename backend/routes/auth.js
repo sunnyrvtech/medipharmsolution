@@ -11,6 +11,9 @@ const validateResetPasswordInput = require("../validation/reset_password");
 const config = require("../config");
 const nodemailer = require("../mailer");
 const User = require("../models/User");
+const Course = require("../models/Course");
+const Enrollment = require("../models/Enrollment");
+const enrollmentNotification = require("../notification/enrollment");
 
 router.post("/register", function(req, res) {
   const { errors, isValid } = validateRegisterInput(req.body);
@@ -67,6 +70,8 @@ router.post("/register", function(req, res) {
                     }
                   }
                 );
+                if(req.body.course !=undefined)
+                  saveEnrollementRequest(user,req.body.course)
                 res.json(user);
               });
             }
@@ -76,6 +81,57 @@ router.post("/register", function(req, res) {
     }
   });
 });
+
+async function saveEnrollementRequest(user,course_id){
+  var newEnrollment = new Enrollment();
+  newEnrollment.user_id =  user._id;
+  newEnrollment.course_id = course_id;
+  var course = await Course.findOne({ _id: course_id });
+  console.log(course);
+  var noti_data = {
+    first_name: user.first_name,
+    last_name: user.last_name,
+    email: user.email,
+    phone_number: user.phone_number != undefined ? user.phone_number:'',
+    course_name: course.name
+  }
+
+  newEnrollment.save(function(err, enrollment) {
+    ///  notification sent to admin
+    noti_data.title = "New enrollment request has been received.Please check following enrollment details below:-"
+    var { html } = enrollmentNotification.adminEnrollmentNotification(noti_data);
+    nodemailer.mailOptions.to = process.env.MAIL_FROM_ADDRESS;
+    nodemailer.mailOptions.subject = "New Enrollment Request Received-Medipharm Solutions";
+    nodemailer.mailOptions.html = html;
+    nodemailer.transporter.sendMail(
+    nodemailer.mailOptions,
+    function(error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email sent: " + info.response);
+      }
+    }
+  );
+    ///  notification sent to user
+    noti_data.title = "We have received your enrollment request and we will contact you soon.If you have not heard from us within this time, please contact us at admin@medipharmsolutions.com.Please check following enrollment details below:-"
+    var { html } = enrollmentNotification.adminEnrollmentNotification(noti_data);
+    nodemailer.mailOptions.to = user.email;
+    nodemailer.mailOptions.subject = "Enrollment Request Received-Medipharm Solutions";
+    nodemailer.mailOptions.html = html;
+    nodemailer.transporter.sendMail(
+    nodemailer.mailOptions,
+    function(error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email sent: " + info.response);
+      }
+    }
+  );
+    return true;
+  });
+}
 
 router.post("/login", (req, res) => {
   const { errors, isValid } = validateLoginInput(req.body);

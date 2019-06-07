@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withRouter, Link } from "react-router-dom";
 import Sidebar from "./Sidebar";
-import { getCourses } from "../../actions/course";
+import { getUserCourses } from "../../actions/course";
 const moment = require('moment');
 
 let route_name;
@@ -21,7 +21,7 @@ class CourseList extends Component {
 
   componentWillMount() {
     this.props
-      .getCourses()
+      .getUserCourses()
       .then(response => {
         this.setState({ courses: response });
       });
@@ -87,5 +87,5 @@ class CourseList extends Component {
 }
 export default connect(
   null,
-  { getCourses }
+  { getUserCourses }
 )(withRouter(CourseList));

@@ -102,7 +102,7 @@ class Home extends Component {
           <div className="container">
           <div className="row no-gutters">
           {this.state.video.map((video, idx) => (
-            <div className={(this.state.video.length==1 || (this.state.video.length-1 ==idx && idx % 2 == 0)) ?"col-md-12":"col-md-6 pr-1"}>
+            <div key={idx} className={(this.state.video.length==1 || (this.state.video.length-1 ==idx && idx % 2 == 0)) ?"col-md-12":"col-md-6 pr-2"}>
             <div key={idx} dangerouslySetInnerHTML={{__html: video.content}} />
             </div>
           ))}
