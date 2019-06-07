@@ -135,13 +135,6 @@ class Header extends Component {
                     </h3>
                     </li>
                   ))}
-                  {!isAuthenticated &&
-                  <li>
-                    <h3>
-                      <Link to ={{pathname: "/register", state: {register_course:true}}}>Apply Now</Link>
-                    </h3>
-                  </li>
-                }
                 </ul>
               </div>
               <div className="col-sm-3 text-right">
@@ -221,11 +214,11 @@ class Header extends Component {
                   </Link>
                 </li>
               </ul>
-              {/*<span className="desktop-cta">
-                <a href="#" className="btn btn-header">
-                  Apply Now
-                </a>
-              </span>*/}
+              {!isAuthenticated &&
+                <span className="desktop-cta">
+                  <Link className="btn btn-header" to ={{pathname: "/register", state: {register_course:true}}}>Apply Now</Link>
+                </span>
+              }
             </div>
           </div>
         </nav>
