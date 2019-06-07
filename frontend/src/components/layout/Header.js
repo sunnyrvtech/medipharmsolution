@@ -135,11 +135,13 @@ class Header extends Component {
                     </h3>
                     </li>
                   ))}
+                  {!isAuthenticated &&
                   <li>
                     <h3>
                       <Link to ={{pathname: "/register", state: {register_course:true}}}>Apply Now</Link>
                     </h3>
                   </li>
+                }
                 </ul>
               </div>
               <div className="col-sm-3 text-right">

@@ -352,7 +352,7 @@ class HeaderSetting extends Component {
                     </div>
                     <div className="card-body">
                     <div className="fontawe text-center mb-2">
-                        Note :- Only three program available to add
+                        Note :- Only three programs are allowed to add.
                     </div>
                       {header_programs != undefined &&
                         header_programs.map((program, idx) => (
