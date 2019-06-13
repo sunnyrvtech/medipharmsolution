@@ -20,17 +20,19 @@ class Certificate extends Component {
     };
   }
 
-  print(quality = 1) {
+  print(quality = 2) {
+    this.setState({ loader: true});
     const filename = "certificate.pdf";
     html2canvas(document.querySelector("#certificate"), {
       scale: quality
     }).then(canvas => {
       let pdf = new jsPDF("p", "mm", "a4");
       pdf.addImage(canvas.toDataURL("image/png"), "PNG", 10, 10, 180, 150);
+      this.setState({ loader: false});
       pdf.save(filename);
     });
   }
-  sendEmail(quality = 1) {
+  sendEmail(quality = 2) {
     this.setState({ loader: true});
     html2canvas(document.querySelector("#certificate"), {
       scale: quality

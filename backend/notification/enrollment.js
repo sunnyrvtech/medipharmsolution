@@ -30,7 +30,7 @@ module.exports = {
     userEnrolledNotification: function(data) {
        let html = '';
        html+='<h3>Hello '+data.user_name+'</h3>';
-       html+='<p>We have added this <b>'+data.course_name+'</b> in your account setting.Please login with your account and check all course modules in your my account setting.For any issue,please contact us at admin@medipharmsolutions.com</p>';
+       html+='<p>We have added this <b>'+data.course_name+'</b> in your account setting. Please login with your account and check all course modules in your my account setting. For any issue,please contact us at admin@medipharmsolutions.com</p>';
        return {
           html: html
       }

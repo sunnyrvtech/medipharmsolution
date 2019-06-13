@@ -49,8 +49,8 @@ class Header extends Component {
     });
   }
   componentWillReceiveProps(nextProps) {
-    // Array.prototype.slice.call(document.getElementsByName('.show')).forEach(el => el.classList.remove('show'));
-    document.querySelectorAll('.show').forEach(el => el.classList.remove('show'));
+    Array.prototype.slice.call(document.getElementsByName('.show')).forEach(el => el.classList.remove('show'));
+    // document.querySelectorAll('.show').forEach(el => el.classList.remove('show'));
     this.setState({ route_name: nextProps.route });
   }
 

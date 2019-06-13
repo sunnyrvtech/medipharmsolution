@@ -84,7 +84,8 @@ ActionButton(cell, row) {
   createCustomInsertButton = (onClick) => {
     return (
       <div>
-        <Link to={`${route_name}/add`} className="btn btn-info">Add New</Link>
+        <Link to={`${route_name}/add`} className="btn btn-info">Add New</Link>{" "}
+        <a className="btn btn-info" onClick={this.props.history.goBack}>Back</a>
       </div>
     );
   }

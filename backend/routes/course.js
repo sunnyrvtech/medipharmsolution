@@ -100,7 +100,7 @@ router.get(
                 first_name: response.user_id.first_name,
                 last_name: response.user_id.last_name,
                 course_name: response.course_id.name,
-                score: score
+                score: score.toFixed(2)
               }
             res.json(certificate);
           });
@@ -135,7 +135,7 @@ router.post(
 
     newEnrollment.save(function(err, enrollment) {
       ///  notification sent to admin
-      noti_data.title = "New enrollment request has been received.Please check following enrollment details below:-"
+      noti_data.title = "New enrollment request has been received. Please check following enrollment details below:-"
       var { html } = enrollmentNotification.adminEnrollmentNotification(noti_data);
       nodemailer.mailOptions.to = process.env.MAIL_FROM_ADDRESS;
       nodemailer.mailOptions.subject = "New Enrollment Request Received-Medipharm Solutions";
@@ -151,7 +151,7 @@ router.post(
       }
     );
       ///  notification sent to user
-      noti_data.title = "We have received your enrollment request and we will contact you soon.If you have not heard from us within this time, please contact us at admin@medipharmsolutions.com.Please check following enrollment details below:-"
+      noti_data.title = "We have received your enrollment request and we will contact you soon. If you have not heard from us within this time, Please contact us at admin@medipharmsolutions.com. Please check following enrollment details below:-"
       var { html } = enrollmentNotification.adminEnrollmentNotification(noti_data);
       nodemailer.mailOptions.to = req.user.email;
       nodemailer.mailOptions.subject = "Enrollment Request Received-Medipharm Solutions";

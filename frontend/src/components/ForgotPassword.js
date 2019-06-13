@@ -48,7 +48,7 @@ componentWillReceiveProps(nextProps) {
     return (
       <div>
         {this.state.alert_message  && (
-          <div class={'text-center alert alert-'+this.state.alert_message.class}>
+          <div className={'text-center alert alert-'+this.state.alert_message.class}>
              {this.state.alert_message.message}
           </div>
         )}
@@ -62,7 +62,7 @@ componentWillReceiveProps(nextProps) {
                     <div className="p-5">
                       <div className="text-center">
                         <h1 className="h4 text-gray-900 mb-4">Forgot Your Password?</h1>
-                        <p class="mb-4">We get it, stuff happens. Just enter your email address below and we{"'"}ll send you a link to reset your password!</p>
+                        <p className="mb-4">We get it, stuff happens. Just enter your email address below and we{"'"}ll send you a link to reset your password!</p>
                       </div>
                       <form className="user" onSubmit={this.handleSubmit}>
                         <div className="form-group">

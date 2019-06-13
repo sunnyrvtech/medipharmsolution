@@ -13,6 +13,7 @@ import DatePicker from "react-datepicker";
 import classnames from "classnames";
 import PageNotFound from "../../PageNotFound";
 import "react-datepicker/dist/react-datepicker.css";
+const moment = require('moment');
 let route_name;
 
 class EnrolledUpdate extends Component {
@@ -49,8 +50,8 @@ class EnrolledUpdate extends Component {
             email: response.user_id.email,
             course_name: response.course_id.name,
             price: response.price,
-            start_at: response.created_at,
-            expired_at: response.expired_at
+            start_at: moment(response.created_at).toDate(),
+            expired_at: moment(response.expired_at).toDate()
           });
         } else {
           this.setState({ page_not_found: true });

@@ -193,9 +193,9 @@ router.post(
     var html =
       "<h3>Hello " + req.body.first_name + " " + req.body.last_name + "</h3>";
     html +=
-      "<p>Congratulation! You have successfully passed <b>" +
+      "<p>Congratulations! You have successfully passed <b>" +
       req.body.course_name +
-      "</b> course.Please find the certificate attachment below:-</p>";
+      "</b> course. Please find the certificate attachment below:-</p>";
     nodemailer.mailOptions.to = req.body.email;
     nodemailer.mailOptions.subject = "Certificate From Medipharm Solutions";
     nodemailer.mailOptions.html = html;

@@ -102,7 +102,8 @@ class Quiz extends Component {
       <div>
         <Link to={`${route_name}/add`} className="btn btn-info">
           Add New
-        </Link>
+        </Link>{" "}
+        <a className="btn btn-info" onClick={this.props.history.goBack}>Back</a>
       </div>
     );
   };

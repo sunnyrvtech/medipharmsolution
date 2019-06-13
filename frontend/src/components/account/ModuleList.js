@@ -61,7 +61,7 @@ class ModuleList extends Component {
           <p>
             <b>Overall Percentage</b>
           </p>
-          <span>{percentage}%</span>
+          <span>{percentage.toFixed(2)}%</span>
           </div>
         }
         </td>
@@ -72,7 +72,10 @@ class ModuleList extends Component {
     return (
       <tbody>
         {modules.map((module, i) => {
-          var quiz_index = quiz_details.findIndex(quiz_detail => quiz_detail.module_id == module._id);
+        //  var quiz_index = quiz_details.findIndex(quiz_detail => quiz_detail.module_id == module._id);
+          var quiz_index = quiz_details.indexOf(
+              quiz_details.filter(el => el.module_id == module._id)[0]
+          );
           var quiz_score = ".......";
           if (quiz_index >= 0) {
             total_question += quiz_details[quiz_index].total_question;

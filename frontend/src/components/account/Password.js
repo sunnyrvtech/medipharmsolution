@@ -41,15 +41,22 @@ class Password extends Component {
     .then(response => {
       if(response){
       this.props.emptyReducer();
-      this.setState({ current_password:'',password:'',password_confirm:'',alert_message: {class:'success',message: 'Password changed successfully!'}});
+      this.setState({ errors: {},current_password:'',password:'',password_confirm:'',alert_message: {class:'success',message: 'Password changed successfully!'}});
       setTimeout(function(){
           this.setState({alert_message:false});
       }.bind(this),5000);
     }
     });
   }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({
+        errors: nextProps.errors
+      });
+    }
+  }
   render() {
-    const { errors } = this.props;
+    const { errors } = this.state;
     return (
       <main className="profile_main">
         <div className="container">
