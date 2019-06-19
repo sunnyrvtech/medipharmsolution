@@ -1,1 +1,1 @@
-{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"sollers.settings"},{"v":2,"unique":true,"key":{"slug":1},"name":"slug_1","ns":"sollers.settings","background":true}],"uuid":"6d155bba427145f0b106282719ab0079"}
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"sollers.settings"},{"v":2,"unique":true,"key":{"slug":1},"name":"slug_1","ns":"sollers.settings","background":true}],"uuid":"13dbd0af06dd4313a4ef7cbcb24d78bb"}
