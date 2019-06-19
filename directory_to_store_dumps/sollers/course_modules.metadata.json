@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"sollers.course_modules"},{"v":2,"unique":true,"key":{"slug":1},"name":"slug_1","ns":"sollers.course_modules","sparse":false,"background":true}],"uuid":"8e845a4b8f3b4fb99902da1a1514055e"}

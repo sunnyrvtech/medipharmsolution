@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"sollers.static_pages"},{"v":2,"unique":true,"key":{"slug":1},"name":"slug_1","ns":"sollers.static_pages","sparse":false,"background":true}],"uuid":"87d0dd0cbb2d4902a56c823e021c0f49"}
