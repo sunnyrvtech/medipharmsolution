@@ -85,7 +85,7 @@ export const courseEnrolled = (enrollment, history) => dispatch =>
           alert_message: {
             class: "success",
             message:
-              "Your Enrollment request has been sent successfully. Admin will contact you soon!"
+              "Your Enrollment request was received successfully. We will contact you soon."
           }
         }
       })

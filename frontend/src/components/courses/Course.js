@@ -72,7 +72,7 @@ class Course extends Component {
               if(course.banner)
                course_banner = this.state.IMAGE_COURSE_URL+course.banner;
                 return (
-                  <div className="col-xl-6 col-lg-6 col-md-12 col-sm-12" key={i}>
+                  <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12" key={i}>
                     <div className="plp-wrapper">
                       <div className="row">
                       <div className="col-xl-6 col-lg-6 col-md-12 col-sm-12">
@@ -83,7 +83,7 @@ class Course extends Component {
                             {course.name}
                           </Link>
                         </h3>
-                        <div className="cta">
+                        <div className="cta cat_btn">
                           <span>
                             <Link to={`${route_name +"/"+ course.slug}`} className="btn btn-ghost btn-white">
                               Learn More

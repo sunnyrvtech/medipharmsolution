@@ -14,6 +14,7 @@ export const getGalleries = () => async dispatch =>
   client()
     .get("/admin/media")
     .then(res => {
+
       return res.data;
     })
     .catch(err => {

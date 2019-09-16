@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { sendMessageByContactUs } from "../actions/user";
 import PhoneInput from "react-phone-number-input";
 import classnames from "classnames";
+import { getSettingBySlug } from "../actions/setting";
 
 class ContactUs extends Component {
   constructor() {
@@ -16,10 +17,13 @@ class ContactUs extends Component {
       email: "",
       phone_number: "",
       message: "",
+      heading: "",
+      Image: [{ link: "",text: "" }],
       errors: {}
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+
   }
 
   handleInputChange(e) {
@@ -46,6 +50,16 @@ class ContactUs extends Component {
   }
   componentDidMount() {
     window.scrollTo(0, 0);
+    this.props.getSettingBySlug('contactus', this.props.history).then(response => {
+      if (response) {
+        console.log(response);
+        this.setState({
+          heading: response.content.content,
+          Image: response.content.Image != undefined ?response.content.Image:[],
+        
+        });
+      }
+    });
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
@@ -63,12 +77,18 @@ class ContactUs extends Component {
             <div className="col-xl-10 col-lg-12 col-md-9">
               <div className="card o-hidden border-0 shadow-lg my-5">
                 <div className="row">
-                  <div className="col-lg-6 d-none d-lg-block bg-contact-image" />
+                  <div className="col-lg-6 d-none d-lg-block bg-contact-image-1" >
+                      {this.state.Image.map((Images, idx) => (
+                        <img alt="" src={Images.link} />   
+                    ))}
+                  </div>
+
                   <div className="col-lg-6 auth-a">
                     <div className="p-5">
                       <div className="text-center">
-                        <h1 className="h4 text-gray-900 mb-4">
-                          Send Us A Message!
+
+                        <h1 className="h4 text-gray-900 mb-4" dangerouslySetInnerHTML={{ __html: this.state.heading }}>
+         
                         </h1>
                       </div>
                       <form className="user" onSubmit={this.handleSubmit}>
@@ -198,5 +218,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { sendMessageByContactUs }
+  { sendMessageByContactUs,getSettingBySlug }
 )(ContactUs);

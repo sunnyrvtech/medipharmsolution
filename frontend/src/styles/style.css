@@ -349,6 +349,10 @@ span.desktop-cta a{
     border-radius: 30px;
     background-clip: padding-box;
 }
+.cat_btn
+{
+    margin-top: 10px;
+}
 nav.navbar {
     background: #f4f4f4;
     box-shadow: 0 1px 1px rgba(0,0,0,.18);
@@ -360,7 +364,7 @@ a.btn:hover {
 section.hero-banner {
     background-image:url('/images/medi-default.jpg');
     min-height: initial !important;
-    padding: 12% 0;
+    padding: 10% 0;
     position: relative;
 }
 .modal-wrap .modal-table {

@@ -5,7 +5,6 @@ const router = express.Router();
 const multer = require("multer");
 const fs = require("fs");
 const config = require('../../config');
-
 const passport = require("passport");
 
 var storage = multer.diskStorage({
@@ -38,8 +37,10 @@ router.get(
   "/",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
+
     fs.readdir("public/gallery", (err, filenames) => {
       var result = [];
+
       filenames.forEach(function(element, i) {
         result.unshift({
           imageUrl: `${'/gallery/'+ element}`,
