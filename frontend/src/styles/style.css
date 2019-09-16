@@ -349,6 +349,14 @@ span.desktop-cta a{
     border-radius: 30px;
     background-clip: padding-box;
 }
+.bg-contact-image-1 > img {
+height: 100%;
+width: 100%;
+object-fit: cover;
+}
+.bg-contact-image-1 {
+max-height: 655px;
+}
 .cat_btn
 {
     margin-top: 10px;
