@@ -15,12 +15,12 @@ class Module extends Component {
     this.state = {
       module: null
     };
-/*    document.addEventListener('contextmenu', event => event.preventDefault());
+    document.addEventListener('contextmenu', event => event.preventDefault());
     document.addEventListener("keydown", function(event){
       if(event.code == "F12"){
         event.preventDefault();
       }
-    });*/
+    });
   }
   componentWillMount() {
     const moduleId = this.props.match.params.moduleId;

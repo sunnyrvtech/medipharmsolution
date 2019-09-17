@@ -26,10 +26,12 @@ router.post('/create', passport.authenticate('jwt', { session: false }), (req, r
   if(!isValid) {
       return res.status(400).json(errors);
   }
+  console.log(req.body);
   var newCourseModule = new CourseModule();
   newCourseModule.name = req.body.name;
   newCourseModule.course_id = req.body.course_id;
   newCourseModule.video = req.body.video;
+
   newCourseModule.content = req.body.content;
   newCourseModule.save(function (err,module) {
       res.json(module);

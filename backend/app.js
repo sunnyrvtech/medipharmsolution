@@ -65,10 +65,10 @@ app.use('/api/blogs', front_blogs);
 app.use('/api/settings', front_settings);
 app.use(express.static('public'));
 
-/*app.use(express.static(path.join(__dirname, 'www')));
+app.use(express.static(path.join(__dirname, 'www')));
 app.get('*', function(req, res) {
     res.sendFile(path.join(__dirname , 'www' , 'index.html'));
-});*/
+});
 
 
 const PORT = process.env.PORT || 5000;
