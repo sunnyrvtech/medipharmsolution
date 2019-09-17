@@ -269,7 +269,7 @@ span.certificatename {
 .gray-box .row > div {
     background: #f6f6f6;
     background-clip: content-box;
-    margin-bottom: 30px;
+    margin-bottom: 0px;
 }
 .profile_main .p-5 .user .col-sm-6 {
     width: 100%;
@@ -1024,7 +1024,7 @@ section.hero-banner::before {
     height: 100%;
     background-color: #293f69;
     padding: 30px 15px;
-        min-height: 300px;
+        min-height: 250px;
 }
 .Flex_alignMent > div {
     align-self: center;
@@ -1082,6 +1082,8 @@ padding-right: 10px;
 .gray-box.pad-70-tb.categorycontent_nEW {
     padding-top: 0px;
     padding-bottom: 0px;
+        max-width: 1080px;
+    margin: 0 auto;
 }
 
 

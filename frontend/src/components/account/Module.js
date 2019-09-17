@@ -15,18 +15,19 @@ class Module extends Component {
     this.state = {
       module: null
     };
-    document.addEventListener('contextmenu', event => event.preventDefault());
+/*    document.addEventListener('contextmenu', event => event.preventDefault());
     document.addEventListener("keydown", function(event){
       if(event.code == "F12"){
         event.preventDefault();
       }
-    });
+    });*/
   }
   componentWillMount() {
     const moduleId = this.props.match.params.moduleId;
     this.props
       .getModuleByModuleId(moduleId, this.props.history)
       .then(response => {
+        console.log(response);
         this.setState({ module: response });
       });
   }
@@ -39,6 +40,15 @@ class Module extends Component {
           {module.name}
         </h2>
         <div className="content_des" dangerouslySetInnerHTML={{ __html: module.content }} />
+
+         <div className="row no-gutters">
+          {module.video && module.video.map((video, idx) => (
+            <div key={idx} className={(module.video.length==1 || (module.video.length-1 ==idx && idx % 2 == 0)) ?"col-md-12 pr-2":"col-md-6 pr-2"}>
+            <div key={idx} dangerouslySetInnerHTML={{__html: video.content}} />
+            </div>
+          ))}
+         </div>
+
         <div className="nxt_btn"><Link to={"/account/modules/"+module.course_id} className="btn btn-primary">Back Module Listing</Link>{" "}<Link to={"/account/quiz/"+module._id} className="btn btn-primary">Play Quiz</Link></div>
       </div>
     );

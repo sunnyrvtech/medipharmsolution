@@ -29,6 +29,7 @@ router.post('/create', passport.authenticate('jwt', { session: false }), (req, r
   var newCourseModule = new CourseModule();
   newCourseModule.name = req.body.name;
   newCourseModule.course_id = req.body.course_id;
+  newCourseModule.video = req.body.video;
   newCourseModule.content = req.body.content;
   newCourseModule.save(function (err,module) {
       res.json(module);
@@ -45,6 +46,7 @@ router.put('/update', passport.authenticate('jwt', { session: false }), (req, re
     if(module){
       module.name = req.body.name;
       module.content = req.body.content;
+      module.video = req.body.video;
       module.save().then(module => {
         res.json(module);
       });

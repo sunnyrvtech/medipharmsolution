@@ -20,6 +20,10 @@ const CourseModuleSchema = new Schema({
         type: String,
         required: true
     },
+    video: {
+        type: Schema.Types.Mixed,
+         required: true
+    },
     created_at: {
         type: Date,
         default: Date.now
