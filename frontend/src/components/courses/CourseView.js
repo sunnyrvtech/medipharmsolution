@@ -8,6 +8,8 @@ import { getCourseByCourseSlug, courseEnrolled } from "../../actions/course";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import classnames from "classnames";
 import PageNotFound from "../PageNotFound";
+import { getSettingBySlug } from "../../actions/setting";
+
 
 let route_name;
 
@@ -37,7 +39,8 @@ class CourseView extends Component {
       course_modules: null,
       page_not_found: false,
       loader: true,
-      errors: {}
+      errors: {},
+      alert_msg:''
     };
     this.apply_now = this.apply_now.bind(this);
     // this.handleInputChange = this.handleInputChange.bind(this);
@@ -60,13 +63,23 @@ class CourseView extends Component {
     e.preventDefault();
     const enrollment = {
       course_id: this.state.course._id,
-      course_name: this.state.course.name
+      course_name: this.state.course.name,
+      alert_msg: this.state.alert_msg
     };
     this.props.courseEnrolled(enrollment, this.props.history);
   }
 
   componentWillMount() {
     var courseSlug = this.props.match.params.courseSlug;
+
+    this.props.getSettingBySlug('Settings', this.props.history).then(response => {
+      if (response) {
+        this.setState({
+          alert_msg: response.content.content,
+        });
+      }
+    });
+
     this.props
       .getCourseByCourseSlug(courseSlug, this.props.history)
       .then(response => {
@@ -253,5 +266,5 @@ const mapStateToProps = state => ({
 });
 export default connect(
   mapStateToProps,
-  { getCourseByCourseSlug, courseEnrolled }
+  { getCourseByCourseSlug, courseEnrolled, getSettingBySlug }
 )(withRouter(CourseView));

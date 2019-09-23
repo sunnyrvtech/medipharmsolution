@@ -77,8 +77,9 @@ class Home extends Component {
     return (
       <main>
       {this.state.alert_message && (
-        <div className={"text-center alert alert-" + this.state.alert_message.class}>
-          {this.state.alert_message.message}
+        <div className={"text-center apply_msg alert alert-" + this.state.alert_message.class}>
+
+           <div dangerouslySetInnerHTML={{__html: this.state.alert_message.message}} />
         </div>
       )}
         <section className="bannerslider">

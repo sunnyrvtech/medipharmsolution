@@ -1,0 +1,11 @@
+APP_ENV=developement
+DEV_APP_URL=http://localhost:5000
+PROD_APP_URL=http://157.230.186.77:5000
+MAIL_USERNAME=sunny_kumar@rvtechnologies.com
+MAIL_PASSWORD=sk@rv03/18
+MAIL_FROM_ADDRESS=admin@medipharmsolutions.com
+
+
+
+
+

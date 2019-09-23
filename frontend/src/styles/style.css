@@ -612,6 +612,11 @@ footer p, footer a {
     letter-spacing: 0;
     line-height: 1.5;
 }
+.apply_msg p
+{
+padding: 0;
+margin-bottom: 0;
+}
 footer h5 {
     color: #fff;
     text-transform: uppercase;

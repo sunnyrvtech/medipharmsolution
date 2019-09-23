@@ -5,6 +5,7 @@ import HomeSetting from "./HomeSetting";
 import HeaderSetting from "./HeaderSetting";
 import FooterSetting from "./FooterSetting";
 import ContactusSetting from "./ContactusSetting";
+import GeneralSetting from "./GeneralSetting";
 export default class Setting extends Component {
   constructor(props) {
     super();
@@ -20,6 +21,7 @@ export default class Setting extends Component {
     {slug == "footer" && <FooterSetting />}
     {slug == "header" && <HeaderSetting />}
      {slug == "contactus" && <ContactusSetting />}
+      {slug == "Settings" && <GeneralSetting />}
     </div>;
   }
 }
