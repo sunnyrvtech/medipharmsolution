@@ -64,7 +64,7 @@ router.get(
 
         CourseModule.find(
           { course_id: req.params.courseId },
-          { _id: 1, name: 1 }
+          { _id: 1, name: 1 , final_mod: 1}
         )
           .populate("course_id", "name")
           .exec(async function(err, modules) {
@@ -82,6 +82,8 @@ router.get(
     }
   }
 );
+
+
 router.get(
   "/module/:id",
   passport.authenticate("jwt", { session: false }),
@@ -101,5 +103,8 @@ router.get(
       });
   }
 );
+
+
+
 
 module.exports = router;

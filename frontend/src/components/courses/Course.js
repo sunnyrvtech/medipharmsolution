@@ -65,8 +65,16 @@ class Course extends Component {
         <div className="container" dangerouslySetInnerHTML={{__html: this.state.category.description}} />
       </section>
         <section className="gray-box pad-70-tb categorycontent_nEW">
+           {this.state.video &&
+          <section className="home-page-Video">
+          <div className="container">
+            <div dangerouslySetInnerHTML={{__html: this.state.video}} />
+          </div>
+          </section>
+        }
           <div className="container-fluid">
             <div className="row">
+
             {courses.map((course, i) => {
               var course_banner = this.state.IMAGE_COURSE_URL+"default.jpg";
               if(course.banner)
@@ -107,14 +115,9 @@ class Course extends Component {
             })}
             </div>
           </div>
+
         </section>
-        {this.state.video &&
-          <section className="home-page-Video">
-          <div className="container">
-            <div dangerouslySetInnerHTML={{__html: this.state.video}} />
-          </div>
-          </section>
-        }
+       
       </main>
     );
   }

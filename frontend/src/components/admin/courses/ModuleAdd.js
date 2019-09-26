@@ -17,6 +17,7 @@ class ModuleAdd extends Component {
       course_id: "",
       content: "",
       errors: {},
+      final_mod: '',
       video: [{content: ""}],
     };
     route_name = props.match.url;
@@ -43,7 +44,8 @@ class ModuleAdd extends Component {
       name: this.state.name,
       course_id: this.props.match.params.courseId,
       video: this.state.video,
-      content: this.state.content
+      content: this.state.content,
+      final_mod: this.state.final_mod,
     };
     this.props.createModule(module,route_name,this.props.history);
   }
@@ -129,34 +131,57 @@ class ModuleAdd extends Component {
               </div>
 
 
-          <div className="card mb-2">
-            <div className="card-header" onClick={this.handleCard}>
-              <h2 className="btn">Video Section</h2>
-              <b className="close fa fa-caret-down" />
-            </div>
-            <div className="card-body">
-              <div className="form-group">
-                <label htmlFor="title">Content with Iframe:</label>
-               
-                 {this.state.video.map((video, idx) => (
-                  <div className="input-group-append mb-2" key={idx}>
-                    <textarea
-                      className="form-control"
-                      placeholder="Iframe content"
-                      name="video"
-                      onChange={this.handleVideoNameChange(idx)}
-                      value={video.content}
-                    />
-                    <button className="btn btn-danger" type="button" onClick={this.handleRemoveVideo(idx)}>-</button>
+              <div className="card mb-2">
+                <div className="card-header" onClick={this.handleCard}>
+                  <h2 className="btn">Video Section</h2>
+                  <b className="close fa fa-caret-down" />
                 </div>
-               ))}
-                
-          
-              <button type="button" onClick={this.handleVideo} className="btn btn-info">+</button>
+                <div className="card-body">
+                  <div className="form-group">
+                    <label htmlFor="title">Content with Iframe:</label>
+                   
+                     {this.state.video.map((video, idx) => (
+                      <div className="input-group-append mb-2" key={idx}>
+                        <textarea
+                          className="form-control"
+                          placeholder="Iframe content"
+                          name="video"
+                          onChange={this.handleVideoNameChange(idx)}
+                          value={video.content}
+                        />
+                        <button className="btn btn-danger" type="button" onClick={this.handleRemoveVideo(idx)}>-</button>
+                    </div>
+                   ))}
+                    
+              
+                  <button type="button" onClick={this.handleVideo} className="btn btn-info">+</button>
+
+                  </div>
+                </div>
+              </div>
+
+
+              <div className=" mb-2">
+                      <label htmlFor="name">Final Module:</label>
+
+                      <label htmlFor="finalyes">Yes</label>
+                      <input
+                        type="radio"
+                        name="final_mod"
+                        value={1}
+                        id="finalyes"
+                        onChange={this.handleInputChange}
+                      />
+                      <label htmlFor="finalno">No</label>
+                       <input
+                        type="radio"
+                        name="final_mod"
+                        value={2}
+                        id="finalno"
+                        onChange={this.handleInputChange}
+                      />
 
               </div>
-            </div>
-          </div>
 
 
 

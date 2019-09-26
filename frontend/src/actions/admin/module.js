@@ -14,7 +14,7 @@ export const createModule = (module,route_name,history) => dispatch => {
     .post("/admin/modules/create", module)
     .then(res => history.push({ pathname: route_name.split('/add')[0],state: { alert_message:{class:'success',message: 'Module added successfully!'}}}))
     .catch(err => {
-      console.log(err);
+      //console.log(err);
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data

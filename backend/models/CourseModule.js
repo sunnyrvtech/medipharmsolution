@@ -24,6 +24,10 @@ const CourseModuleSchema = new Schema({
         type: Schema.Types.Mixed,
          required: true
     },
+    final_mod: {
+        type: String,
+        required: true
+    },
     created_at: {
         type: Date,
         default: Date.now

@@ -16,6 +16,7 @@ class ModuleUpdate extends Component {
       course_id: "",
       content: "",
       errors: { },
+      final_mod: '',
       video: [{content: ""}],
     };
     route_name = props.match.url;
@@ -62,6 +63,7 @@ class ModuleUpdate extends Component {
       content: this.state.content,
       moduleId: this.props.match.params.moduleId,
       video: this.state.video,
+      final_mod: this.state.final_mod,
     };
     this.props.updateModule(module,route_name,this.props.history);
   }
@@ -78,7 +80,7 @@ class ModuleUpdate extends Component {
           {
           this.setState({video: response.video});
           }
-          this.setState({ name: response.name,content: response.content,course_id: response.course_id._id,course_name: response.course_id.name});
+          this.setState({final_mod: response.final_mod, name: response.name,content: response.content,course_id: response.course_id._id,course_name: response.course_id.name});
         }
       });
   }
@@ -159,7 +161,29 @@ class ModuleUpdate extends Component {
               </div>
 
 
+              <div className=" mb-2">
+                      <label htmlFor="name">Final Module:</label>
 
+                      <label htmlFor="finalyes">Yes</label>
+                      <input
+                        type="radio"
+                        name="final_mod"
+                        value={1}
+                        checked={this.state.final_mod == 1}
+                        id="finalyes"
+                        onChange={this.handleInputChange}
+                      />
+                      <label htmlFor="finalno">No</label>
+                       <input
+                        type="radio"
+                        name="final_mod"
+                        value={2}
+                        checked={this.state.final_mod == 2}
+                        id="finalno"
+                        onChange={this.handleInputChange}
+                      />
+
+              </div>
               <button type="submit" className="btn btn-info mr-2">
                 Update
               </button>

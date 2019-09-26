@@ -4,13 +4,14 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withRouter, Link } from "react-router-dom";
-import { getModules } from "../../actions/module";
+import { getModules, getModulesfront } from "../../actions/module";
 import Sidebar from "./Sidebar";
 const moment = require("moment");
 let route_name;
 let total_question;
 let total_answer;
 let quiz_count;
+let modulelen;
 
 class ModuleList extends Component {
   constructor(props) {
@@ -22,12 +23,19 @@ class ModuleList extends Component {
     total_question = 0;
     total_answer = 0;
     quiz_count = 0;
+    modulelen = 0;
   }
 
   componentWillMount() {
     const courseId = this.props.match.params.courseId;
+    if (total_question != 0) {
+      var percentage = (total_answer * 100) / total_question;
+    } else {
+      var percentage = 0;
+    }
 
     this.props.getModules(courseId).then(response => {
+
       this.setState({ percentage: 0, modules: response.modules,quiz_details: response.quiz_details });
     });
   }
@@ -72,6 +80,8 @@ class ModuleList extends Component {
     return (
       <tbody>
         {modules.map((module, i) => {
+
+
         //  var quiz_index = quiz_details.findIndex(quiz_detail => quiz_detail.module_id == module._id);
           var quiz_index = quiz_details.indexOf(
               quiz_details.filter(el => el.module_id == module._id)[0]
@@ -83,12 +93,22 @@ class ModuleList extends Component {
             quiz_score = quiz_details[quiz_index].score + " %";
             quiz_count++;
           }
+
+          if (total_question != 0) {
+            var percentage = (total_answer * 100) / total_question;
+          } else {
+            var percentage = 0;
+          }
+
+        if(module.final_mod!=1) {
+
+          modulelen++;
           return (
             <tr key={i}>
               <th scope="row">{i + 1}</th>
               <td>{module.name}</td>
               <td>{module.course_id.name}</td>
-              <td>{quiz_score}</td>
+              <td>{quiz_score} </td>
               <td>
                 <Link
                   to={"/account/modules/module/" + module._id}
@@ -105,6 +125,37 @@ class ModuleList extends Component {
               </td>
             </tr>
           );
+        }
+
+
+        if((percentage >= 80 && modulelen == quiz_count) || (percentage >= 80 && modules.length == quiz_count)) {
+        if(module.final_mod==1) {
+
+          return (
+            <tr key={i}>
+              <th scope="row">{i + 1}</th>
+              <td>{module.name}</td>
+              <td>{module.course_id.name}</td>
+              <td>{quiz_score} </td>
+              <td>
+                <Link
+                  to={"/account/modules/module/" + module._id}
+                  tooltip="View Detail"
+                >
+                  <i className="fa fa-low-vision" />
+                </Link>{" "}
+                <Link
+                  to={"/account/quiz/" + module._id}
+                  tooltip="Play Quiz"
+                >
+                  <i className="fa fa-question-circle" />
+                </Link>
+              </td>
+            </tr>
+          );
+        }
+      }
+
         })}
         {this.reanderPercentage(modules.length)}
       </tbody>
@@ -155,5 +206,5 @@ class ModuleList extends Component {
 }
 export default connect(
   null,
-  { getModules }
+  { getModules, getModulesfront }
 )(withRouter(ModuleList));

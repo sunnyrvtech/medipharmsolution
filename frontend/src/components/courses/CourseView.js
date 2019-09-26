@@ -84,7 +84,7 @@ class CourseView extends Component {
       .getCourseByCourseSlug(courseSlug, this.props.history)
       .then(response => {
         if (response.course.length) {
-          var course_modules = chunk(response.course[0].course_modules, 3);
+          var course_modules = chunk(response.course[0].course_modules, 5);
           this.setState({
             loader: false,
             IMAGE_COURSE_URL: response.IMAGE_COURSE_URL,
@@ -154,7 +154,15 @@ class CourseView extends Component {
             </div>
           </div>
         </section>
-        <section className="list_sec pad-70-tb">
+
+        {course.video &&
+          <section className="home-page-Video">
+          <div className="container">
+            <div dangerouslySetInnerHTML={{__html: course.video}} />
+          </div>
+          </section>
+        }
+        <section className="list_sec pad-40-tb Syllabus_wrap">
           <div className="container text-center">
             <div className="row">
               <div className="col-sm-12">
@@ -208,13 +216,7 @@ class CourseView extends Component {
             </div>
           </div>
         </section>
-        {course.video &&
-          <section className="home-page-Video">
-          <div className="container">
-            <div dangerouslySetInnerHTML={{__html: course.video}} />
-          </div>
-          </section>
-        }
+        
         {/*<Modal isOpen={this.state.modal} className="">
           <form onSubmit={this.handleSubmit}>
             <div className="modal-header">
