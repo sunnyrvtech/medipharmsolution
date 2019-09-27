@@ -109,6 +109,7 @@ class CategoryAdd extends Component {
                 <label htmlFor="description">Description:</label>
                 <CKEditor
                   activeClass="p10"
+                  
                   content={this.state.description}
                   events={{
                     change: this.onChangeEditor('description')

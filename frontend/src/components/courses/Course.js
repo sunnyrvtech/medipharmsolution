@@ -62,16 +62,20 @@ class Course extends Component {
         </div>
       </section>
       <section className="categorycontent pad-70-tb">
-        <div className="container" dangerouslySetInnerHTML={{__html: this.state.category.description}} />
-      </section>
-        <section className="gray-box pad-70-tb categorycontent_nEW">
-           {this.state.video &&
+        <div className="container">
+        <h2 >Program Description</h2>
+          {this.state.video &&
           <section className="home-page-Video">
           <div className="container">
             <div dangerouslySetInnerHTML={{__html: this.state.video}} />
           </div>
           </section>
         }
+        <div  dangerouslySetInnerHTML={{__html: this.state.category.description}} />
+        </div>
+      </section>
+        <section className="gray-box pad-70-tb categorycontent_nEW">
+         
           <div className="container-fluid">
             <div className="row">
 

@@ -12,6 +12,7 @@ let total_question;
 let total_answer;
 let quiz_count;
 let modulelen;
+let percentagenew;
 
 class ModuleList extends Component {
   constructor(props) {
@@ -24,6 +25,7 @@ class ModuleList extends Component {
     total_answer = 0;
     quiz_count = 0;
     modulelen = 0;
+    percentagenew=0;
   }
 
   componentWillMount() {
@@ -35,7 +37,7 @@ class ModuleList extends Component {
     }
 
     this.props.getModules(courseId).then(response => {
-
+      console.log(response);
       this.setState({ percentage: 0, modules: response.modules,quiz_details: response.quiz_details });
     });
   }
@@ -83,9 +85,11 @@ class ModuleList extends Component {
 
 
         //  var quiz_index = quiz_details.findIndex(quiz_detail => quiz_detail.module_id == module._id);
+
           var quiz_index = quiz_details.indexOf(
               quiz_details.filter(el => el.module_id == module._id)[0]
           );
+
           var quiz_score = ".......";
           if (quiz_index >= 0) {
             total_question += quiz_details[quiz_index].total_question;
@@ -95,13 +99,16 @@ class ModuleList extends Component {
           }
 
           if (total_question != 0) {
-            var percentage = (total_answer * 100) / total_question;
+             percentagenew = (total_answer * 100) / total_question;
           } else {
-            var percentage = 0;
+             percentagenew = 0;
           }
 
-        if(module.final_mod!=1) {
 
+        if(module.final_mod!=1) 
+        {
+
+      
           modulelen++;
           return (
             <tr key={i}>
@@ -128,33 +135,33 @@ class ModuleList extends Component {
         }
 
 
-        if((percentage >= 80 && modulelen == quiz_count) || (percentage >= 80 && modules.length == quiz_count)) {
-        if(module.final_mod==1) {
-
-          return (
-            <tr key={i}>
-              <th scope="row">{i + 1}</th>
-              <td>{module.name}</td>
-              <td>{module.course_id.name}</td>
-              <td>{quiz_score} </td>
-              <td>
-                <Link
-                  to={"/account/modules/module/" + module._id}
-                  tooltip="View Detail"
-                >
-                  <i className="fa fa-low-vision" />
-                </Link>{" "}
-                <Link
-                  to={"/account/quiz/" + module._id}
-                  tooltip="Play Quiz"
-                >
-                  <i className="fa fa-question-circle" />
-                </Link>
-              </td>
-            </tr>
-          );
+        if((percentagenew >= 80 && modules.length-1 == quiz_count) || (modules.length == quiz_count) )
+        {
+           if(module.final_mod==1) {
+            return (
+              <tr key={i}>
+                <th scope="row">{i + 1}</th>
+                <td>{module.name}</td>
+                <td>{module.course_id.name}</td>
+                <td>{quiz_score} </td>
+                <td>
+                  <Link
+                    to={"/account/modules/module/" + module._id}
+                    tooltip="View Detail"
+                  >
+                    <i className="fa fa-low-vision" />
+                  </Link>{" "}
+                  <Link
+                    to={"/account/quiz/" + module._id}
+                    tooltip="Play Quiz"
+                  >
+                    <i className="fa fa-question-circle" />
+                  </Link>
+                </td>
+              </tr>
+            );
+          }
         }
-      }
 
         })}
         {this.reanderPercentage(modules.length)}

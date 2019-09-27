@@ -164,7 +164,7 @@ class CourseView extends Component {
         }
         <section className="list_sec pad-40-tb Syllabus_wrap">
           <div className="container text-center">
-            <div className="row">
+            {/*<div className="row">
               <div className="col-sm-12">
                 <div className="title">
                   <h2>
@@ -193,7 +193,7 @@ class CourseView extends Component {
                   <span>No Syllabus found!</span>
                 )}
               </div>
-            </div>
+            </div>*/}
             <div className="row">
               <div className="col-sm-12">
                 {this.props.auth.isAuthenticated ? (
