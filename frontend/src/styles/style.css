@@ -373,6 +373,10 @@ nav.navbar {
 a.btn:hover {
     background: #1f2222;    color: #fff;
 }
+
+footer li {
+    list-style: none;
+}
 section.hero-banner {
     background-image:url('/images/medi-default.jpg');
     min-height: initial !important;

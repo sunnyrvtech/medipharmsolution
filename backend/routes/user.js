@@ -178,7 +178,7 @@ router.post("/contact-us", function(req, res) {
   };
   var { html } = contactUsNotification(noti_data);
   nodemailer.mailOptions.to = process.env.MAIL_FROM_ADDRESS;
-  nodemailer.mailOptions.subject = "Medipharm Solutions-Contact Us Email!";
+  nodemailer.mailOptions.subject = "Medipharm Solutions-Contact Us!";
   nodemailer.mailOptions.html = html;
   nodemailer.transporter.sendMail(nodemailer.mailOptions, function(
     error,
